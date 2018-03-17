@@ -8,13 +8,26 @@ namespace SchedulingSystem.Models
 {
     public class GeneticAlgorithm
     {
-        SchedulingContext _context; 
+        private SchedulingContext _context;
+
+        private List<Schedule> Population = new List<Schedule>(GlobalConfig.POPULATION_SIZE);
         public GeneticAlgorithm()
         {
             _context = new SchedulingContext();
-            var section = _context.Sections.SingleOrDefault(s => s.Id == 1); 
+            var section = _context.Sections.SingleOrDefault(s => s.Id == 1);
 
-            Schedule schedule = new Schedule(section); 
+            for (int i=0; i < GlobalConfig.POPULATION_SIZE; i++)
+            {
+                var s = new Schedule(section)
+                {
+                    
+                };
+
+                s.CalculateFitness();
+                s.Print();
+                Population.Add(s); 
+            }
+            
         }
 
         

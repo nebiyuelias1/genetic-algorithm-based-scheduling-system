@@ -8,6 +8,7 @@ namespace SchedulingSystem.Models
 {
     public class Course
     {
+        // Determine whether this course is a Lab course or not
         public int Id { get; set; }
         public string CourseCode { get; set; }
         public string Title { get; set; }

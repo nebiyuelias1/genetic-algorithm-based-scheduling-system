@@ -13,7 +13,8 @@ namespace SchedulingSystem.Models
         public string Building { get; set; }
         public int Size { get; set; }
         public List<Section> AssignedSections { get; set; }
-
         // TODO - should you add IsLab, IsShared properties? 
+        public bool IsLabRoom { get; set; }
+        public bool IsLectureRoom { get; set; }
     }
 }
