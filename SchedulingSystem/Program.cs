@@ -18,8 +18,6 @@ namespace SchedulingSystem
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
-
             Application.Run(new AssignInstructorToCourseOffering());
             //Application.Run(new Main());
         }

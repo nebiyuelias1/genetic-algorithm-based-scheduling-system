@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
+    <Compile Include="EntityConfigurations\DayConfiguration.cs" />
     <Compile Include="EntityConfigurations\InstructorConfiguration.cs" />
     <Compile Include="EntityConfigurations\ScheduleConfiguration.cs" />
     <Compile Include="GlobalConfig.cs" />
@@ -93,8 +94,13 @@
     <Compile Include="Migrations\201803131752078_ModifyModels.Designer.cs">
       <DependentUpon>201803131752078_ModifyModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803210833566_AddDaysTable.cs" />
+    <Compile Include="Migrations\201803210833566_AddDaysTable.Designer.cs">
+      <DependentUpon>201803210833566_AddDaysTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourseOffering.cs" />
+    <Compile Include="Models\Day.cs" />
     <Compile Include="Models\GeneticAlgorithm.cs" />
     <Compile Include="Models\Population.cs" />
     <Compile Include="Models\Schedule.cs" />
@@ -187,6 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803131752078_ModifyModels.resx">
       <DependentUpon>201803131752078_ModifyModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803210833566_AddDaysTable.resx">
+      <DependentUpon>201803210833566_AddDaysTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AssignInstructorToCourseOffering.resx">
       <DependentUpon>AssignInstructorToCourseOffering.cs</DependentUpon>
