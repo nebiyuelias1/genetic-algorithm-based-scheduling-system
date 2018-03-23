@@ -98,6 +98,18 @@
     <Compile Include="Migrations\201803210833566_AddDaysTable.Designer.cs">
       <DependentUpon>201803210833566_AddDaysTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803231717574_ModifyDatabaseTables.cs" />
+    <Compile Include="Migrations\201803231717574_ModifyDatabaseTables.Designer.cs">
+      <DependentUpon>201803231717574_ModifyDatabaseTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803231724440_ModifyDatabaseTables1.cs" />
+    <Compile Include="Migrations\201803231724440_ModifyDatabaseTables1.Designer.cs">
+      <DependentUpon>201803231724440_ModifyDatabaseTables1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803231823093_ModifyDatabaseTables2.cs" />
+    <Compile Include="Migrations\201803231823093_ModifyDatabaseTables2.Designer.cs">
+      <DependentUpon>201803231823093_ModifyDatabaseTables2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourseOffering.cs" />
     <Compile Include="Models\Day.cs" />
@@ -196,6 +208,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803210833566_AddDaysTable.resx">
       <DependentUpon>201803210833566_AddDaysTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231717574_ModifyDatabaseTables.resx">
+      <DependentUpon>201803231717574_ModifyDatabaseTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231724440_ModifyDatabaseTables1.resx">
+      <DependentUpon>201803231724440_ModifyDatabaseTables1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231823093_ModifyDatabaseTables2.resx">
+      <DependentUpon>201803231823093_ModifyDatabaseTables2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AssignInstructorToCourseOffering.resx">
       <DependentUpon>AssignInstructorToCourseOffering.cs</DependentUpon>

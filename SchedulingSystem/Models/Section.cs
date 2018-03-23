@@ -17,6 +17,6 @@ namespace SchedulingSystem.Models
         // TODO - Which one is better IList, List, IEnumerable
         public virtual List<Room> AssignedRooms { get; set; } = new List<Room>();
 
-        public List<CourseOffering> CourseOfferings { get; set; }
+        public virtual List<CourseOffering> CourseOfferings { get; set; }
     }
 }

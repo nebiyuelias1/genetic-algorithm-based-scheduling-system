@@ -11,37 +11,54 @@ namespace SchedulingSystem.Models
         private SchedulingContext _context;
 
         private List<Schedule> Population = new List<Schedule>(GlobalConfig.POPULATION_SIZE);
-        private List<Schedule> MatingPool = new List<Schedule>(); 
 
         public GeneticAlgorithm()
         {
             _context = new SchedulingContext();
 
+            Random rand = new Random(); 
 
             IntializePopulation();
 
-            //int i = 0;
-            //while (i < 10)
-            //{
-            //    var matingPool = NaturalSelection();
-            //    CreateNextGeneration(matingPool);
-            //    Console.WriteLine(i);
-            //    i++; 
-            //}
-
-            foreach (var item in Population)
+            for (int j = 0; j < 100; j++)
             {
-                Console.WriteLine(item.Fitness);
+                for (int i = 0; i < Population.Count; i++)
+                {
+                    var parentA = PickRandomParent();
+                    var parentB = PickRandomParent();
+
+                    var child = parentA.Crossover(parentB);
+                    if (rand.NextDouble() < GlobalConfig.MUTATION_RATE)
+                    {
+                        child.Mutate();
+                    }
+                    child.CalculateFitness();
+                    Population[i] = child;
+                }
             }
         }
 
+        public Schedule PickRandomParent()
+        {
+            Random rand = new Random();
+            while (true)
+            {
+                int randSlot = rand.Next(Population.Count);
+
+                if(rand.NextDouble() < Population[randSlot].Fitness)
+                {
+                    return Population[randSlot]; 
+                }
+            }
+            
+        }
         public void IntializePopulation()
         {
             var section = _context.Sections.SingleOrDefault(s => s.Id == 1);
 
             for (int i = 0; i < GlobalConfig.POPULATION_SIZE; i++)
             {
-                var s = new Schedule(section, true);
+                var s = new Schedule(section);
                 
                 s.PrintSchedule(); 
                 s.CalculateFitness();
