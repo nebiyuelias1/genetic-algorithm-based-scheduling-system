@@ -110,6 +110,10 @@
     <Compile Include="Migrations\201803231823093_ModifyDatabaseTables2.Designer.cs">
       <DependentUpon>201803231823093_ModifyDatabaseTables2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803251543119_ModifyModels1.cs" />
+    <Compile Include="Migrations\201803251543119_ModifyModels1.Designer.cs">
+      <DependentUpon>201803251543119_ModifyModels1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourseOffering.cs" />
     <Compile Include="Models\Day.cs" />
@@ -217,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803231823093_ModifyDatabaseTables2.resx">
       <DependentUpon>201803231823093_ModifyDatabaseTables2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803251543119_ModifyModels1.resx">
+      <DependentUpon>201803251543119_ModifyModels1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AssignInstructorToCourseOffering.resx">
       <DependentUpon>AssignInstructorToCourseOffering.cs</DependentUpon>

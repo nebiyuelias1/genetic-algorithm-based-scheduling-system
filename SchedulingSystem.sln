@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulingSystem", "SchedulingSystem\SchedulingSystem.csproj", "{B0E52BCA-C2FB-46F6-B552-9B7D70A1640C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulingSystemWeb", "SchedulingSystemWeb\SchedulingSystemWeb.csproj", "{102D2A51-B16F-4710-80B7-7A8BB1273816}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulingSystemClassLibrary", "SchedulingSystemClassLibrary\SchedulingSystemClassLibrary.csproj", "{7E7E5DDB-D616-4A99-BC39-3B44FC69F977}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{B0E52BCA-C2FB-46F6-B552-9B7D70A1640C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0E52BCA-C2FB-46F6-B552-9B7D70A1640C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0E52BCA-C2FB-46F6-B552-9B7D70A1640C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{102D2A51-B16F-4710-80B7-7A8BB1273816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{102D2A51-B16F-4710-80B7-7A8BB1273816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{102D2A51-B16F-4710-80B7-7A8BB1273816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{102D2A51-B16F-4710-80B7-7A8BB1273816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E7E5DDB-D616-4A99-BC39-3B44FC69F977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E7E5DDB-D616-4A99-BC39-3B44FC69F977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7E5DDB-D616-4A99-BC39-3B44FC69F977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7E5DDB-D616-4A99-BC39-3B44FC69F977}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

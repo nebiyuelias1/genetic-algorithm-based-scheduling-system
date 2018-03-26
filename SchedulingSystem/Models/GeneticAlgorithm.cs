@@ -20,21 +20,29 @@ namespace SchedulingSystem.Models
 
             IntializePopulation();
 
-            for (int j = 0; j < 100; j++)
+            for (int j = 0; j < 20; j++)
             {
-                for (int i = 0; i < Population.Count; i++)
-                {
-                    var parentA = PickRandomParent();
-                    var parentB = PickRandomParent();
+                //for (int i = 0; i < Population.Count; i++)
+                //{
+                //    var parentA = PickRandomParent();
+                //    var parentB = PickRandomParent();
 
-                    var child = parentA.Crossover(parentB);
-                    if (rand.NextDouble() < GlobalConfig.MUTATION_RATE)
-                    {
-                        child.Mutate();
-                    }
-                    child.CalculateFitness();
-                    Population[i] = child;
-                }
+                //    parentA.PrintSchedule();
+                //    parentB.PrintSchedule(); 
+                //    var child = parentA.Crossover(parentB);
+
+
+                //    if (rand.NextDouble() < GlobalConfig.MUTATION_RATE)
+                //    {
+                //        //child.Mutate();
+                //    }
+                //    child.PrintSchedule();
+                //    child.CalculateFitness();
+                //    Population[i] = child;
+                //}
+
+                var matingPool = NaturalSelection();
+                CreateNextGeneration(matingPool);
             }
         }
 
@@ -47,7 +55,7 @@ namespace SchedulingSystem.Models
 
                 if(rand.NextDouble() < Population[randSlot].Fitness)
                 {
-                    return Population[randSlot]; 
+                    return Population[randSlot];  
                 }
             }
             
@@ -60,9 +68,9 @@ namespace SchedulingSystem.Models
             {
                 var s = new Schedule(section);
                 
-                s.PrintSchedule(); 
+                //s.PrintSchedule(); 
                 s.CalculateFitness();
-                Console.WriteLine(s.Fitness);
+                //Console.WriteLine(s.Fitness);
                 Population.Add(s);
             }
         }
@@ -94,9 +102,16 @@ namespace SchedulingSystem.Models
                 var parentA = matingPool[a];
                 var parentB = matingPool[b];
 
-                var child = parentA.Crossover(parentB);
+                //Console.WriteLine("Parent A: {0}", parentA.Fitness);
+                //parentA.PrintSchedule();
+                //Console.WriteLine("Parent B: {0}", parentB.Fitness);
+                //parentB.PrintSchedule();
+
+                var child = parentA;
                 child.Mutate();
-                child.CalculateFitness(); 
+                child.CalculateFitness();
+                //Console.WriteLine("Child: {0}", child.Fitness);
+                //child.PrintSchedule();
                 Population[i] = child; 
             }
         }

@@ -18,7 +18,7 @@ namespace SchedulingSystem.Models
         // TODO: Should we represent day and period here 
         public virtual Day Day { get; set; }
         public int DayId { get; set; }
-        public int Period { get; set; }
+        public byte Period { get; set; }
         public bool IsLecture { get; set; } = false;
         public bool IsLab { get; set; } = false;
         public bool IsTutor { get; set; } = false; 

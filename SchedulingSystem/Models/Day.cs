@@ -10,7 +10,7 @@ namespace SchedulingSystem.Models
     {
         public int Id { get; set; }
         public string DayName { get; set; }
-        public int DayNumber { get; set; }
+        public byte DayNumber { get; set; }
         public Schedule Schedule { get; set; }
         public int ScheduleId { get; set; }
         public virtual List<ScheduleEntry> Periods { get; set; } = new List<ScheduleEntry>(GlobalConfig.NUM_OF_PERIODS); 
