@@ -4,7 +4,15 @@
     ViewBag.Title = "New";
 }
 
-<h2>New</h2>
+@if (Model.Id == 0)
+{
+    <h2>New</h2>
+}
+else
+{
+    <h2>Edit</h2>
+}
+
 
 @using (Html.BeginForm()) 
 {

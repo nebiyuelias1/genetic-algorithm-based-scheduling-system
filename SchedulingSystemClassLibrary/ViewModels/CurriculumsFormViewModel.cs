@@ -44,5 +44,22 @@ namespace SchedulingSystemClassLibrary.ViewModels
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
         public IEnumerable<Department> Departments { get; set; }
+
+        public CurriculumsFormViewModel(Curriculum curriculum)
+        {
+            this.Id = curriculum.Id; 
+            this.Nomenclature = curriculum.Nomenclature;
+            this.Program = curriculum.Program;
+            this.StaySemester = curriculum.StaySemester;
+            this.StayYear = curriculum.StayYear;
+            this.FieldOfStudy = curriculum.FieldOfStudy;
+            this.AdmissionClassification = curriculum.AdmissionClassification;
+            this.DepartmentId = curriculum.DepartmentId;
+            this.MinimumCredit = curriculum.MinimumCredit;
+        }
+
+        public CurriculumsFormViewModel()
+        {
+        }
     }
 }

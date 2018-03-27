@@ -28,11 +28,24 @@ namespace SchedulingSystemWeb.Controllers
         {
             var departments = _context.Departments.ToList();
 
-            var curriculumViewModel = new CurriculumsFormViewModel
+            var curriculumViewModel = new CurriculumsFormViewModel()
             {
                 Departments = departments
             };
             return View("CurriculumForm", curriculumViewModel);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var curriculum = _context.Curriculums.SingleOrDefault(c => c.Id == id);
+            var departments = _context.Departments.ToList();
+
+            var viewModel = new CurriculumsFormViewModel(curriculum)
+            {
+                Departments = departments
+            };
+
+            return View("CurriculumForm", viewModel);
         }
     }
 }
