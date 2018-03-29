@@ -17,6 +17,6 @@ namespace SchedulingSystem.Models
         public List<CourseOffering> CurrentlyAssignedCourses { get; set; } = new List<CourseOffering>();
         public Department Department { get; set; }
         public int DepartmentId { get; set; }
-
+        public List<InstructorPreference> InstructorPreferences { get; set; }
     }
 }

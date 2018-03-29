@@ -15,6 +15,10 @@ namespace SchedulingSystem.EntityConfigurations
             this.HasRequired(i => i.Department)
                 .WithMany(d => d.Instructors)
                 .HasForeignKey(i => i.DepartmentId)
+                .WillCascadeOnDelete(false);
+
+            this.HasMany(i => i.InstructorPreferences)
+                .WithRequired(p => p.Instructor)
                 .WillCascadeOnDelete(false); 
         }
     }

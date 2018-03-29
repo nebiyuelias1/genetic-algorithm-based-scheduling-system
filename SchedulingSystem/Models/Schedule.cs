@@ -28,7 +28,7 @@ namespace SchedulingSystem.Models
 
             InitializeSchedule();
         }
-        public Schedule(Section section)
+        public Schedule(Section section, Dictionary<string, byte[]> dictionary)
         {
             _context = new SchedulingContext();
 
@@ -41,11 +41,18 @@ namespace SchedulingSystem.Models
             
             InitializeSchedule();
 
-            List<CourseOffering> courseOfferings = _context.CourseOfferings.Where(c => c.SectionId == Section.Id).ToList();
+            List<CourseOffering> courseOfferings = section.CourseOfferings;
+
+           
+
+ 
+            
 
             foreach (CourseOffering offering in courseOfferings)
             {
                 var instructor = offering.Instructor;
+                
+               
                 var course = offering.Course;
 
                 byte lecture = course.Lecture;
@@ -61,7 +68,9 @@ namespace SchedulingSystem.Models
                     var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLectureRoom == true);
 
                     // pick a random slot to index into the Day list
-                    byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                    //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                    byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
+                    byte randDay = dictionary[offering.Course.Title][randIndex];
                     byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
 
                     if (lecture > 1)
@@ -105,7 +114,9 @@ namespace SchedulingSystem.Models
                     var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLabRoom == true);
 
                     // pick a random slot to index into the ScheduleDNA list 
-                    byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                    //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                    byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
+                    byte randDay = dictionary[offering.Course.Title][randIndex];
                     byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
 
                     if (lab > 2)
@@ -177,7 +188,9 @@ namespace SchedulingSystem.Models
                     var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLectureRoom == true);
 
                     // pick a random slot to index into the ScheduleDNA list 
-                    byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                    //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                    byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
+                    byte randDay = dictionary[offering.Course.Title][randIndex];
                     byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
 
                     if (tutor > 1)

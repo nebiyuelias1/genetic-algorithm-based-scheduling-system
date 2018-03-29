@@ -10,13 +10,12 @@ namespace SchedulingSystemClassLibrary
 
         }
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<Curriculum> Curriculums { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
-        public virtual DbSet<Faculty> Faculties { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Section> Sections { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<CourseOffering> CourseOfferings { get; set; }
+        public virtual DbSet<Curriculum> Curriculums { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

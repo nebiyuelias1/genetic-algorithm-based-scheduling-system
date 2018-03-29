@@ -47,5 +47,35 @@ namespace SchedulingSystemWeb.Controllers
 
             return View("CurriculumForm", viewModel);
         }
+
+        [HttpPost]
+        public ActionResult Save(Curriculum curriculum)
+        {
+            if (curriculum.Id == 0)
+            {
+                _context.Curriculums.Add(curriculum); 
+            }
+            else
+            {
+                var curriculumInDb = _context.Curriculums.SingleOrDefault(c => c.Id == curriculum.Id); 
+
+                curriculumInDb.AdmissionClassification = curriculum.AdmissionClassification;
+                curriculumInDb.DepartmentId = curriculum.DepartmentId;
+                curriculumInDb.FieldOfStudy = curriculum.FieldOfStudy;
+                curriculumInDb.MinimumCredit = curriculum.MinimumCredit;
+                curriculumInDb.Program = curriculum.Program;
+                curriculumInDb.StaySemester = curriculum.StaySemester;
+                curriculumInDb.StayYear = curriculum.StayYear;
+                curriculumInDb.Nomenclature = curriculum.Nomenclature; 
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Curriculums"); 
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
     }
 }

@@ -64,9 +64,33 @@ namespace SchedulingSystem.Models
         {
             var section = _context.Sections.SingleOrDefault(s => s.Id == 1);
 
+            var mwfDays = new byte[] { 0, 2, 4 };
+            var tthDays = new byte[] { 1, 3 };
+
+            var dictionary = new Dictionary<string, byte[]>();
+
+            var randomizedCourseOffering = section.CourseOfferings
+                                .OrderByDescending(c => c.Course.Laboratory)
+                                .ThenByDescending(c => c.Course.Lecture);
+
+            byte counter = 0;
+            foreach (var courseOffering in randomizedCourseOffering)
+            {
+                if (counter % 2 == 0)
+                {
+                    dictionary.Add(courseOffering.Course.Title, mwfDays);
+                }
+                else
+                {
+                    dictionary.Add(courseOffering.Course.Title, tthDays); 
+                }
+
+                counter++; 
+            }
+
             for (int i = 0; i < GlobalConfig.POPULATION_SIZE; i++)
             {
-                var s = new Schedule(section);
+                var s = new Schedule(section, dictionary);
                 
                 //s.PrintSchedule(); 
                 s.CalculateFitness();
@@ -102,16 +126,16 @@ namespace SchedulingSystem.Models
                 var parentA = matingPool[a];
                 var parentB = matingPool[b];
 
-                //Console.WriteLine("Parent A: {0}", parentA.Fitness);
-                //parentA.PrintSchedule();
-                //Console.WriteLine("Parent B: {0}", parentB.Fitness);
-                //parentB.PrintSchedule();
+                Console.WriteLine("Parent A: {0}", parentA.Fitness);
+                parentA.PrintSchedule();
+                Console.WriteLine("Parent B: {0}", parentB.Fitness);
+                parentB.PrintSchedule();
 
                 var child = parentA;
                 child.Mutate();
                 child.CalculateFitness();
-                //Console.WriteLine("Child: {0}", child.Fitness);
-                //child.PrintSchedule();
+                Console.WriteLine("Child: {0}", child.Fitness);
+                child.PrintSchedule();
                 Population[i] = child; 
             }
         }

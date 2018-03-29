@@ -14,7 +14,7 @@ else
 }
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Save", "Curriculums")) 
 {
     @Html.AntiForgeryToken()
     
@@ -85,10 +85,10 @@ else
                 @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @Html.HiddenFor(model => model.Id)
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>

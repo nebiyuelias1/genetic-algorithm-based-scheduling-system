@@ -19,8 +19,12 @@ namespace SchedulingSystemWeb.Controllers
         // GET: Faculties
         public ActionResult Index()
         {
-            var faculties = _context.Faculties.ToList(); 
+            var faculties = _context.Rooms.ToList(); 
             return View(faculties);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
         }
     }
 }
