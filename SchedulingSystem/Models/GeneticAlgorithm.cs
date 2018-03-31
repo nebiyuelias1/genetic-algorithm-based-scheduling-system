@@ -131,7 +131,7 @@ namespace SchedulingSystem.Models
                 Console.WriteLine("Parent B: {0}", parentB.Fitness);
                 parentB.PrintSchedule();
 
-                var child = parentA;
+                var child = parentA.Crossover(parentB);
                 child.Mutate();
                 child.CalculateFitness();
                 Console.WriteLine("Child: {0}", child.Fitness);
