@@ -20,6 +20,12 @@
             <th>
                 Department
             </th>
+            <th>
+                Lecture Room
+            </th>
+            <th>
+                Lab Room
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +39,7 @@
             var table = $("#sections").DataTable({
                 ajax: {
                     url: "/api/sections",
-                    daraSrc: ""
+                    dataSrc: ""
                 },
                 columns: 
                     [
@@ -48,8 +54,13 @@
                         },
                         {
                             data: "department.name"
+                        },
+                        {
+                            data: "department.name"
+                        },
+                        {
+                            data: "department.name"
                         }
-
                     ]
             });
         });

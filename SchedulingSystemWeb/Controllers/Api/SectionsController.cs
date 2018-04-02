@@ -31,7 +31,7 @@ namespace SchedulingSystemWeb.Controllers.Api
                                 s.EntranceYear, 
                                 s.StudentCount, 
                                 Department = new { s.Department.Id, s.Department.Name},
-                                AssignedRooms = s.AssignedRooms
+                                AssignedRooms = s.AssignedRooms, 
                             })
                             .ToList();
 

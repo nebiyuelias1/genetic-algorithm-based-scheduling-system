@@ -17,6 +17,15 @@ namespace SchedulingSystemWeb.Controllers.Api
             _context = new SchedulingContext();
         }
 
+        // GET /api/rooms
+        public IHttpActionResult GetRooms()
+        {
+            var rooms = _context.Rooms
+                .ToList();
+
+            return Ok(rooms);
+        }
+
         // DELETE /api/rooms/1 
         [HttpDelete]
         public void DeleteRoom(int id)

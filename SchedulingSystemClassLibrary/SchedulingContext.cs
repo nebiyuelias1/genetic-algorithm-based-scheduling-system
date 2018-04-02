@@ -1,4 +1,5 @@
-﻿using SchedulingSystemClassLibrary.Models;
+﻿using SchedulingSystemClassLibrary.EntityConfigurations;
+using SchedulingSystemClassLibrary.Models;
 using System.Data.Entity;
 
 namespace SchedulingSystemClassLibrary
@@ -16,10 +17,13 @@ namespace SchedulingSystemClassLibrary
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<CourseOffering> CourseOfferings { get; set; }
         public virtual DbSet<Curriculum> Curriculums { get; set; }
-
+        public virtual DbSet<Faculty> Faculties { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Configurations.Add(new CourseOfferingConfiguration());
+            modelBuilder.Configurations.Add(new InstructorConfiguration());
+            modelBuilder.Configurations.Add(new DayConfiguration());
+            modelBuilder.Configurations.Add(new RoomConfiguration()); 
 
             base.OnModelCreating(modelBuilder); 
         }

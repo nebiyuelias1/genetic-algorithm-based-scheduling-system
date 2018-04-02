@@ -121,7 +121,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourseOffering.cs" />
     <Compile Include="Models\Day.cs" />
-    <Compile Include="Models\Dictionary.cs" />
     <Compile Include="Models\GeneticAlgorithm.cs" />
     <Compile Include="Models\InstructorPreference.cs" />
     <Compile Include="Models\Population.cs" />
