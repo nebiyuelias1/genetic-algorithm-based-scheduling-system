@@ -44,6 +44,14 @@ namespace SchedulingSystem.Models
                 var matingPool = NaturalSelection();
                 CreateNextGeneration(matingPool);
             }
+
+
+            var best = Population.OrderByDescending(p => p.Fitness).First();
+            best.PrintSchedule();
+            best.CalculateFitness();
+            _context.Schedules.Add(best);
+            _context.SaveChanges();
+
         }
 
         public Schedule PickRandomParent()
@@ -91,9 +99,12 @@ namespace SchedulingSystem.Models
             for (int i = 0; i < GlobalConfig.POPULATION_SIZE; i++)
             {
                 var s = new Schedule(section, dictionary);
-                
-                //s.PrintSchedule(); 
+
                 s.CalculateFitness();
+                Console.WriteLine("Fitness: {0}", s.Fitness);
+                s.PrintSchedule(); 
+
+                
                 //Console.WriteLine(s.Fitness);
                 Population.Add(s);
             }
@@ -126,16 +137,16 @@ namespace SchedulingSystem.Models
                 var parentA = matingPool[a];
                 var parentB = matingPool[b];
 
-                Console.WriteLine("Parent A: {0}", parentA.Fitness);
-                parentA.PrintSchedule();
-                Console.WriteLine("Parent B: {0}", parentB.Fitness);
-                parentB.PrintSchedule();
+                //Console.WriteLine("Parent A: {0}", parentA.Fitness);
+                //parentA.PrintSchedule();
+                //Console.WriteLine("Parent B: {0}", parentB.Fitness);
+                //parentB.PrintSchedule();
 
                 var child = parentA.Crossover(parentB);
                 child.Mutate();
                 child.CalculateFitness();
-                Console.WriteLine("Child: {0}", child.Fitness);
-                child.PrintSchedule();
+                //Console.WriteLine("Child: {0}", child.Fitness);
+                //child.PrintSchedule();
                 Population[i] = child; 
             }
         }

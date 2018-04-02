@@ -11,6 +11,6 @@ namespace SchedulingSystem
         public const byte NUM_OF_DAYS = 5;
         public const byte NUM_OF_PERIODS = 8;
         public const int POPULATION_SIZE = 1000;
-        public const float MUTATION_RATE = 0.5f;
+        public const float MUTATION_RATE = 0.2f;
     }
 }

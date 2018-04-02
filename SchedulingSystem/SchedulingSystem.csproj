@@ -57,9 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConfigurations\BuildingConfiguration.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
     <Compile Include="EntityConfigurations\DayConfiguration.cs" />
     <Compile Include="EntityConfigurations\InstructorConfiguration.cs" />
+    <Compile Include="EntityConfigurations\RoomConfiguration.cs" />
     <Compile Include="EntityConfigurations\ScheduleConfiguration.cs" />
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="Migrations\201802261607428_InitialModel.cs" />
@@ -118,7 +120,12 @@
     <Compile Include="Migrations\201803281924588_AddInstructorsPreferenceTable.Designer.cs">
       <DependentUpon>201803281924588_AddInstructorsPreferenceTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804020420377_UpdateBuildingsAndRoomsTable.cs" />
+    <Compile Include="Migrations\201804020420377_UpdateBuildingsAndRoomsTable.Designer.cs">
+      <DependentUpon>201804020420377_UpdateBuildingsAndRoomsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Building.cs" />
     <Compile Include="Models\CourseOffering.cs" />
     <Compile Include="Models\Day.cs" />
     <Compile Include="Models\GeneticAlgorithm.cs" />
@@ -232,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803281924588_AddInstructorsPreferenceTable.resx">
       <DependentUpon>201803281924588_AddInstructorsPreferenceTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804020420377_UpdateBuildingsAndRoomsTable.resx">
+      <DependentUpon>201804020420377_UpdateBuildingsAndRoomsTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AssignInstructorToCourseOffering.resx">
       <DependentUpon>AssignInstructorToCourseOffering.cs</DependentUpon>
