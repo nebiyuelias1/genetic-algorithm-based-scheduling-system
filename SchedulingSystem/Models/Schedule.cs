@@ -697,122 +697,201 @@ namespace SchedulingSystem.Models
         public void CalculateFitness()
         {
             #region Old Fitness function
-            //int score = 0;
-            //int maximumScore = 0; 
+            int score = 0;
+            int maximumScore = 0;
 
-            //byte totalLectureHours = 0;
-            //byte totalHours = 0; 
+            byte totalLectureHours = 0;
+            byte totalHours = 0;
 
-            //foreach (var courseOffering in Section.CourseOfferings)
-            //{
-            //    totalLectureHours += courseOffering.Course.Lecture;
-            //    totalHours += courseOffering.Course.Lecture;
-            //    totalHours += courseOffering.Course.Laboratory;
-            //    totalHours += courseOffering.Course.Tutor;
-            //}
-
-            //score += AssignScoreBasedOnScheduleStartingOnFirstPeriod();
-            //maximumScore += 10; 
-            //score += AssignScoreBasedOnLunchBreakGaps();
-            //maximumScore += 5;
-            //score += AssignScoreBasedOnPerforation();
-            //maximumScore += 10;
-            //if (totalLectureHours < 20)
-            //{
-            //    score += AssignScoreBasedOnLectureBeingInTheMorning();
-            //    maximumScore += totalLectureHours; 
-            //}
-
-            //if (totalLectureHours < 30)
-            //{
-            //    score += AssignScoreBasedOnFreeEntryInTheLastPeriod();
-            //    maximumScore += 10; 
-            //}
-
-            //Fitness = Math.Pow(score, 2);
-            //MaximumScore = Math.Pow(maximumScore, 2);
-            //Fitness = Fitness / MaximumScore;  
-            #endregion
-
-            int numOfConflicts = 0;
-
-            if (!DoesScheduleStartOnFirstPeriod())
+            foreach (var courseOffering in Section.CourseOfferings)
             {
-                numOfConflicts++; 
+                totalLectureHours += courseOffering.Course.Lecture;
+                totalHours += courseOffering.Course.Lecture;
+                totalHours += courseOffering.Course.Laboratory;
+                totalHours += courseOffering.Course.Tutor;
             }
-            if (IsTheSameCourseScheduledOnFourthAndFithPeriods())
-            {
-                numOfConflicts++; 
-            }
-
-            Fitness = 1 / (numOfConflicts + 1); 
-        }
-        private byte AssignScoreBasedOnFreeEntryInTheLastPeriod()
-        {
-            byte score = 0;
 
             foreach (var day in Days)
             {
-                if (day.Periods[3].Course == null)
-                {
-                    score++;    
-                }
+                score += AssignScoreBasedOnScheduleStartingOnFirstPeriod(day);
+                maximumScore += 2;
 
-                if (day.Periods[7].Course == null)
-                {
-                    score++; 
-                }
+                // TODO - Should the same course be allowed before and after lunch break? 
+                //score += AssignScoreBasedOnLunchBreakGaps(day)
+                //maximumScore += 5;
+
+                score += AssignScoreBasedOnGapBetweenEntries(day);
+                maximumScore += 2;
+
+                //if (totalLectureHours < 30)
+                //{
+                //    score += AssignScoreBasedOnFreeEntryInTheLastPeriod(day);
+                //    maximumScore += 2;
+                //}
+
+                //if (totalLectureHours < 20)
+                //{
+                //    score += AssignScoreBasedOnLectureBeingInTheMorning(day);
+                //}
             }
+
+            //if (totalLectureHours < 20)
+            //{
+            //    maximumScore += totalLectureHours;
+            //}
+
+
+
+
+
+
+
+
+            Fitness = Math.Pow(score, 2);
+            MaximumScore = Math.Pow(maximumScore, 2);
+            Fitness = Fitness / MaximumScore;
+            #endregion
+
+            //int numOfConflicts = 0;
+
+            //if (!DoesScheduleStartOnFirstPeriod())
+            //{
+            //    numOfConflicts++; 
+            //}
+            //if (IsTheSameCourseScheduledOnFourthAndFithPeriods())
+            //{
+            //    numOfConflicts++; 
+            //}
+
+            //Fitness = 1.0 / (numOfConflicts + 1); 
+        }
+        private byte AssignScoreBasedOnFreeEntryInTheLastPeriod(Day day)
+        {
+            byte score = 0;
+
+            if (day.Periods[3].Course == null)
+            {
+                score++;    
+            }
+
+            if (day.Periods[7].Course == null)
+            {
+                score++; 
+            }
+
             return score; 
         }
-        private byte AssignScoreBasedOnLectureBeingInTheMorning()
+        private byte AssignScoreBasedOnLectureBeingInTheMorning(Day day)
         {
             
             byte score = 0;
 
-            foreach (var day in Days)
+            foreach (var item in day.Periods.GetRange(0, 4))
             {
-                foreach (var item in day.Periods.GetRange(0, 4))
+                if (item.Course != null && item.IsLecture)
                 {
-                    if (item.Course != null && item.IsLecture)
-                    {
-                        score++; 
-                    }
+                    score++; 
                 }
             }
 
+
             return score; 
         }
-        private byte AssignScoreBasedOnPerforation()
+
+        private byte AssignScoreBasedOnGapBetweenEntries(Day day)
         {
             byte score = 0;
 
             byte morningStartIndex = 0;
             byte afternoonStartIndex = 4;
 
-            foreach (var day in Days)
+            var morningPeriods = day.Periods.GetRange(morningStartIndex, 4).ToList();
+            var afternoonPeriods = day.Periods.GetRange(afternoonStartIndex, 4).ToList();
+
+            var morningPeriodsCount = morningPeriods.Where(s => s.Course != null).ToList().Count;
+            var afternoonPeriodsCount = afternoonPeriods.Where(s => s.Course != null).ToList().Count;
+
+            if (morningPeriodsCount > 1)
             {
-                var morningPeriods = day.Periods.GetRange(morningStartIndex, 4).Where(s => s.Course != null).ToList();
-                var afternoonPeriods = day.Periods.GetRange(afternoonStartIndex, 4).Where(s => s.Course != null).ToList();
+                var first = morningPeriods.First(x => x.Course != null);
+                var last = morningPeriods.Last(x => x.Course != null);
 
-                int morningPeriodsCount = morningPeriods.Count(s => s.Course != null);
-                int afternoonPeriodsCount = afternoonPeriods.Count(s => s.Course != null);
+                var firstIndex = morningPeriods.IndexOf(first);
+                var lastIndex = morningPeriods.IndexOf(last); 
 
-                Dictionary<string, List<byte>> dictionary = CreatePeriodDictionary(morningPeriods);
+                if (!isPerforated(morningPeriods.GetRange(firstIndex, (lastIndex - firstIndex) + 1)))
+                {
+                    score++; 
+                }
+            }
+            else
+            {
+                score++;
+            }
 
-                bool perforated = IsPerforated(dictionary);
-                if (!perforated)
+            if (afternoonPeriodsCount > 1)
+            {
+                var first = afternoonPeriods.First(x => x.Course != null);
+                var last = afternoonPeriods.Last(x => x.Course != null);
+
+                var firstIndex = afternoonPeriods.IndexOf(first);
+                var lastIndex = afternoonPeriods.IndexOf(last);
+
+                if (!isPerforated(afternoonPeriods.GetRange(firstIndex, (lastIndex - firstIndex) + 1)))
                 {
                     score++;
                 }
+            }
+            else
+            {
+                score++;
+            }
 
-                dictionary = CreatePeriodDictionary(afternoonPeriods);
 
-                perforated = IsPerforated(dictionary);
-                if (!perforated)
+            return score; 
+        }
+
+        private bool isPerforated(List<ScheduleEntry> entries)
+        {
+
+
+            foreach (var entry in entries)
+            {
+                if (entry.Course == null)
                 {
-                    score++;
+                    return true; 
                 }
+            }
+
+            return false; 
+        }
+        private byte AssignScoreBasedOnPerforation(Day day)
+        {
+            byte score = 0;
+
+            byte morningStartIndex = 0;
+            byte afternoonStartIndex = 4;
+
+            var morningPeriods = day.Periods.GetRange(morningStartIndex, 4).Where(s => s.Course != null).ToList();
+            var afternoonPeriods = day.Periods.GetRange(afternoonStartIndex, 4).Where(s => s.Course != null).ToList();
+
+            int morningPeriodsCount = morningPeriods.Count(s => s.Course != null);
+            int afternoonPeriodsCount = afternoonPeriods.Count(s => s.Course != null);
+
+            Dictionary<string, List<byte>> dictionary = CreatePeriodDictionary(morningPeriods);
+
+            bool perforated = IsPerforated(dictionary);
+            if (!perforated)
+            {
+                score++;
+            }
+
+            dictionary = CreatePeriodDictionary(afternoonPeriods);
+
+            perforated = IsPerforated(dictionary);
+            if (!perforated)
+            {
+                score++;
             }
 
             return score; 
@@ -830,20 +909,17 @@ namespace SchedulingSystem.Models
 
             return false; 
         }
-        private byte AssignScoreBasedOnLunchBreakGaps()
+        private byte AssignScoreBasedOnLunchBreakGaps(Day day)
         {
             byte score = 0;
 
-            foreach (var day in Days)
+            if (day.Periods[3].Course != null && day.Periods[4].Course != null && day.Periods[3].Course.Title != day.Periods[4].Course.Title)
             {
-                if (day.Periods[3].Course != null && day.Periods[4].Course != null && day.Periods[3].Course.Title != day.Periods[4].Course.Title)
-                {
-                    score++; 
-                }
-                else if (day.Periods[3].Course == null || day.Periods[4].Course == null)
-                {
-                    score++; 
-                }
+                score++; 
+            }
+            else if (day.Periods[3].Course == null || day.Periods[4].Course == null)
+            {
+                score++; 
             }
             return score; 
         }
@@ -866,23 +942,20 @@ namespace SchedulingSystem.Models
 
             return true;
         }
-        private byte AssignScoreBasedOnScheduleStartingOnFirstPeriod()
+        private byte AssignScoreBasedOnScheduleStartingOnFirstPeriod(Day day)
         {
             byte morningStartIndex = 0;
             byte afternoonStartIndex = 4;
 
             byte score = 0;
 
-            foreach (var day in Days)
+            if (day.Periods[morningStartIndex].Course != null)
             {
-                if (day.Periods[morningStartIndex].Course != null)
-                {
-                    score++;  
-                }
-                if (day.Periods[afternoonStartIndex].Course != null)
-                {
-                    score++; 
-                }
+                score++;  
+            }
+            if (day.Periods[afternoonStartIndex].Course != null)
+            {
+                score++; 
             }
 
             return score; 

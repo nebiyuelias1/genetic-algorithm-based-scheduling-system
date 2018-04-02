@@ -61,7 +61,12 @@
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
     <Compile Include="ViewModels\SectionsFormViewModel.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SchedulingSystem\SchedulingSystem.csproj">
+      <Project>{B0E52BCA-C2FB-46F6-B552-9B7D70A1640C}</Project>
+      <Name>SchedulingSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

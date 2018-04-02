@@ -1,4 +1,5 @@
-﻿using SchedulingSystemClassLibrary.Models;
+﻿using SchedulingSystem.EntityConfigurations;
+using SchedulingSystemClassLibrary.Models;
 using System.Data.Entity;
 
 namespace SchedulingSystemClassLibrary

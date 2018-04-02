@@ -25,7 +25,7 @@ namespace SchedulingSystem.UI
             var room = new Room
             {
                 Name = nameValue.Text, 
-                Building = buildingValue.Text, 
+                //Building = buildingValue.Text, 
                 Size = int.Parse(sizeValue.Text)
             };
 

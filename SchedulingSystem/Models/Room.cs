@@ -10,7 +10,8 @@ namespace SchedulingSystem.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Building { get; set; }
+        public Building Building { get; set; }
+        public int BuildingId { get; set; }
         public int Size { get; set; }
         public List<Section> AssignedSections { get; set; }
         // TODO - should you add IsLab, IsShared properties? 

@@ -28,11 +28,13 @@ namespace SchedulingSystem
         public virtual DbSet<ScheduleEntry> ScheduleEntries { get; set; }
         public virtual DbSet<Day> Days { get; set; }
         public virtual DbSet<InstructorPreference> InstructorPreferences { get; set; }
+        public virtual DbSet<Building> Buildings { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CourseOfferingConfiguration());
             modelBuilder.Configurations.Add(new InstructorConfiguration());
             modelBuilder.Configurations.Add(new DayConfiguration());
+            modelBuilder.Configurations.Add(new RoomConfiguration()); 
 
             base.OnModelCreating(modelBuilder); 
         }
