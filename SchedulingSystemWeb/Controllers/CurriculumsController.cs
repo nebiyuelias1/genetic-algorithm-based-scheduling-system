@@ -20,8 +20,8 @@ namespace SchedulingSystemWeb.Controllers
         // GET: Curriculums
         public ActionResult Index()
         {
-            var curriculums = _context.Curriculums.Include(c => c.Department).ToList(); 
-            return View(curriculums);
+            
+            return View();
         }
 
         public ActionResult New()

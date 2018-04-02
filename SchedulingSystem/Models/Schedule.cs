@@ -736,16 +736,24 @@ namespace SchedulingSystem.Models
 
             int numOfConflicts = 0;
 
-            if (!DoesScheduleStartOnFirstPeriod())
+            foreach (var day in Days)
             {
-                numOfConflicts++; 
+                if (!DoesScheduleStartOnFirstPeriodInTheMorning(day))
+                {
+                    numOfConflicts++;
+                }
+                if (!DoesScheduleStartOnFirstPeriodInTheAfternoon(day))
+                {
+                    numOfConflicts++;
+                }
+                if (IsTheSameCourseScheduledOnFourthAndFithPeriods(day))
+                {
+                    numOfConflicts++;
+                }
             }
-            if (IsTheSameCourseScheduledOnFourthAndFithPeriods())
-            {
-                numOfConflicts++; 
-            }
+            
 
-            Fitness = 1 / (numOfConflicts + 1); 
+            Fitness = 1.0 / (numOfConflicts + 1); 
         }
         private byte AssignScoreBasedOnFreeEntryInTheLastPeriod()
         {
@@ -817,17 +825,13 @@ namespace SchedulingSystem.Models
 
             return score; 
         }
-        private bool IsTheSameCourseScheduledOnFourthAndFithPeriods()
+        private bool IsTheSameCourseScheduledOnFourthAndFithPeriods(Day day)
         {
-
-            foreach (var day in Days)
+            if (day.Periods[3].Course != null && day.Periods[4].Course != null && day.Periods[3].Course.Title == day.Periods[4].Course.Title)
             {
-                if (day.Periods[3].Course != null && day.Periods[4].Course != null && day.Periods[3].Course.Title == day.Periods[4].Course.Title)
-                {
-                    return true;
-                }
+                return true;
             }
-
+ 
             return false; 
         }
         private byte AssignScoreBasedOnLunchBreakGaps()
@@ -847,21 +851,24 @@ namespace SchedulingSystem.Models
             }
             return score; 
         }
-        private bool DoesScheduleStartOnFirstPeriod()
+        private bool DoesScheduleStartOnFirstPeriodInTheMorning(Day day)
         {
             byte morningStartIndex = 0;
+
+            if (day.Periods[morningStartIndex].Course == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool DoesScheduleStartOnFirstPeriodInTheAfternoon(Day day)
+        {
             byte afternoonStartIndex = 4;
 
-            foreach (var day in Days)
+            if (day.Periods[afternoonStartIndex].Course != null)
             {
-                if (day.Periods[morningStartIndex].Course == null)
-                {
-                    return false;
-                }
-                if (day.Periods[afternoonStartIndex].Course != null)
-                {
-                    return false; 
-                }
+                return false;
             }
 
             return true;

@@ -1,6 +1,7 @@
 ﻿using SchedulingSystemClassLibrary;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity; 
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,6 +16,16 @@ namespace SchedulingSystemWeb.Controllers.Api
         public CurriculumsController()
         {
             _context = new SchedulingContext();
+        }
+
+        // GET /api/curriculums
+        public IHttpActionResult GetCustomers()
+        {
+            var curriculums = _context.Curriculums
+                .Include(c => c.Department)
+                .ToList();
+
+            return Ok(curriculums);
         }
 
         // DELETE /api/curriculums/1 

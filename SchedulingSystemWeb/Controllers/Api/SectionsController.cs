@@ -1,6 +1,7 @@
 ﻿using SchedulingSystemClassLibrary;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity; 
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,6 +16,26 @@ namespace SchedulingSystemWeb.Controllers.Api
         public SectionsController()
         {
             _context = new SchedulingContext();
+        }
+
+        // GET /api/sections 
+        public IHttpActionResult GetSections()
+        {
+            var sections = _context.Sections
+                            .Include(s => s.Department)
+                            .Include(s => s.AssignedRooms)
+                            .Select(s => new
+                            {
+                                s.Id, 
+                                s.Name, 
+                                s.EntranceYear, 
+                                s.StudentCount, 
+                                Department = new { s.Department.Id, s.Department.Name},
+                                AssignedRooms = s.AssignedRooms
+                            })
+                            .ToList();
+
+            return Ok(sections);
         }
 
         // DELETE /api/sections/1 

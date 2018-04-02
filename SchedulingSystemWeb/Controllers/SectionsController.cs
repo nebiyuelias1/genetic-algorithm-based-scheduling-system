@@ -71,6 +71,11 @@ namespace SchedulingSystemWeb.Controllers
 
             return RedirectToAction("Index", "Sections"); 
         }
+
+        public ActionResult Assign()
+        {
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose(); 

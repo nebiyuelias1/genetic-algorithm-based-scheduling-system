@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Assign";
+}
+
+<h2>Assign Room to Sections</h2>
+
+<table id="sections"  class="table table-bordered table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Entrance Year
+            </th>
+            <th>
+                Student Count
+            </th>
+            <th>
+                Department
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#sections").DataTable({
+                ajax: {
+                    url: "/api/sections",
+                    daraSrc: ""
+                },
+                columns: 
+                    [
+                        {
+                            data: "name"
+                        },
+                        {
+                            data: "entranceYear"
+                        },
+                        {
+                            data: "studentCount"
+                        },
+                        {
+                            data: "department.name"
+                        }
+
+                    ]
+            });
+        });
+    </script>
+}
+
