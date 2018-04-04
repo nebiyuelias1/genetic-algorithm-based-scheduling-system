@@ -1,0 +1,88 @@
+﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.Building>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "New")
+</p>
+<table id="buildings" class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                Name
+            </th>
+            <th>
+                Number
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+
+</table>
+
+@section scripts
+{
+    <script>
+        /* Formatting function for row details - modify as you need */
+        function format(d) {
+            // `d` is the original data object for the row
+            var html = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'; 
+            for (var room in d.rooms) {
+                html += '<tr>';
+                html += '<td>Name:</td>';
+                html += '<td>' + room.name + '</td>';
+                html += '<td>Size:</td>';
+                html += '<td>' + room.size + '</td>'; 
+                html += '</tr>';
+            }
+
+            html += '</table>';
+            
+            return html; 
+        }
+
+        $(document).ready(function () {
+            var table = $('#buildings').DataTable({
+                ajax: {
+                    url: "/api/buildings",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    { data: "name" },
+                    { data: "number" },
+                ],
+                "order": [[1, 'asc']]
+            });
+
+            // Add event listener for opening and closing details
+            $('#buildings tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+        });
+    </script>
+}

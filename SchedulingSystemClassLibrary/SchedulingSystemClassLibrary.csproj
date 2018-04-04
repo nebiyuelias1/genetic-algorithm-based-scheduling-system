@@ -49,6 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201804031823176_AddBuildingsTable.cs" />
+    <Compile Include="Migrations\201804031823176_AddBuildingsTable.Designer.cs">
+      <DependentUpon>201804031823176_AddBuildingsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804031843066_ModifyBuildingsTable.cs" />
+    <Compile Include="Migrations\201804031843066_ModifyBuildingsTable.Designer.cs">
+      <DependentUpon>201804031843066_ModifyBuildingsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Building.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
     <Compile Include="EntityConfigurations\DayConfiguration.cs" />
     <Compile Include="EntityConfigurations\InstructorConfiguration.cs" />
@@ -181,6 +190,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804021337349_ModifyRelationshipBetweenRoomsAndSections.resx">
       <DependentUpon>201804021337349_ModifyRelationshipBetweenRoomsAndSections.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804031823176_AddBuildingsTable.resx">
+      <DependentUpon>201804031823176_AddBuildingsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804031843066_ModifyBuildingsTable.resx">
+      <DependentUpon>201804031843066_ModifyBuildingsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

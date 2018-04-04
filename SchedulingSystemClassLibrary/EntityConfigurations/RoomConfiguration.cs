@@ -14,6 +14,11 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
         {
             this.HasMany(r => r.AssignedSections)
                 .WithMany(r => r.AssignedRooms);
+
+            this.HasRequired(r => r.Building)
+                .WithMany(b => b.Rooms)
+                .HasForeignKey(r => r.BuildingId)
+                .WillCascadeOnDelete(false);
         }
     }
 }
