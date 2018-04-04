@@ -25,8 +25,14 @@ textarea {
 
 td.details-control {
     background: url('Images/icons-plus.png') no-repeat center center;
+    background-size: 20px 20px;
     cursor: pointer;
 }
 tr.shown td.details-control {
     background: url('Images/icons-minus.png') no-repeat center center;
+    background-size: 20px 20px;
+}
+
+.inner-table {
+    margin-left: 7%; 
 }

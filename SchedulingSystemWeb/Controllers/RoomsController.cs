@@ -1,5 +1,6 @@
 ﻿using SchedulingSystemClassLibrary;
 using SchedulingSystemClassLibrary.Models;
+using SchedulingSystemClassLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,12 @@ namespace SchedulingSystemWeb.Controllers
 
         public ActionResult New()
         {
-            var room = new Room(); 
-            return View("RoomForm", room);
+            var buildings = _context.Buildings.ToList();
+            var viewModel = new RoomsFormViewModel
+            {
+                Buildings = buildings
+            };
+            return View("RoomForm", viewModel);
         }
 
         public ActionResult Edit(int id)

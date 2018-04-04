@@ -23,6 +23,13 @@ namespace SchedulingSystemWeb.Controllers.Api
         {
             var buildings = _context.Buildings
                             .Include(b => b.Rooms)
+                            .Select(b => new
+                            {
+                                Id = b.Id, 
+                                Name = b.Name, 
+                                Number = b.Number,
+                                Rooms = b.Rooms
+                            })
                             .ToList();
 
             return Ok(buildings); 

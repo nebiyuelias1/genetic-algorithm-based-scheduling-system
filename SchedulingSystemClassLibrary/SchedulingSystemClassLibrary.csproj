@@ -57,6 +57,10 @@
     <Compile Include="Migrations\201804031843066_ModifyBuildingsTable.Designer.cs">
       <DependentUpon>201804031843066_ModifyBuildingsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804040825256_ModifyBuildingsTable1.cs" />
+    <Compile Include="Migrations\201804040825256_ModifyBuildingsTable1.Designer.cs">
+      <DependentUpon>201804040825256_ModifyBuildingsTable1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Building.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
     <Compile Include="EntityConfigurations\DayConfiguration.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="SchedulingContext.cs" />
     <Compile Include="ViewModels\CoursesFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
+    <Compile Include="ViewModels\RoomsFormViewModel.cs" />
     <Compile Include="ViewModels\SectionsFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804031843066_ModifyBuildingsTable.resx">
       <DependentUpon>201804031843066_ModifyBuildingsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804040825256_ModifyBuildingsTable1.resx">
+      <DependentUpon>201804040825256_ModifyBuildingsTable1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

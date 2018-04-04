@@ -33,17 +33,27 @@
         /* Formatting function for row details - modify as you need */
         function format(d) {
             // `d` is the original data object for the row
-            var html = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'; 
-            for (var room in d.rooms) {
-                html += '<tr>';
-                html += '<td>Name:</td>';
-                html += '<td>' + room.name + '</td>';
-                html += '<td>Size:</td>';
-                html += '<td>' + room.size + '</td>'; 
-                html += '</tr>';
-            }
+            var rooms = d.rooms;
+            console.log(rooms);
+            var html = ''; 
 
-            html += '</table>';
+            if (rooms.length > 0) {
+                html = '<table class="inner-table" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+                html += "<thead><th>Room Name</th><th>Room Size</th><th>Is Lecture Room</th><th>Is Lab Room</th></thead>";
+                for (var i = 0 ; i < rooms.length; i++) {
+                    html += '<tr>';
+                    html += '<td>' + rooms[i].name + '</td>';
+                    html += '<td>' + rooms[i].size + '</td>';
+                    var isChecked = rooms[i].isLectureRoom ? 'checked="checked"' : '';
+                    html += '<td><input class="check-box" type="checkbox" disabled="disabled" ' + isChecked + '></td>';
+                    isChecked = rooms[i].isLabRoom ? 'checked="checked"' : '';
+                    html += '<td><input class="check-box" type="checkbox" disabled="disabled" ' + isChecked + '></td>';
+                    html += '</tr>';
+                }
+
+                html += '</table>';
+            }
+           
             
             return html; 
         }
