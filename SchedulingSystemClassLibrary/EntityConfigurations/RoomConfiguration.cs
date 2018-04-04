@@ -12,8 +12,15 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
     {
         public RoomConfiguration()
         {
-            this.HasMany(r => r.AssignedSections)
-                .WithMany(r => r.AssignedRooms);
+            this.HasMany(r => r.AssignedLectureSections)
+                .WithOptional(r => r.AssignedLectureRoom)
+                .HasForeignKey(s => s.AssignedLectureRoomId)
+                .WillCascadeOnDelete(false);
+
+            this.HasMany(r => r.AssignedLabSections)
+                 .WithOptional(r => r.AssignedLabRoom)
+                 .HasForeignKey(s => s.AssignedLabRoomId)
+                 .WillCascadeOnDelete(false);
 
             this.HasRequired(r => r.Building)
                 .WithMany(b => b.Rooms)

@@ -26,6 +26,9 @@
             <th>
                 Lab Room
             </th>
+            <th>
+                Assign
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -56,12 +59,68 @@
                             data: "department.name"
                         },
                         {
-                            data: "department.name"
+                            render: function (data, type, section) {
+                                var html = '<select>';
+
+                                var assignedLectureRoomId = 0;
+
+                                if (section.assignedLectureRoom)
+                                    assignedLectureRoomId = section.assignedLectureRoom.id;
+
+                                for (var i = 0; i < section.rooms.length; i++) {
+                                    if (section.rooms[i].isLectureRoom) {
+                                        if (section.rooms[i].id == assignedLectureRoomId)
+                                            html += '<option selected value="' + section.rooms[i].id + '">' + section.rooms[i].name + '</option>';
+                                        else
+                                            html += '<option value="' + section.rooms[i].id + '">' + section.rooms[i].name + '</option>';
+                                    }
+                                }
+                                html += '</select>'
+                                return html; 
+                            }
                         },
                         {
-                            data: "department.name"
+                            render: function (data, type, section) {
+                                var html = '<select>';
+
+                                var assignedLabRoomId = 0;
+
+                                if (section.assignedLabRoom)
+                                    assignedLabRoomId = section.assignedLabRoom.id;
+
+                                for (var i = 0; i < section.rooms.length; i++) {
+                                    if (section.rooms[i].isLabRoom) {
+                                        if (section.rooms[i].id == assignedLabRoomId)
+                                            html += '<option selected value="' + section.rooms[i].id + '">' + section.rooms[i].name + '</option>';
+                                        else
+                                            html += '<option value="' + section.rooms[i].id + '">' + section.rooms[i].name + '</option>';
+                                    }
+                                }
+                                html += '</select>';
+                                return html;
+                            }
+                        },
+                        {
+                            data: "id",
+                            render: function (data, type, section) {
+                                return '<button class="btn btn-primary js-assign" data-section-id="' + section.id + '">Assign</button>';
+                            }
                         }
                     ]
+            });
+
+            $('#sections').on('click', '.js-assign', function () {
+                var button = $(this);
+                console.log(button.parents('tr'));
+                console.log(table.row(button.parents('tr')));
+                var data = table.$('select').serialize();
+                console.log(data); 
+                alert("Wassup" + data);
+
+                $.ajax({
+                    url: "api/sections",
+                    method: "POST", 
+                })
             });
         });
     </script>

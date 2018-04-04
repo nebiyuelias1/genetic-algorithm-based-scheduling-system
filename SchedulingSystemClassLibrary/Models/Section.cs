@@ -27,7 +27,10 @@ namespace SchedulingSystemClassLibrary.Models
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
         // TODO - Which one is better IList, List, IEnumerable
-        public List<Room> AssignedRooms { get; set; } = new List<Room>();
+        public Room AssignedLectureRoom { get; set; }
+        public int? AssignedLectureRoomId { get; set; }
+        public Room AssignedLabRoom { get; set; }
+        public int? AssignedLabRoomId { get; set; }
         public List<CourseOffering> CourseOfferings { get; set; }
     }
 }

@@ -65,7 +65,7 @@ namespace SchedulingSystemClassLibrary.Models
                 while (lecture > 0)
                 {
                     // Get the lecture room for the current section
-                    var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLectureRoom == true);
+                    //var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLectureRoom == true);
 
                     // pick a random slot to index into the Day list
                     //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
@@ -82,13 +82,13 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[slots[0]]; 
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLecture = true;
 
                             entry = Days[randDay].Periods[slots[1]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLecture = true;
 
                             lecture -= 2;
@@ -101,7 +101,7 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[randPeriod];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLecture = true;
 
                             lecture--;
@@ -111,7 +111,7 @@ namespace SchedulingSystemClassLibrary.Models
 
                 while (lab > 0)
                 {
-                    var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLabRoom == true);
+                    //var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLabRoom == true);
 
                     // pick a random slot to index into the ScheduleDNA list 
                     //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
@@ -128,19 +128,19 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[slots[0]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLab = true;
 
                             entry = Days[randDay].Periods[slots[1]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLab = true;
 
                             entry = Days[randDay].Periods[slots[2]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLab = true;
 
                             lab -= 3;
@@ -155,13 +155,13 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[slots[0]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLab = true;
 
                             entry = Days[randDay].Periods[slots[1]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLab = true;
 
                             lab -= 2;
@@ -174,7 +174,7 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[randPeriod];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsLab = true;
 
                             lab--;
@@ -185,7 +185,7 @@ namespace SchedulingSystemClassLibrary.Models
 
                 while (tutor > 0)
                 {
-                    var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLectureRoom == true);
+                    //var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLectureRoom == true);
 
                     // pick a random slot to index into the ScheduleDNA list 
                     //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
@@ -202,13 +202,13 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[slots[0]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsTutor = true;
 
                             entry = Days[randDay].Periods[slots[1]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsTutor = true;
 
                             tutor -= 2;
@@ -221,7 +221,7 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[randPeriod];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            entry.Room = room;
+                            //entry.Room = room;
                             entry.IsTutor = true;
 
                             tutor--;

@@ -61,6 +61,14 @@
     <Compile Include="Migrations\201804040825256_ModifyBuildingsTable1.Designer.cs">
       <DependentUpon>201804040825256_ModifyBuildingsTable1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804041228592_ModifyRoomConfiguration.cs" />
+    <Compile Include="Migrations\201804041228592_ModifyRoomConfiguration.Designer.cs">
+      <DependentUpon>201804041228592_ModifyRoomConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804041242182_ModifyRoomConfiguration1.cs" />
+    <Compile Include="Migrations\201804041242182_ModifyRoomConfiguration1.Designer.cs">
+      <DependentUpon>201804041242182_ModifyRoomConfiguration1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Building.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
     <Compile Include="EntityConfigurations\DayConfiguration.cs" />
@@ -204,6 +212,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804040825256_ModifyBuildingsTable1.resx">
       <DependentUpon>201804040825256_ModifyBuildingsTable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804041228592_ModifyRoomConfiguration.resx">
+      <DependentUpon>201804041228592_ModifyRoomConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804041242182_ModifyRoomConfiguration1.resx">
+      <DependentUpon>201804041242182_ModifyRoomConfiguration1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

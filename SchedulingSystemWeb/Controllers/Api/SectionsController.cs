@@ -1,7 +1,8 @@
 ﻿using SchedulingSystemClassLibrary;
+using SchedulingSystemClassLibrary.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity; 
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,9 +22,16 @@ namespace SchedulingSystemWeb.Controllers.Api
         // GET /api/sections 
         public IHttpActionResult GetSections()
         {
+            var rooms = _context.Rooms.ToList();
+            rooms.Insert(0, new Room {
+                IsLectureRoom = true, 
+                IsLabRoom = true
+            });
             var sections = _context.Sections
                             .Include(s => s.Department)
-                            .Include(s => s.AssignedRooms)
+                            .Include(s => s.AssignedLectureRoom)
+                            .Include(s => s.AssignedLabRoom)
+                            .AsEnumerable()
                             .Select(s => new
                             {
                                 s.Id, 
@@ -31,7 +39,9 @@ namespace SchedulingSystemWeb.Controllers.Api
                                 s.EntranceYear, 
                                 s.StudentCount, 
                                 Department = new { s.Department.Id, s.Department.Name},
-                                AssignedRooms = s.AssignedRooms, 
+                                AssignedLectureRoom = s.AssignedLectureRoom,
+                                AssignedLabRoom = s.AssignedLabRoom,
+                                Rooms = rooms
                             })
                             .ToList();
 
