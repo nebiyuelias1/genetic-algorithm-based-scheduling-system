@@ -60,19 +60,23 @@
                         },
                         {
                             render: function (data, type, section) {
-                                var html = '<select>';
+                                var html = '<select class="lectureRoomsCombo">';
 
                                 var assignedLectureRoomId = 0;
 
-                                if (section.assignedLectureRoom)
-                                    assignedLectureRoomId = section.assignedLectureRoom.id;
+                                if (section.assignedLectureRoomId)
+                                    assignedLectureRoomId = section.assignedLectureRoomId;
 
                                 for (var i = 0; i < section.rooms.length; i++) {
-                                    if (section.rooms[i].isLectureRoom) {
-                                        if (section.rooms[i].id == assignedLectureRoomId)
-                                            html += '<option selected value="' + section.rooms[i].id + '">' + section.rooms[i].name + '</option>';
-                                        else
-                                            html += '<option value="' + section.rooms[i].id + '">' + section.rooms[i].name + '</option>';
+                                    if (section.rooms[i].id == 0) {
+                                        html += '<option selected value="' + section.rooms[i].id + '">Not Assigned</option>';
+                                    } else {
+                                        if (section.rooms[i].isLectureRoom) {
+                                            if (section.rooms[i].id == assignedLectureRoomId)
+                                                html += '<option selected value="' + section.rooms[i].id + '">B: ' + section.rooms[i].building.buildingTitle + ' R: ' + section.rooms[i].name + '</option>';
+                                            else
+                                                html += '<option value="' + section.rooms[i].id + '">B: ' + section.rooms[i].building.buildingTitle + ' R: ' + section.rooms[i].name + '</option>';
+                                        }
                                     }
                                 }
                                 html += '</select>'
@@ -81,19 +85,23 @@
                         },
                         {
                             render: function (data, type, section) {
-                                var html = '<select>';
+                                var html = '<select class="labRoomsCombo">';
 
                                 var assignedLabRoomId = 0;
 
-                                if (section.assignedLabRoom)
-                                    assignedLabRoomId = section.assignedLabRoom.id;
+                                if (section.assignedLabRoomId)
+                                    assignedLabRoomId = section.assignedLabRoomId;
 
                                 for (var i = 0; i < section.rooms.length; i++) {
-                                    if (section.rooms[i].isLabRoom) {
-                                        if (section.rooms[i].id == assignedLabRoomId)
-                                            html += '<option selected value="' + section.rooms[i].id + '">' + section.rooms[i].name + '</option>';
-                                        else
-                                            html += '<option value="' + section.rooms[i].id + '">' + section.rooms[i].name + '</option>';
+                                    if (section.rooms[i].id == 0) {
+                                        html += '<option selected value="' + section.rooms[i].id + '">Not Assigned</option>';
+                                    } else {
+                                        if (section.rooms[i].isLabRoom) {
+                                            if (section.rooms[i].id == assignedLabRoomId)
+                                                html += '<option selected value="' + section.rooms[i].id + '">B: ' + section.rooms[i].building.buildingTitle + ' R: '+ section.rooms[i].name + '</option>';
+                                            else
+                                                html += '<option value="' + section.rooms[i].id + '">B: ' + section.rooms[i].building.buildingTitle + ' R: '+ section.rooms[i].name + '</option>';
+                                        }
                                     }
                                 }
                                 html += '</select>';
@@ -111,16 +119,19 @@
 
             $('#sections').on('click', '.js-assign', function () {
                 var button = $(this);
-                console.log(button.parents('tr'));
-                console.log(table.row(button.parents('tr')));
-                var data = table.$('select').serialize();
-                console.log(data); 
-                alert("Wassup" + data);
+                var sectionId = button.attr('data-section-id');
+
+                var lectureRoomId = button.parents('tr').find('td select.lectureRoomsCombo').val();
+                var labRoomId = button.parents('tr').find('td select.labRoomsCombo').val();
 
                 $.ajax({
-                    url: "api/sections",
-                    method: "POST", 
-                })
+                    url: "/api/sections/assign",
+                    method: "POST",
+                    data: { "sectionId": sectionId, "lectureRoomId": lectureRoomId, "labRoomId": labRoomId },
+                    success: function () {
+                        table.draw();
+                    }
+                });
             });
         });
     </script>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using SchedulingSystemWeb.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,7 +20,7 @@ namespace SchedulingSystemWeb
             //config.Formatters.JsonFormatter
             //            .SerializerSettings
             //            .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-
+            Mapper.Initialize(c => c.AddProfile<MappingProfile>());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
