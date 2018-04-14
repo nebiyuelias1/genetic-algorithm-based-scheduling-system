@@ -1,4 +1,5 @@
-﻿using SchedulingSystem.Models;
+﻿using SchedulingSystemClassLibrary.GeneticAlgorithm;
+using SchedulingSystemClassLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,11 +14,11 @@ namespace SchedulingSystem.UI
 {
     public partial class AssignInstructorToCourseOffering : Form
     {
-        private SchedulingContext _context; 
+        private SchedulingSystemClassLibrary.SchedulingContext _context; 
         public AssignInstructorToCourseOffering()
         {
             InitializeComponent();
-            _context = new SchedulingContext();
+            _context = new SchedulingSystemClassLibrary.SchedulingContext();
             new GeneticAlgorithm(); 
         }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
+using SchedulingSystemClassLibrary.GeneticAlgorithm;
 
 namespace SchedulingSystemClassLibrary.Models
 {
@@ -17,6 +19,8 @@ namespace SchedulingSystemClassLibrary.Models
         public int SectionId { get; set; }
         public virtual List<Day> Days { get; set; }
 
+        public IList<ScheduleEntry> scheduleEntries { get; set; }
+
         public Schedule()
         {
             _context = new SchedulingContext();
@@ -28,7 +32,7 @@ namespace SchedulingSystemClassLibrary.Models
 
             InitializeSchedule();
         }
-        public Schedule(Section section, Dictionary<string, byte[]> dictionary)
+        public Schedule(Section section, Dictionary<string, byte[]> dictionary, IList<ScheduleEntry> scheduleEntries)
         {
             _context = new SchedulingContext();
 
@@ -43,10 +47,11 @@ namespace SchedulingSystemClassLibrary.Models
 
             List<CourseOffering> courseOfferings = section.CourseOfferings;
 
-           
 
- 
-            
+            this.scheduleEntries = scheduleEntries;
+                                    
+
+
 
             foreach (CourseOffering offering in courseOfferings)
             {
@@ -61,57 +66,10 @@ namespace SchedulingSystemClassLibrary.Models
 
                 Random rand = new Random();
 
-
-                while (lecture > 0)
-                {
-                    // Get the lecture room for the current section
-                    //var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLectureRoom == true);
-
-                    // pick a random slot to index into the Day list
-                    //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
-                    byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
-                    byte randDay = dictionary[offering.Course.Title][randIndex];
-                    byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
-
-                    if (lecture > 1)
-                    {
-                        byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 2);
-
-                        if (slots.Where(b => b == 0).Count() <= 1)
-                        {
-                            var entry = Days[randDay].Periods[slots[0]]; 
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            //entry.Room = room;
-                            entry.IsLecture = true;
-
-                            entry = Days[randDay].Periods[slots[1]];
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            //entry.Room = room;
-                            entry.IsLecture = true;
-
-                            lecture -= 2;
-                        }
-                    }
-                    else
-                    {
-                        if (Days[randDay].Periods[randPeriod].Course == null)
-                        {
-                            var entry = Days[randDay].Periods[randPeriod];
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            //entry.Room = room;
-                            entry.IsLecture = true;
-
-                            lecture--;
-                        }
-                    }
-                }
-
+                
                 while (lab > 0)
                 {
-                    //var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLabRoom == true);
+                    var room = Section.AssignedLabRoom;
 
                     // pick a random slot to index into the ScheduleDNA list 
                     //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
@@ -128,25 +86,26 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[slots[0]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsLab = true;
 
                             entry = Days[randDay].Periods[slots[1]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsLab = true;
 
                             entry = Days[randDay].Periods[slots[2]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsLab = true;
 
                             lab -= 3;
                         }
                     }
-                    else if (lab > 1)
+
+                    if (lab > 1)
                     {
                         byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 2);
 
@@ -155,26 +114,27 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[slots[0]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsLab = true;
 
                             entry = Days[randDay].Periods[slots[1]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsLab = true;
 
                             lab -= 2;
                         }
                     }
-                    else
+                    
+                    if (lab > 0)
                     {
                         if (Days[randDay].Periods[randPeriod].Course == null)
                         {
                             var entry = Days[randDay].Periods[randPeriod];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsLab = true;
 
                             lab--;
@@ -183,9 +143,57 @@ namespace SchedulingSystemClassLibrary.Models
 
                 }
 
+                while (lecture > 0)
+                {
+                    // Get the lecture room for the current section
+                    var room = Section.AssignedLectureRoom;
+
+                    // pick a random slot to index into the Day list
+                    //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                    byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
+                    byte randDay = dictionary[offering.Course.Title][randIndex];
+                    byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
+
+                    if (lecture > 1)
+                    {
+                        byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 2);
+
+                        if (slots.Where(b => b == 0).Count() <= 1)
+                        {
+                            var entry = Days[randDay].Periods[slots[0]];
+                            entry.Course = course;
+                            entry.Instructor = instructor;
+                            entry.Room = room;
+                            entry.IsLecture = true;
+
+                            entry = Days[randDay].Periods[slots[1]];
+                            entry.Course = course;
+                            entry.Instructor = instructor;
+                            entry.Room = room;
+                            entry.IsLecture = true;
+
+                            lecture -= 2;
+                        }
+                    }
+                    
+                    if(lecture > 0)
+                    {
+                        if (Days[randDay].Periods[randPeriod].Course == null)
+                        {
+                            var entry = Days[randDay].Periods[randPeriod];
+                            entry.Course = course;
+                            entry.Instructor = instructor;
+                            entry.Room = room;
+                            entry.IsLecture = true;
+
+                            lecture--;
+                        }
+                    }
+                }
+
                 while (tutor > 0)
                 {
-                    //var room = Section.AssignedRooms.SingleOrDefault(r => r.IsLectureRoom == true);
+                    var room = Section.AssignedLectureRoom;
 
                     // pick a random slot to index into the ScheduleDNA list 
                     //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
@@ -202,26 +210,27 @@ namespace SchedulingSystemClassLibrary.Models
                             var entry = Days[randDay].Periods[slots[0]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsTutor = true;
 
                             entry = Days[randDay].Periods[slots[1]];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsTutor = true;
 
                             tutor -= 2;
                         }
                     }
-                    else
+                    
+                    if (tutor > 0)
                     {
                         if (Days[randDay].Periods[randPeriod].Course == null)
                         {
                             var entry = Days[randDay].Periods[randPeriod];
                             entry.Course = course;
                             entry.Instructor = instructor;
-                            //entry.Room = room;
+                            entry.Room = room;
                             entry.IsTutor = true;
 
                             tutor--;
@@ -285,7 +294,6 @@ namespace SchedulingSystemClassLibrary.Models
             
 
         }
-
         private void ShiftToEarlyPeriods()
         {
             byte minMorning = 0;
@@ -355,7 +363,6 @@ namespace SchedulingSystemClassLibrary.Models
                 }
             }
         }
-
         public Schedule Crossover(Schedule parentB)
         {
             #region Crossover function
@@ -664,7 +671,8 @@ namespace SchedulingSystemClassLibrary.Models
 
             var child = new Schedule()
             {
-                Section = this.Section
+                Section = this.Section, 
+                scheduleEntries = this.scheduleEntries
             };
 
             var parentA = this;
@@ -693,15 +701,17 @@ namespace SchedulingSystemClassLibrary.Models
 
             return child;
         }
-
         public void CalculateFitness()
         {
             #region Old Fitness function
             //int score = 0;
-            //int maximumScore = 0; 
+            //int maximumScore = 0;
 
             //byte totalLectureHours = 0;
-            //byte totalHours = 0; 
+            //byte totalHours = 0;
+
+            //byte threeLabHourCoursesCount = 0;
+
 
             //foreach (var courseOffering in Section.CourseOfferings)
             //{
@@ -709,52 +719,304 @@ namespace SchedulingSystemClassLibrary.Models
             //    totalHours += courseOffering.Course.Lecture;
             //    totalHours += courseOffering.Course.Laboratory;
             //    totalHours += courseOffering.Course.Tutor;
+
+            //    if (courseOffering.Course.Laboratory >= 3)
+            //    {
+            //        threeLabHourCoursesCount++; 
+            //    }
             //}
 
-            //score += AssignScoreBasedOnScheduleStartingOnFirstPeriod();
-            //maximumScore += 10; 
-            //score += AssignScoreBasedOnLunchBreakGaps();
-            //maximumScore += 5;
-            //score += AssignScoreBasedOnPerforation();
-            //maximumScore += 10;
-            //if (totalLectureHours < 20)
+            //foreach (var day in Days)
             //{
-            //    score += AssignScoreBasedOnLectureBeingInTheMorning();
-            //    maximumScore += totalLectureHours; 
-            //}
+            //    score += AssignScoreBasedOnScheduleStartingOnFirstPeriod(day);
+            //    maximumScore += 2;
 
-            //if (totalLectureHours < 30)
-            //{
-            //    score += AssignScoreBasedOnFreeEntryInTheLastPeriod();
-            //    maximumScore += 10; 
+            //    //score += AssignScoreBasedOnLunchBreakGaps(day);
+            //    //maximumScore += 5;
+
+            //    score += AssignScoreBasedOnGapBetweenEntries(day);
+            //    maximumScore += 2;
+
+            //    //if (totalLectureHours < 30)
+            //    //{
+            //    //    score += AssignScoreBasedOnFreeEntryInTheLastPeriod(day);
+            //    //    maximumScore += 2;
+            //    //}
+
+            //    //if (totalLectureHours < 20)
+            //    //{
+            //    //    score += AssignScoreBasedOnLectureBeingInTheMorning(day);
+            //    //}
+
+            //    score += AssignScoreBasedOnPerforation(day);
+            //    maximumScore += 2;
+
+            //    score += AssignScoreBasedOnThreeConsecutiveLabEntries(day); 
             //}
+            //// Increase maximumScore by the number of courses that have 3 lab hours 
+            //maximumScore += 2*threeLabHourCoursesCount;
+
+            //score += AssignScoreBasedOnInstructorBeingFree();
+            //maximumScore += totalHours;
+
+            //score += AssignScoreBasedOnRoomBeingFree();
+            //maximumScore += totalHours; 
+
+            ////if (totalLectureHours < 20)
+            ////{
+            ////    maximumScore += totalLectureHours;
+            ////}
+
+
+
+
+
+
+
 
             //Fitness = Math.Pow(score, 2);
             //MaximumScore = Math.Pow(maximumScore, 2);
-            //Fitness = Fitness / MaximumScore;  
+            //Fitness = Fitness / MaximumScore;
             #endregion
 
+            #region New Fitness Function
             int numOfConflicts = 0;
+
+            //PrintSchedule();
 
             foreach (var day in Days)
             {
-                if (!DoesScheduleStartOnFirstPeriodInTheMorning(day))
+                // This checks if the schedule starts first thing in the morning
+                if (!ScheduleHelper.DoesScheduleStartOnFirstPeriodInTheMorning(day))
                 {
                     numOfConflicts++;
                 }
-                if (!DoesScheduleStartOnFirstPeriodInTheAfternoon(day))
+
+                // This checks if the schedule starts first thing in the afternoon
+                if (!ScheduleHelper.DoesScheduleStartOnFirstPeriodInTheAfternoon(day))
                 {
                     numOfConflicts++;
                 }
-                if (IsTheSameCourseScheduledOnFourthAndFithPeriods(day))
+
+                // This checks if there is a free gap between periods in the morning
+                if (ScheduleHelper.IsThereAGapBetweenEntriesInTheMorning(day))
                 {
                     numOfConflicts++;
+                }
+
+                // This checks if there is a free gap between periods in the afternoon
+                if (ScheduleHelper.IsThereAGapBetweenEntriesInTheAfternoon(day))
+                {
+                    numOfConflicts++;
+                }
+
+                numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheMorning(day);
+                numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheAfternoon(day);
+
+                numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheMorning(day);
+                numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheAfternoon(day); 
+
+            }
+
+            numOfConflicts += CountConflictsBasedOnInstructorBeingFree();
+            numOfConflicts += CountConflictsBasedOnRoomBeingFree();
+
+
+            Fitness = 1.0 / (numOfConflicts + 1);
+            #endregion
+        }
+
+        private byte CountConflictsBasedOnInstructorBeingFree()
+        {
+            byte conflicts = 0;
+
+            for (int i = 0; i < GlobalConfig.NUM_OF_DAYS; i++)
+            {
+                byte day = this.Days[i].DayNumber;
+
+                for (int j = 0; j < GlobalConfig.NUM_OF_PERIODS; j++)
+                {
+                    byte period = this.Days[i].Periods[j].Period;
+
+                    var currentEntry = this.Days[i].Periods[j];
+
+                    if (currentEntry.Course != null)
+                    {
+                        bool isThereAClash = scheduleEntries.Any(s => s.Day.DayNumber == day
+                                                                    && s.Period == period
+                                                                    && s.InstructorId == currentEntry.Instructor.Id);
+                        if (isThereAClash)
+                        {
+                            conflicts++;
+                        }
+                    }
                 }
             }
+            return conflicts;
+        }
+
+        private byte CountConflictsBasedOnRoomBeingFree()
+        {
+            byte conflicts = 0;
+
+            for (int i = 0; i < GlobalConfig.NUM_OF_DAYS; i++)
+            {
+                byte day = this.Days[i].DayNumber;
+
+                for (int j = 0; j < GlobalConfig.NUM_OF_PERIODS; j++)
+                {
+                    byte period = this.Days[i].Periods[j].Period;
+
+                    var currentEntry = this.Days[i].Periods[j];
+
+                    if (currentEntry.Course != null)
+                    {
+                        bool isThereAClash = scheduleEntries.Any(s => s.Day.DayNumber == day
+                                                                    && s.Period == period
+                                                                    && s.RoomId == currentEntry.Room.Id);
+                        if (isThereAClash)
+                        {
+                            conflicts++;
+                        }
+                    }
+                }
+            }
+            return conflicts;
+        }
+        private byte AssignScoreBasedOnRoomBeingFree()
+        {
+            byte score = 0;
+
             
 
-            Fitness = 1.0 / (numOfConflicts + 1); 
+            for (int i = 0; i < GlobalConfig.NUM_OF_DAYS; i++)
+            {
+                byte day = this.Days[i].DayNumber;
+
+                for (int j = 0; j < GlobalConfig.NUM_OF_PERIODS; j++)
+                {
+                    byte period = this.Days[i].Periods[j].Period;
+
+                    var currentEntry = this.Days[i].Periods[j];
+
+                    if (currentEntry.Course != null)
+                    {
+                        bool isThereAClash = scheduleEntries.Any(s => s.Day.DayNumber == day
+                                                                    && s.Period == period
+                                                                    && s.RoomId == currentEntry.Room.Id);
+                        if (!isThereAClash)
+                        {
+                            score++;
+                        }
+                    }
+                }
+            }
+            return score;
         }
+
+        private byte AssignScoreBasedOnInstructorBeingFree()
+        {
+            byte score = 0;
+
+            for (int i = 0; i < GlobalConfig.NUM_OF_DAYS; i++)
+            {
+                byte day = this.Days[i].DayNumber;
+
+                for (int j = 0; j < GlobalConfig.NUM_OF_PERIODS; j++)
+                {
+                    byte period = this.Days[i].Periods[j].Period; 
+
+                    var currentEntry = this.Days[i].Periods[j];
+
+                    if (currentEntry.Course != null)
+                    {
+                        bool isThereAClash = scheduleEntries.Any(s => s.Day.DayNumber == day
+                                                                    && s.Period == period
+                                                                    && s.InstructorId == currentEntry.Instructor.Id);
+                        if (!isThereAClash)
+                        {
+                            score++;
+                        }
+                    }
+                }
+            }
+            return score;  
+        }
+
+        private byte AssignScoreBasedOnThreeConsecutiveLabEntries(Day day)
+        {
+            byte score = 0;
+            var labPeriods = day.Periods.Where(s => s.IsLab).ToList();
+
+            var dictionary = CreatePeriodDictionary(labPeriods);
+
+            foreach (var courseTitle in dictionary.Keys)
+            {
+                int labPeriodsCount = dictionary[courseTitle].Count;
+                if (labPeriodsCount == 3)
+                {
+                    int difference = dictionary[courseTitle][labPeriodsCount - 1] - dictionary[courseTitle][0];
+                    if (difference < labPeriodsCount)
+                    {
+                        score+=2;
+                    }
+                }
+            }
+            return score; 
+        }
+        private byte AssignScoreBasedOnGapBetweenEntries(Day day)
+        {
+            byte score = 0;
+
+            //byte morningStartIndex = 0;
+            //byte afternoonStartIndex = 4;
+
+            //var morningPeriods = day.Periods.GetRange(morningStartIndex, 4).ToList();
+            //var afternoonPeriods = day.Periods.GetRange(afternoonStartIndex, 4).ToList();
+
+            //var morningPeriodsCount = morningPeriods.Where(s => s.Course != null).ToList().Count;
+            //var afternoonPeriodsCount = afternoonPeriods.Where(s => s.Course != null).ToList().Count;
+
+            //if (morningPeriodsCount > 1)
+            //{
+            //    var first = morningPeriods.First(x => x.Course != null);
+            //    var last = morningPeriods.Last(x => x.Course != null);
+
+            //    var firstIndex = morningPeriods.IndexOf(first);
+            //    var lastIndex = morningPeriods.IndexOf(last);
+
+            //    if (!isPerforated(morningPeriods.GetRange(firstIndex, (lastIndex - firstIndex) + 1)))
+            //    {
+            //        score++;
+            //    }
+            //}
+            //else
+            //{
+            //    score++;
+            //}
+
+            //if (afternoonPeriodsCount > 1)
+            //{
+            //    var first = afternoonPeriods.First(x => x.Course != null);
+            //    var last = afternoonPeriods.Last(x => x.Course != null);
+
+            //    var firstIndex = afternoonPeriods.IndexOf(first);
+            //    var lastIndex = afternoonPeriods.IndexOf(last);
+
+            //    if (!isPerforated(afternoonPeriods.GetRange(firstIndex, (lastIndex - firstIndex) + 1)))
+            //    {
+            //        score++;
+            //    }
+            //}
+            //else
+            //{
+            //    score++;
+            //}
+
+
+            return score;
+        }
+        
         private byte AssignScoreBasedOnFreeEntryInTheLastPeriod()
         {
             byte score = 0;
@@ -791,37 +1053,33 @@ namespace SchedulingSystemClassLibrary.Models
 
             return score; 
         }
-        private byte AssignScoreBasedOnPerforation()
+        private byte AssignScoreBasedOnPerforation(Day day)
         {
             byte score = 0;
 
             byte morningStartIndex = 0;
             byte afternoonStartIndex = 4;
 
-            foreach (var day in Days)
+            
+            var morningPeriods = day.Periods.GetRange(morningStartIndex, 4).Where(s => s.Course != null).ToList();
+            var afternoonPeriods = day.Periods.GetRange(afternoonStartIndex, 4).Where(s => s.Course != null).ToList();
+
+            Dictionary<string, List<byte>> dictionary = CreatePeriodDictionary(morningPeriods);
+
+            bool perforated = IsPerforated(dictionary);
+            if (!perforated)
             {
-                var morningPeriods = day.Periods.GetRange(morningStartIndex, 4).Where(s => s.Course != null).ToList();
-                var afternoonPeriods = day.Periods.GetRange(afternoonStartIndex, 4).Where(s => s.Course != null).ToList();
-
-                int morningPeriodsCount = morningPeriods.Count(s => s.Course != null);
-                int afternoonPeriodsCount = afternoonPeriods.Count(s => s.Course != null);
-
-                Dictionary<string, List<byte>> dictionary = CreatePeriodDictionary(morningPeriods);
-
-                bool perforated = IsPerforated(dictionary);
-                if (!perforated)
-                {
-                    score++;
-                }
-
-                dictionary = CreatePeriodDictionary(afternoonPeriods);
-
-                perforated = IsPerforated(dictionary);
-                if (!perforated)
-                {
-                    score++;
-                }
+                score++;
             }
+
+            dictionary = CreatePeriodDictionary(afternoonPeriods);
+
+            perforated = IsPerforated(dictionary);
+            if (!perforated)
+            {
+                score++;
+            }
+            
 
             return score; 
         }
@@ -834,63 +1092,40 @@ namespace SchedulingSystemClassLibrary.Models
  
             return false; 
         }
-        private byte AssignScoreBasedOnLunchBreakGaps()
+        private byte AssignScoreBasedOnLunchBreakGaps(Day day)
         {
             byte score = 0;
 
-            foreach (var day in Days)
+            
+            if (day.Periods[3].Course != null && day.Periods[4].Course != null && day.Periods[3].Course.Title != day.Periods[4].Course.Title)
             {
-                if (day.Periods[3].Course != null && day.Periods[4].Course != null && day.Periods[3].Course.Title != day.Periods[4].Course.Title)
-                {
-                    score++; 
-                }
-                else if (day.Periods[3].Course == null || day.Periods[4].Course == null)
-                {
-                    score++; 
-                }
+                score++; 
             }
+            else if (day.Periods[3].Course == null || day.Periods[4].Course == null)
+            {
+                score++; 
+            }
+            
             return score; 
         }
-        private bool DoesScheduleStartOnFirstPeriodInTheMorning(Day day)
-        {
-            byte morningStartIndex = 0;
-
-            if (day.Periods[morningStartIndex].Course == null)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool DoesScheduleStartOnFirstPeriodInTheAfternoon(Day day)
-        {
-            byte afternoonStartIndex = 4;
-
-            if (day.Periods[afternoonStartIndex].Course != null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        private byte AssignScoreBasedOnScheduleStartingOnFirstPeriod()
+        
+        private byte AssignScoreBasedOnScheduleStartingOnFirstPeriod(Day day)
         {
             byte morningStartIndex = 0;
             byte afternoonStartIndex = 4;
 
             byte score = 0;
 
-            foreach (var day in Days)
+           
+            if (day.Periods[morningStartIndex].Course != null)
             {
-                if (day.Periods[morningStartIndex].Course != null)
-                {
-                    score++;  
-                }
-                if (day.Periods[afternoonStartIndex].Course != null)
-                {
-                    score++; 
-                }
+                score++;  
             }
+            if (day.Periods[afternoonStartIndex].Course != null)
+            {
+                score++; 
+            }
+            
 
             return score; 
         }
@@ -945,7 +1180,7 @@ namespace SchedulingSystemClassLibrary.Models
                 {
                     DayNumber = i,
                     DayName = GetDayName(i),
-                    Schedule = this
+                    //Schedule = this
                 };
                 for (byte j = 0; j < GlobalConfig.NUM_OF_PERIODS; j++)
                 {
@@ -1083,7 +1318,6 @@ namespace SchedulingSystemClassLibrary.Models
 
             return slots; 
         }
-
         private byte[] FindConsecutiveSlotsForChild(Schedule child, byte randDay, byte randPeriod, byte size)
         {
             byte[] slots = new byte[size];
@@ -1220,6 +1454,38 @@ namespace SchedulingSystemClassLibrary.Models
                 Console.WriteLine();
             }
             Console.WriteLine(); 
+        }
+
+        public bool IsThereAnyClash()
+        {
+
+            for (int i = 0; i < GlobalConfig.NUM_OF_DAYS; i++)
+            {
+                byte day = this.Days[i].DayNumber;
+
+                for (int j = 0; j < GlobalConfig.NUM_OF_PERIODS; j++)
+                {
+                    byte period = this.Days[i].Periods[j].Period;
+
+                    var currentEntry = this.Days[i].Periods[j];
+
+                    if (currentEntry.Course != null)
+                    {
+                        bool isThereAnInstructorClash = scheduleEntries.Any(s => s.Day.DayNumber == day
+                                                                    && s.Period == period
+                                                                    && s.InstructorId == currentEntry.Instructor.Id);
+
+                        bool isThereARoomClash = scheduleEntries.Any(s => s.Day.DayNumber == day
+                                                                    && s.Period == period
+                                                                    && s.RoomId == currentEntry.Room.Id);
+                        if (isThereAnInstructorClash || isThereARoomClash)
+                        {
+                            return true; 
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }

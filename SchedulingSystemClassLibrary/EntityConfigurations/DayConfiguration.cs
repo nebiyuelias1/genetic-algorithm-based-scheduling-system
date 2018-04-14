@@ -12,10 +12,10 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
     {
         public DayConfiguration()
         {
-            this.HasRequired(c => c.Schedule)
-                .WithMany(s => s.Days)
-                .HasForeignKey(c => c.ScheduleId)
-                .WillCascadeOnDelete(false);
+            //this.HasRequired(c => c.Schedule)
+            //    .WithMany(s => s.Days)
+            //    .HasForeignKey(c => c.ScheduleId)
+            //    .WillCascadeOnDelete(false);
         }
     }
 }

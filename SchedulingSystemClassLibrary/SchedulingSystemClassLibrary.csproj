@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
+    <Compile Include="GeneticAlgorithm\ScheduleHelper.cs" />
     <Compile Include="Migrations\201804031823176_AddBuildingsTable.cs" />
     <Compile Include="Migrations\201804031823176_AddBuildingsTable.Designer.cs">
       <DependentUpon>201804031823176_AddBuildingsTable.cs</DependentUpon>
@@ -68,6 +70,26 @@
     <Compile Include="Migrations\201804041242182_ModifyRoomConfiguration1.cs" />
     <Compile Include="Migrations\201804041242182_ModifyRoomConfiguration1.Designer.cs">
       <DependentUpon>201804041242182_ModifyRoomConfiguration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804070649402_ModifyExistingModel.cs" />
+    <Compile Include="Migrations\201804070649402_ModifyExistingModel.Designer.cs">
+      <DependentUpon>201804070649402_ModifyExistingModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804101233006_ModifyDaysTable.cs" />
+    <Compile Include="Migrations\201804101233006_ModifyDaysTable.Designer.cs">
+      <DependentUpon>201804101233006_ModifyDaysTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804101259491_ModifyScheduleEntriesTable.cs" />
+    <Compile Include="Migrations\201804101259491_ModifyScheduleEntriesTable.Designer.cs">
+      <DependentUpon>201804101259491_ModifyScheduleEntriesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804101546380_ModifyScheduleEntriesTableToAllowNulls.cs" />
+    <Compile Include="Migrations\201804101546380_ModifyScheduleEntriesTableToAllowNulls.Designer.cs">
+      <DependentUpon>201804101546380_ModifyScheduleEntriesTableToAllowNulls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804121909588_ModifySchedulesTable.cs" />
+    <Compile Include="Migrations\201804121909588_ModifySchedulesTable.Designer.cs">
+      <DependentUpon>201804121909588_ModifySchedulesTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Building.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
@@ -218,6 +240,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804041242182_ModifyRoomConfiguration1.resx">
       <DependentUpon>201804041242182_ModifyRoomConfiguration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804070649402_ModifyExistingModel.resx">
+      <DependentUpon>201804070649402_ModifyExistingModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101233006_ModifyDaysTable.resx">
+      <DependentUpon>201804101233006_ModifyDaysTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101259491_ModifyScheduleEntriesTable.resx">
+      <DependentUpon>201804101259491_ModifyScheduleEntriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101546380_ModifyScheduleEntriesTableToAllowNulls.resx">
+      <DependentUpon>201804101546380_ModifyScheduleEntriesTableToAllowNulls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804121909588_ModifySchedulesTable.resx">
+      <DependentUpon>201804121909588_ModifySchedulesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

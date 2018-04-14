@@ -13,7 +13,8 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
     {
         public ScheduleConfiguration()
         {
-
+            this.Ignore(s => s.MaximumScore)
+                .Ignore(s => s.scheduleEntries); 
         }
     }
 }

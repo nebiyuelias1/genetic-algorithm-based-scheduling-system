@@ -474,6 +474,12 @@
     <Content Include="Scripts\jquery-1.7.js" />
     <Content Include="Scripts\jquery-1.7.min.js" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SchedulingSystemClassLibrary\SchedulingSystemClassLibrary.csproj">
+      <Project>{7E7E5DDB-D616-4A99-BC39-3B44FC69F977}</Project>
+      <Name>SchedulingSystemClassLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
