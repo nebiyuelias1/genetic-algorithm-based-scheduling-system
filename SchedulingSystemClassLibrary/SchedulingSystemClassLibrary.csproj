@@ -49,6 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\BuildingDto.cs" />
+    <Compile Include="Dtos\DepartmentDto.cs" />
+    <Compile Include="Dtos\RoomDto.cs" />
+    <Compile Include="Dtos\SectionDto.cs" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
     <Compile Include="GeneticAlgorithm\ScheduleHelper.cs" />
     <Compile Include="Migrations\201804031823176_AddBuildingsTable.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\InstructorPreference.cs" />
     <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\RoomAssignmentInfo.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\ScheduleEntry.cs" />
     <Compile Include="Models\Section.cs" />
@@ -261,6 +266,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

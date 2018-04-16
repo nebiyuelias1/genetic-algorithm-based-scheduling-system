@@ -1,4 +1,6 @@
-﻿using SchedulingSystemClassLibrary;
+﻿using AutoMapper;
+using SchedulingSystemClassLibrary;
+using SchedulingSystemClassLibrary.Dtos;
 using SchedulingSystemClassLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -22,30 +24,44 @@ namespace SchedulingSystemWeb.Controllers.Api
         // GET /api/sections 
         public IHttpActionResult GetSections()
         {
-            var rooms = _context.Rooms.ToList();
+            var rooms = _context.Rooms.Include(r => r.Building).ToList();
             rooms.Insert(0, new Room {
                 IsLectureRoom = true, 
                 IsLabRoom = true
             });
+
+            var roomDtos = rooms.Select(Mapper.Map<Room, RoomDto>);
+
             var sections = _context.Sections
                             .Include(s => s.Department)
-                            .Include(s => s.AssignedLectureRoom)
-                            .Include(s => s.AssignedLabRoom)
-                            .AsEnumerable()
-                            .Select(s => new
-                            {
-                                s.Id, 
-                                s.Name, 
-                                s.EntranceYear, 
-                                s.StudentCount, 
-                                Department = new { s.Department.Id, s.Department.Name},
-                                AssignedLectureRoom = s.AssignedLectureRoom,
-                                AssignedLabRoom = s.AssignedLabRoom,
-                                Rooms = rooms
-                            })
                             .ToList();
+            var sectionDtos = sections.Select(Mapper.Map<Section, SectionDto>);
+                            //.Select(s => new
+                            //{
+                            //    s.Id, 
+                            //    s.Name, 
+                            //    s.EntranceYear, 
+                            //    s.StudentCount, 
+                            //    Department = Mapper.Map<Department, DepartmentDto>(s.Department),
+                            //    AssignedLectureRoomId =  s.AssignedLectureRoomId == null ? 0 : s.AssignedLectureRoomId,
+                            //    AssignedLabRoomId = s.AssignedLabRoom.Id == null ? 0 : s.AssignedLabRoomId,
+                            //    Rooms = roomDtos
+                            //})
+                            //.ToList();
 
-            return Ok(sections);
+            return Ok(sectionDtos.Select(s => new
+            {
+                Id = s.Id,
+                Name = s.Name, 
+                EntranceYear = s.EntranceYear, 
+                StudentCount = s.StudentCount, 
+                Department = s.Department, 
+                DepartmentId = s.DepartmentId,
+                AssignedLectureRoomId = s.AssignedLectureRoomId,
+                AssignedLabRoomId = s.AssignedLabRoomId,
+                Rooms = roomDtos
+
+            }));
         }
 
         // DELETE /api/sections/1 
@@ -61,6 +77,24 @@ namespace SchedulingSystemWeb.Controllers.Api
             _context.SaveChanges();
         }
 
+        // POST /api/sections/assign 
+        [Route("api/sections/assign")]
+        [HttpPost]
+        public void AssignRoom(RoomAssignmentInfo info)
+        {
+            var sectionInDb = _context.Sections.SingleOrDefault(s => s.Id == info.SectionId);
+
+            if (info.LectureRoomId != 0)
+            {
+                sectionInDb.AssignedLectureRoomId = info.LectureRoomId; 
+            }
+
+            if (info.LabRoomId != 0)
+            {
+                sectionInDb.AssignedLabRoomId = info.LabRoomId; 
+            }
+            _context.SaveChanges();
+        }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
