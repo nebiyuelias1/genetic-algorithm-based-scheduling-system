@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchedulingSystemClassLibrary.Models
+namespace SchedulingSystemClassLibrary.Dtos
 {
-    public class CourseOffering
+    public class CourseOfferingDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Section Section { get; set; }
+        public SectionDto Section { get; set; }
         public int SectionId { get; set; }
-        public Instructor Instructor { get; set; }
+        public InstructorDto Instructor { get; set; }
         public int? InstructorId { get; set; }
-        public Course Course { get; set; }
+        public CourseDto Course { get; set; }
         public int CourseId { get; set; }
         public int Year { get; set; }
         public int Semester { get; set; }

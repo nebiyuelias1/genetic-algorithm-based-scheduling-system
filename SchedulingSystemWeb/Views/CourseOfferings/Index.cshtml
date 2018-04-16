@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "New")
+</p>
+<table id="courseofferings" class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Course Offering Name</th>
+            <th>Section</th>
+            <th>Instructor</th>
+            <th>Course</th>
+            <th>Year</th>
+            <th>Semester</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+
+    </tbody>
+</table>
+
+
+@section scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#courseofferings').DataTable({
+                ajax: {
+                    url: "/api/courseofferings",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, courseOffering) {
+                            return '<a href="CourseOfferings/Assign/' + courseOffering.id + '">' + courseOffering.name + '</a>';
+                        }
+                    },
+                    {
+                        data: "section.name"
+                    },
+                    {
+                        data: "instructor.firstName"
+                    },
+                    {
+                        data: "course.title"
+                    },
+                    {
+                        data: "year"
+                    },
+                    {
+                        data: "semester"
+                    }
+                ]
+            });
+        });
+    </script>    
+}

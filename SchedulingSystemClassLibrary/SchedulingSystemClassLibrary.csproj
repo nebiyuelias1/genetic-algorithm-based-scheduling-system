@@ -50,7 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\BuildingDto.cs" />
+    <Compile Include="Dtos\CourseDto.cs" />
+    <Compile Include="Dtos\CourseOfferingDto.cs" />
     <Compile Include="Dtos\DepartmentDto.cs" />
+    <Compile Include="Dtos\InstructorDto.cs" />
     <Compile Include="Dtos\RoomDto.cs" />
     <Compile Include="Dtos\SectionDto.cs" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
@@ -180,6 +183,7 @@
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchedulingContext.cs" />
+    <Compile Include="ViewModels\CourseOfferingsFormViewModel.cs" />
     <Compile Include="ViewModels\CoursesFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
     <Compile Include="ViewModels\RoomsFormViewModel.cs" />

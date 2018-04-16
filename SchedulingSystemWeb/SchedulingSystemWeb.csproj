@@ -184,12 +184,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\BuildingsController.cs" />
+    <Compile Include="Controllers\Api\CourseOfferingsController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
     <Compile Include="Controllers\Api\CurriculumsController.cs" />
     <Compile Include="Controllers\Api\FacultiesController.cs" />
     <Compile Include="Controllers\Api\RoomsController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
+    <Compile Include="Controllers\CourseOfferingsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\CurriculumsController.cs" />
     <Compile Include="Controllers\FacultiesController.cs" />
@@ -448,6 +450,8 @@
     <Content Include="Views\Sections\Assign.cshtml" />
     <Content Include="Views\Buildings\Index.cshtml" />
     <Content Include="Views\Buildings\BuildingForm.cshtml" />
+    <Content Include="Views\CourseOfferings\Index.cshtml" />
+    <Content Include="Views\CourseOfferings\Assign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
