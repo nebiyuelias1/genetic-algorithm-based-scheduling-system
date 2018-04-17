@@ -52,9 +52,12 @@
     <Compile Include="Dtos\BuildingDto.cs" />
     <Compile Include="Dtos\CourseDto.cs" />
     <Compile Include="Dtos\CourseOfferingDto.cs" />
+    <Compile Include="Dtos\DayDto.cs" />
     <Compile Include="Dtos\DepartmentDto.cs" />
     <Compile Include="Dtos\InstructorDto.cs" />
     <Compile Include="Dtos\RoomDto.cs" />
+    <Compile Include="Dtos\ScheduleDto.cs" />
+    <Compile Include="Dtos\ScheduleEntryDto.cs" />
     <Compile Include="Dtos\SectionDto.cs" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
     <Compile Include="GeneticAlgorithm\ScheduleHelper.cs" />

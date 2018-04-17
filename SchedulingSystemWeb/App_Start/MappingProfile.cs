@@ -20,7 +20,10 @@ namespace SchedulingSystemWeb.App_Start
             Mapper.CreateMap<Instructor, InstructorDto>();
             Mapper.CreateMap<Course, CourseDto>();
             Mapper.CreateMap<CourseOffering, CourseOfferingDto>();
-            Mapper.CreateMap<CourseOffering, CourseOfferingsFormViewModel>(); 
+            Mapper.CreateMap<CourseOffering, CourseOfferingsFormViewModel>();
+            Mapper.CreateMap<Day, DayDto>();
+            Mapper.CreateMap<ScheduleEntry, ScheduleEntryDto>();
+            Mapper.CreateMap<Schedule, ScheduleDto>();
         }
     }
 }

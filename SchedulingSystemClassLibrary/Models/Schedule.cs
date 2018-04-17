@@ -10,12 +10,11 @@ namespace SchedulingSystemClassLibrary.Models
 {
     public class Schedule
     {
-        public int Id { get; set; }
-
         private SchedulingContext _context;
+        public int Id { get; set; }
         public double Fitness { get; set; }
         public double MaximumScore { get; set; }
-        public virtual Section Section { get; set; }
+        public Section Section { get; set; }
         public int SectionId { get; set; }
         public virtual List<Day> Days { get; set; }
 

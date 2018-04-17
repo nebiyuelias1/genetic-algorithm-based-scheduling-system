@@ -77,7 +77,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
         }
         public void IntializePopulation()
         {
-            var section = _context.Sections.Include(s => s.CourseOfferings)
+            var section = _context.Sections.Include(s => s.CourseOfferings.Select(c => c.Course))
                                             .Include(s => s.AssignedLectureRoom)
                                             .Include(s => s.AssignedLabRoom)
                                             .SingleOrDefault(s => s.Id == 4);
