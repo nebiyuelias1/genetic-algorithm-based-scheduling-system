@@ -29,6 +29,12 @@ namespace SchedulingSystemWeb.Controllers.Api
                 .Include(s => s.Days
                 .Select(d => d.Periods
                 .Select(p => p.Course)))
+                .Include(s => s.Days
+                .Select(d => d.Periods
+                .Select(p => p.Instructor)))
+                .Include(s => s.Days
+                .Select(d => d.Periods
+                .Select(p => p.Room)))
                 .ToList()
                 .Select(Mapper.Map<Schedule, ScheduleDto>); 
 

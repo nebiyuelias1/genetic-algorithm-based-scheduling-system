@@ -101,6 +101,14 @@
     <Compile Include="Migrations\201804121909588_ModifySchedulesTable.Designer.cs">
       <DependentUpon>201804121909588_ModifySchedulesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804171315005_AddColorPropertyToCoursesTable.cs" />
+    <Compile Include="Migrations\201804171315005_AddColorPropertyToCoursesTable.Designer.cs">
+      <DependentUpon>201804171315005_AddColorPropertyToCoursesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.cs" />
+    <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.Designer.cs">
+      <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Building.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
     <Compile Include="EntityConfigurations\DayConfiguration.cs" />
@@ -267,6 +275,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804121909588_ModifySchedulesTable.resx">
       <DependentUpon>201804121909588_ModifySchedulesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804171315005_AddColorPropertyToCoursesTable.resx">
+      <DependentUpon>201804171315005_AddColorPropertyToCoursesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.resx">
+      <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

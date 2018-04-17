@@ -45,6 +45,13 @@ namespace SchedulingSystemClassLibrary.ViewModels
         [Display(Name = "Curriculum")]
         public int CurriculumId { get; set; }
 
+        [Required]
+        [Display(Name = "Pick a Color")]
+        public int Color { get; set; }
+
+        [Required]
+        public string Acronym { get; set; }
+
         public IList<Curriculum> Curriculums { get; set; }
 
         public CoursesFormViewModel()
@@ -63,7 +70,9 @@ namespace SchedulingSystemClassLibrary.ViewModels
             this.Laboratory = course.Laboratory;
             this.Lecture = course.Lecture;
             this.Title = course.Title;
-            this.Tutor = course.Tutor; 
+            this.Tutor = course.Tutor;
+            this.Color = course.Color;
+            this.Acronym = course.Acronym;
         }
     }
 }

@@ -72,7 +72,8 @@ namespace SchedulingSystemWeb.Controllers
                 courseInDb.Lecture = course.Lecture;
                 courseInDb.Title = course.Title;
                 courseInDb.Tutor = course.Tutor;
-
+                courseInDb.Color = course.Color;
+                courseInDb.Acronym = course.Acronym;
 
             }
 

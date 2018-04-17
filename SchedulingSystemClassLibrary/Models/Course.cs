@@ -44,5 +44,12 @@ namespace SchedulingSystemClassLibrary.Models
         [Required]
         [Display(Name = "Curriculum")]
         public int CurriculumId { get; set; }
+
+        [Required]
+        [Display(Name = "Pick a Color")]
+        public int Color { get; set; }
+
+        [Required]
+        public string Acronym { get; set; }
     }
 }
