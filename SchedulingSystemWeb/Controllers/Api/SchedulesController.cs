@@ -24,6 +24,7 @@ namespace SchedulingSystemWeb.Controllers.Api
 
         public IHttpActionResult GetSchedules()
         {
+            
             var schedules = _context.Schedules
                 .Include(s => s.Section)
                 .Include(s => s.Days

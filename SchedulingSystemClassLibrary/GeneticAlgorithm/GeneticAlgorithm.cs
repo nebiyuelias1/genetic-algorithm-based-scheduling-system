@@ -22,7 +22,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             Random rand = new Random(); 
 
             IntializePopulation();
-
+            
             for (int j = 0; j < 40; j++)
             {
                 //for (int i = 0; i < Population.Count; i++)
@@ -141,13 +141,10 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 var s = new Schedule(section, dictionary, scheduleEntries);
 
                 s.CalculateFitness();
-                
-                
+
                 //Console.WriteLine("Fitness: {0}", s.Fitness);
                 //s.PrintSchedule();
 
-
-                //Console.WriteLine(s.Fitness);
                 Population.Add(s);
             }
         }

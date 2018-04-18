@@ -26,10 +26,10 @@ namespace SchedulingSystemClassLibrary.Models
 
             if (Days == null)
             {
-                Days = new List<Day>(GlobalConfig.NUM_OF_DAYS);
+                //Days = new List<Day>(GlobalConfig.NUM_OF_DAYS);
             }
 
-            InitializeSchedule();
+            //InitializeSchedule();
         }
         public Schedule(Section section, Dictionary<string, byte[]> dictionary, IList<ScheduleEntry> scheduleEntries)
         {
@@ -809,11 +809,22 @@ namespace SchedulingSystemClassLibrary.Models
                     numOfConflicts++;
                 }
 
+                // This checks if the lecture entries spans more than 2 periods
+                if (ScheduleHelper.AreThereMoreThanTwoConsecutiveLectureEntriesInTheMorning(day))
+                {
+                    numOfConflicts++;
+                }
+                if (ScheduleHelper.AreThereMoreThanTwoConsecutiveLectureEntriesInTheAfternoon(day))
+                {
+                    numOfConflicts++;
+                }
+
                 numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheMorning(day);
                 numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheAfternoon(day);
 
                 numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheMorning(day);
                 numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheAfternoon(day); 
+
 
             }
 

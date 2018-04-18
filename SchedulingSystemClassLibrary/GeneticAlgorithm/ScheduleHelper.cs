@@ -209,6 +209,60 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             return conflicts;
         }
 
+        public static bool AreThereMoreThanTwoConsecutiveLectureEntriesInTheMorning(Day day)
+        {
+           
+            var lecturePeriods = day.Periods.GetRange(MORNING_START_INDEX, 4).Where(s => s.IsLecture).ToList();
+
+            if (lecturePeriods.Count > 2)
+            {
+                var dictionary = CreatePeriodDictionary(lecturePeriods);
+
+                foreach (var courseTitle in dictionary.Keys)
+                {
+                    var lectureCourse = day.Periods.First(s => s.Course != null && s.Course.Title == courseTitle);
+
+                    if (lectureCourse.Course.Lecture > 2)
+                    {
+                        int lecturePeriodsCount = dictionary[courseTitle].Count;
+
+                        if(lecturePeriodsCount > 2)
+                        {
+                            return true; 
+                        }
+                    }
+                }
+            }
+            return false; 
+        }
+
+        public static bool AreThereMoreThanTwoConsecutiveLectureEntriesInTheAfternoon(Day day)
+        {
+
+            var lecturePeriods = day.Periods.GetRange(AFTERNOON_START_INDEX, 4).Where(s => s.IsLecture).ToList();
+
+            if (lecturePeriods.Count > 2)
+            {
+                var dictionary = CreatePeriodDictionary(lecturePeriods);
+
+                foreach (var courseTitle in dictionary.Keys)
+                {
+                    var lectureCourse = day.Periods.First(s => s.Course != null && s.Course.Title == courseTitle);
+
+                    if (lectureCourse.Course.Lecture > 2)
+                    {
+                        int lecturePeriodsCount = dictionary[courseTitle].Count;
+
+                        if (lecturePeriodsCount > 2)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
         private static Dictionary<string, List<byte>> CreatePeriodDictionary(List<ScheduleEntry> periods)
         {
             Dictionary<string, List<byte>> dictionary = new Dictionary<string, List<byte>>();
