@@ -22,14 +22,18 @@ namespace SchedulingSystemClassLibrary.Models
 
         public Schedule()
         {
+
+        }
+        public Schedule(bool isAChild)
+        {
             _context = new SchedulingContext();
 
             if (Days == null)
             {
-                //Days = new List<Day>(GlobalConfig.NUM_OF_DAYS);
+                Days = new List<Day>(GlobalConfig.NUM_OF_DAYS);
             }
 
-            //InitializeSchedule();
+            InitializeSchedule();
         }
         public Schedule(Section section, Dictionary<string, byte[]> dictionary, IList<ScheduleEntry> scheduleEntries)
         {
@@ -668,7 +672,7 @@ namespace SchedulingSystemClassLibrary.Models
             //return child;  
             #endregion
 
-            var child = new Schedule()
+            var child = new Schedule(true)
             {
                 Section = this.Section, 
                 scheduleEntries = this.scheduleEntries

@@ -23,12 +23,15 @@
                 //        duration: { days: 3 }
                 //    }
                 //},
+                //defaultDate: '2018-03-12',
                 allDaySlot: true, // Determines if the “all-day” slot is displayed at the top of the calendar
                 allDayText: 'my-day', // The text titling the “all-day” slot at the top of the calendar.
                 minTime: "02:30:00",
                 maxTime: "11:30:00",
+                slotDuration: "00:50:00",
                 weekNumbers: false, //Determines if week numbers should be displayed on the calendar
                 contentHeight: 400,
+                displayEventEnd: true, // Whether or not to display an event’s end time
                 header: {
                     left:   'title',
                     center: 'today',
@@ -36,8 +39,71 @@
                 },
                 weekends: false, // will hide Saturdays and Sundays
                 dayClick: function() {
-                alert('a day has been clicked!');
-            }
+                    alert('a day has been clicked!');
+                },
+                events: [
+                    {
+                        title: 'All Day Event',
+                        start: '2018-04-19',
+                        backgroundColor: "#ff0000"
+                    },
+                    {
+                        title: 'Long Event',
+                        start: '2018-04-19',
+                        end: '2018-04-21'
+                    },
+                    {
+                        id: 999,
+                        title: 'C++',
+                        start: moment('2018-04-19 02:30:00'),
+                        end: moment('2018-04-19 03:20:00'),
+                        color: '#257e4a',
+                        //backgroundColor: "#ff0000",
+                        durationEditable: true
+                        //rendering: 'inverse-background'
+                    },
+                    {
+                        id: 999,
+                        title: 'Java',
+                        start: moment('2018-04-19 03:25:00'),
+                        end: moment('2018-04-19 04:15:00')
+                    },
+                    {
+                        title: 'Conference',
+                        start: '2018-03-11',
+                        end: '2018-03-13'
+                    },
+                    {
+                        title: 'Meeting',
+                        start: '2018-03-12T10:30:00',
+                        end: '2018-03-12T12:30:00'
+                    },
+                    {
+                        title: 'Lunch',
+                        start: '2018-03-12T12:00:00'
+                    },
+                    {
+                        title: 'Meeting',
+                        start: '2018-03-12T14:30:00'
+                    },
+                    {
+                        title: 'Happy Hour',
+                        start: '2018-03-12T17:30:00'
+                    },
+                    {
+                        title: 'Dinner',
+                        start: '2018-03-12T20:00:00'
+                    },
+                    {
+                        title: 'Birthday Party',
+                        start: '2018-03-13T07:00:00'
+                    },
+                    {
+                        title: 'Click for Google',
+                        url: 'http://google.com/',
+                        start: '2018-03-28'
+                    }
+                ]
             })
         });
     </script>    

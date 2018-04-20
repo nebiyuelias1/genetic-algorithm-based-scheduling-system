@@ -43,7 +43,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 //    child.CalculateFitness();
                 //    Population[i] = child;
                 //}
-
+                RouletteWheelSelection();
                 var matingPool = NaturalSelection();
                 CreateNextGeneration(matingPool);
             }
@@ -147,6 +147,35 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
 
                 Population.Add(s);
             }
+        }
+        public void RouletteWheelSelection()
+        {
+            var population = new List<Schedule>(GlobalConfig.POPULATION_SIZE);
+            var fitnessSum = Population.Sum(s => s.Fitness);
+
+            Random rand = new Random();
+
+            Population = Population.OrderByDescending(s => s.Fitness).ToList();
+
+            for (int i = 0; i < GlobalConfig.POPULATION_SIZE; i++)
+            {
+                var r = rand.NextDouble() * fitnessSum;
+
+                
+                double partialSum = 0.0; 
+                for (int j = 0; j < Population.Count; j++)
+                {
+                    partialSum += Population[j].Fitness; 
+
+                    if (partialSum >= r)
+                    {
+                        population.Add(Population[j]);
+                        break; 
+                    }
+                }
+            }
+
+            Population = population; 
         }
         public List<Schedule> NaturalSelection()
         {
