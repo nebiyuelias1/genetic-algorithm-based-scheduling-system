@@ -59,6 +59,7 @@
     <Compile Include="Dtos\ScheduleDto.cs" />
     <Compile Include="Dtos\ScheduleEntryDto.cs" />
     <Compile Include="Dtos\SectionDto.cs" />
+    <Compile Include="EntityConfigurations\InstructorPreferenceConfiguration.cs" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
     <Compile Include="GeneticAlgorithm\ScheduleHelper.cs" />
     <Compile Include="Migrations\201804031823176_AddBuildingsTable.cs" />
@@ -108,6 +109,14 @@
     <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.cs" />
     <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.Designer.cs">
       <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804221133205_ModifyInstructorsTable.cs" />
+    <Compile Include="Migrations\201804221133205_ModifyInstructorsTable.Designer.cs">
+      <DependentUpon>201804221133205_ModifyInstructorsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.cs" />
+    <Compile Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.Designer.cs">
+      <DependentUpon>201804221158549_AddInstructorPreferenceConfiguration.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Building.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
@@ -281,6 +290,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.resx">
       <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804221133205_ModifyInstructorsTable.resx">
+      <DependentUpon>201804221133205_ModifyInstructorsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.resx">
+      <DependentUpon>201804221158549_AddInstructorPreferenceConfiguration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

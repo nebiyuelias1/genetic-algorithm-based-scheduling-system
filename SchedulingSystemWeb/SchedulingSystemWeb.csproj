@@ -188,6 +188,7 @@
     <Compile Include="Controllers\Api\CoursesController.cs" />
     <Compile Include="Controllers\Api\CurriculumsController.cs" />
     <Compile Include="Controllers\Api\FacultiesController.cs" />
+    <Compile Include="Controllers\Api\InstructorsController.cs" />
     <Compile Include="Controllers\Api\RoomsController.cs" />
     <Compile Include="Controllers\Api\SchedulesController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />

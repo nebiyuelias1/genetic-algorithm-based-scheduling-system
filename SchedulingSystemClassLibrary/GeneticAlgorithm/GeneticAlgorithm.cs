@@ -22,8 +22,8 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             Random rand = new Random(); 
 
             IntializePopulation();
-            
-            for (int j = 0; j < 40; j++)
+
+            for (int j = 0; j < 100; j++)
             {
                 //for (int i = 0; i < Population.Count; i++)
                 //{
@@ -43,9 +43,26 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 //    child.CalculateFitness();
                 //    Population[i] = child;
                 //}
-                RouletteWheelSelection();
+                Console.WriteLine($"Generation - {j+1}");
+                var noClashCount = 0;
+                Population.ForEach(s => {
+
+                    if (!s.IsThereAnyClash())
+                    {
+                        noClashCount++; 
+                    }
+                });
+                Console.WriteLine($"No Clash count - {noClashCount}");
+
+                int distinctElementsCount = Population.GroupBy(s => s.Fitness).Count();
+                Console.WriteLine($"from {distinctElementsCount} distinct elements");
+
+                Console.WriteLine($"Max Fitness - {Population.Max(s => s.Fitness)} Min Fitness - {Population.Min(s => s.Fitness)}");
+                //CreateNextGeneration();
                 var matingPool = NaturalSelection();
                 CreateNextGeneration(matingPool);
+
+
             }
 
 
@@ -59,6 +76,46 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             _context.Schedules.Add(best);
             _context.SaveChanges();
 
+        }
+
+        private void CreateNextGeneration()
+        {
+            var population = new List<Schedule>(GlobalConfig.POPULATION_SIZE);
+            var fitnessSum = Population.Sum(s => s.Fitness);
+
+            Random rand = new Random();
+
+            Population = Population.OrderByDescending(s => s.Fitness).ToList();
+
+            for (int i = 0; i < GlobalConfig.POPULATION_SIZE; i++)
+            {
+                //var parentA = RouletteWheelSelection(fitnessSum);
+                var parentA = TournamentSelection();
+
+                //while (parentA == null)
+                //{
+                //    parentA = RouletteWheelSelection(fitnessSum);
+                //}
+
+                //var parentB = RouletteWheelSelection(fitnessSum);
+                var parentB = TournamentSelection();
+
+                //while (parentB == null)
+                //{
+                //    parentB = RouletteWheelSelection(fitnessSum);
+                //}
+
+                var child = parentA.Crossover(parentB);
+                if (rand.NextDouble() <= GlobalConfig.MUTATION_RATE)
+                {
+                    child.Mutate();
+                }
+
+                child.CalculateFitness();
+                population.Add(child); 
+            }
+
+            Population = population;
         }
 
         public Schedule PickRandomParent()
@@ -78,7 +135,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
         public void IntializePopulation()
         {
             var section = _context.Sections.Include(s => s.CourseOfferings.Select(c => c.Course))
-                                            .Include(s => s.CourseOfferings.Select(c => c.Instructor))
+                                            .Include(s => s.CourseOfferings.Select(c => c.Instructor).Select(c => c.InstructorPreference))
                                             .Include(s => s.AssignedLectureRoom)
                                             .Include(s => s.AssignedLabRoom)
                                             .SingleOrDefault(s => s.Id == 4);
@@ -96,7 +153,6 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
 
             var randomizedCourseOffering = section.CourseOfferings
                                 .OrderByDescending(c => c.Course.Laboratory);
-            //.ThenByDescending(c => c.Course.Tutor);
 
             int mwfPeriodsCount = 0;
             int tthPeriodsCount = 0; 
@@ -148,34 +204,40 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 Population.Add(s);
             }
         }
-        public void RouletteWheelSelection()
+        public Schedule RouletteWheelSelection(double fitnessSum)
         {
-            var population = new List<Schedule>(GlobalConfig.POPULATION_SIZE);
-            var fitnessSum = Population.Sum(s => s.Fitness);
+            Random rand = new Random(); 
 
-            Random rand = new Random();
+            var r = rand.NextDouble() * fitnessSum;
 
-            Population = Population.OrderByDescending(s => s.Fitness).ToList();
-
-            for (int i = 0; i < GlobalConfig.POPULATION_SIZE; i++)
+            double partialSum = 0.0; 
+            for (int j = 0; j < GlobalConfig.POPULATION_SIZE; j++)
             {
-                var r = rand.NextDouble() * fitnessSum;
+                partialSum += Population[j].Fitness; 
 
-                
-                double partialSum = 0.0; 
-                for (int j = 0; j < Population.Count; j++)
+                if (partialSum >= r)
                 {
-                    partialSum += Population[j].Fitness; 
-
-                    if (partialSum >= r)
-                    {
-                        population.Add(Population[j]);
-                        break; 
-                    }
+                    return Population[j];
                 }
             }
 
-            Population = population; 
+            return null; 
+        }
+
+        public Schedule TournamentSelection()
+        {
+            Random rand = new Random();
+
+            var schedules = new List<Schedule>(GlobalConfig.TOURNAMENT_SIZE); 
+
+            for (int i = 0; i < GlobalConfig.TOURNAMENT_SIZE; i++)
+            {
+                int randIndex = rand.Next(GlobalConfig.POPULATION_SIZE);
+
+                schedules.Add(Population[randIndex]);
+            }
+
+            return schedules.OrderByDescending(s => s.Fitness).First(); 
         }
         public List<Schedule> NaturalSelection()
         {
@@ -211,7 +273,10 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 //parentB.PrintSchedule();
 
                 var child = parentA.Crossover(parentB);
-                child.Mutate();
+                if (rand.NextDouble() <= GlobalConfig.MUTATION_RATE)
+                {
+                    child.Mutate();
+                }
                 child.CalculateFitness();
                 //Console.WriteLine("Child: {0}", child.Fitness);
                 //child.PrintSchedule();

@@ -302,5 +302,26 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             return isPerforated;
         }
 
+        public static byte CountInstructorPreferenceConflictsForThisDay(Day day)
+        {
+            byte conflicts = 0; 
+
+            foreach (var period in day.Periods)
+            {
+                var instructor = period.Instructor;
+                if (instructor != null)
+                {
+                    if (instructor.InstructorPreference != null && !instructor.InstructorPreference.Preference[day.DayNumber])
+                    {
+                        conflicts++;
+                    }
+                }
+            }
+
+            return conflicts; 
+        }
+
+
+        
     }
 }

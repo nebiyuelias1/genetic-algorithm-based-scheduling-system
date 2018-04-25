@@ -246,9 +246,23 @@ namespace SchedulingSystemClassLibrary.Models
         public void Mutate()
         {
             // TODO - Implement this mutate method
+            Random rand = new Random();
+            switch (rand.Next(3))
+            {
+                case 0:
+                    //SwapMorningAndAfternoonPeriods();
+                    break;
+                case 1:
+                    //ShiftToEarlyPeriods();
+                    break;
+                case 2:
+                    //SwapPeriods();
+                    break;
+            }
             SwapMorningAndAfternoonPeriods();
             ShiftToEarlyPeriods();
-            
+            //SwapPeriods();
+
             //Random rand = new Random(); 
 
             //    int randDay = rand.Next(GlobalConfig.NUM_OF_DAYS);
@@ -278,24 +292,103 @@ namespace SchedulingSystemClassLibrary.Models
             //    }
         }
 
+        private void SwapPeriods()
+        {
+            var mwfDays = new byte[] { 0, 2, 4 };
+            var tthDays = new byte[] { 1, 3 };
+
+            Random rand = new Random();
+
+            var r = rand.Next(2);
+            byte randDay;
+            switch (r)
+            {
+                
+                
+                case 0:
+                    randDay = mwfDays[rand.Next(3)];
+                    int randPeriod = rand.Next(GlobalConfig.NUM_OF_PERIODS);
+
+                    int secondRandDay = mwfDays[rand.Next(3)];
+                    int secondRandPeriod = rand.Next(GlobalConfig.NUM_OF_PERIODS);
+
+                    var temp = new ScheduleEntry
+                    {
+                        Course = Days[randDay].Periods[randPeriod].Course,
+                        Instructor = Days[randDay].Periods[randPeriod].Instructor,
+                        Room = Days[randDay].Periods[randPeriod].Room ,
+                        IsLecture = Days[randDay].Periods[randPeriod].IsLecture,
+                        IsLab = Days[randDay].Periods[randPeriod].IsLab,
+                        IsTutor = Days[randDay].Periods[randPeriod].IsTutor,
+                        Period = Days[randDay].Periods[randPeriod].Period
+                    };
+
+                    Days[randDay].Periods[randPeriod].Course = Days[secondRandDay].Periods[secondRandPeriod].Course;
+                    Days[randDay].Periods[randPeriod].Instructor = Days[secondRandDay].Periods[secondRandPeriod].Instructor;
+                    Days[randDay].Periods[randPeriod].Room = Days[secondRandDay].Periods[secondRandPeriod].Room;
+                    Days[randDay].Periods[randPeriod].IsLecture = Days[secondRandDay].Periods[secondRandPeriod].IsLecture;
+                    Days[randDay].Periods[randPeriod].IsLab = Days[secondRandDay].Periods[secondRandPeriod].IsLab;
+                    Days[randDay].Periods[randPeriod].IsTutor = Days[secondRandDay].Periods[secondRandPeriod].IsTutor;
+
+                    Days[secondRandDay].Periods[secondRandPeriod].Course = temp.Course;
+                    Days[secondRandDay].Periods[secondRandPeriod].Instructor = temp.Instructor;
+                    Days[secondRandDay].Periods[secondRandPeriod].Room = temp.Room;
+                    Days[secondRandDay].Periods[secondRandPeriod].IsLecture = temp.IsLecture;
+                    Days[secondRandDay].Periods[secondRandPeriod].IsLab = temp.IsLab;
+                    Days[secondRandDay].Periods[secondRandPeriod].IsTutor = temp.IsTutor;
+                    break;
+                case 1:
+                    randDay = tthDays[rand.Next(2)];
+
+                    randPeriod = rand.Next(GlobalConfig.NUM_OF_PERIODS);
+
+                    secondRandDay = tthDays[rand.Next(2)];
+                    secondRandPeriod = rand.Next(GlobalConfig.NUM_OF_PERIODS);
+
+                    temp = new ScheduleEntry
+                    {
+                        Course = Days[randDay].Periods[randPeriod].Course,
+                        Instructor = Days[randDay].Periods[randPeriod].Instructor,
+                        Room = Days[randDay].Periods[randPeriod].Room,
+                        IsLecture = Days[randDay].Periods[randPeriod].IsLecture,
+                        IsLab = Days[randDay].Periods[randPeriod].IsLab,
+                        IsTutor = Days[randDay].Periods[randPeriod].IsTutor,
+                        Period = Days[randDay].Periods[randPeriod].Period
+                    };
+
+                    Days[randDay].Periods[randPeriod].Course = Days[secondRandDay].Periods[secondRandPeriod].Course;
+                    Days[randDay].Periods[randPeriod].Instructor = Days[secondRandDay].Periods[secondRandPeriod].Instructor;
+                    Days[randDay].Periods[randPeriod].Room = Days[secondRandDay].Periods[secondRandPeriod].Room;
+                    Days[randDay].Periods[randPeriod].IsLecture = Days[secondRandDay].Periods[secondRandPeriod].IsLecture;
+                    Days[randDay].Periods[randPeriod].IsLab = Days[secondRandDay].Periods[secondRandPeriod].IsLab;
+                    Days[randDay].Periods[randPeriod].IsTutor = Days[secondRandDay].Periods[secondRandPeriod].IsTutor;
+
+                    Days[secondRandDay].Periods[secondRandPeriod].Course = temp.Course;
+                    Days[secondRandDay].Periods[secondRandPeriod].Instructor = temp.Instructor;
+                    Days[secondRandDay].Periods[secondRandPeriod].Room = temp.Room;
+                    Days[secondRandDay].Periods[secondRandPeriod].IsLecture = temp.IsLecture;
+                    Days[secondRandDay].Periods[secondRandPeriod].IsLab = temp.IsLab;
+                    Days[secondRandDay].Periods[secondRandPeriod].IsTutor = temp.IsTutor;
+                    break; 
+            }
+        }
+
         private void SwapMorningAndAfternoonPeriods()
         {
             Random rand = new Random();
 
-            var randDay = rand.Next(GlobalConfig.NUM_OF_DAYS);
+            var dayNumber = rand.Next(GlobalConfig.NUM_OF_DAYS);
 
-            var morningPeriods = this.Days[randDay].Periods.GetRange(0, 4);
-            var afternoonPeriods = this.Days[randDay].Periods.GetRange(4, 4);
+            var morningPeriods = this.Days[dayNumber].Periods.GetRange(0, 4);
+            var afternoonPeriods = this.Days[dayNumber].Periods.GetRange(4, 4);
             var swapped = afternoonPeriods.Concat(morningPeriods).ToList();
 
             for (byte i = 0; i < GlobalConfig.NUM_OF_PERIODS; i++)
             {
-                swapped[i].Period = i; 
+                swapped[i].Period = i;
             }
 
-            this.Days[randDay].Periods = swapped; 
-            
-
+            this.Days[dayNumber].Periods = swapped;
         }
         private void ShiftToEarlyPeriods()
         {
@@ -671,16 +764,63 @@ namespace SchedulingSystemClassLibrary.Models
 
             //return child;  
             #endregion
+            Random rand = new Random();
+
+            //if (rand.NextDouble() <= GlobalConfig.CROSSOVER_RATE)
+            //{
+            //    var child = new Schedule(true)
+            //    {
+            //        Section = this.Section,
+            //        scheduleEntries = this.scheduleEntries
+            //    };
+
+            //    var parentA = this;
+
+
+
+            //    var parentAOrBMwfDays = DetermineWhichParentIsBetterForMwfDays(this, parentB);
+            //    var parentAOrBTthDays = DetermineWhichParentIsBetterForTthDays(this, parentB);
+
+            //    switch (parentAOrBMwfDays)
+            //    {
+            //        case 0:
+            //            child.Days[0] = parentA.Days[0];
+            //            child.Days[2] = parentA.Days[2];
+            //            child.Days[4] = parentA.Days[4];
+            //            break;
+            //        case 1:
+            //            child.Days[0] = parentB.Days[0];
+            //            child.Days[2] = parentB.Days[2];
+            //            child.Days[4] = parentB.Days[4];
+            //            break;
+            //    }
+
+            //    switch (parentAOrBTthDays)
+            //    {
+            //        case 0:
+            //            child.Days[1] = parentA.Days[1];
+            //            child.Days[3] = parentA.Days[3];
+            //            break;
+            //        case 1:
+            //            child.Days[1] = parentB.Days[1];
+            //            child.Days[3] = parentB.Days[3];
+            //            break;
+            //    }
+
+            //    return child; 
+            //}
+            //else
+            //{
+            //    return this;
+            //}
 
             var child = new Schedule(true)
             {
-                Section = this.Section, 
+                Section = this.Section,
                 scheduleEntries = this.scheduleEntries
             };
 
             var parentA = this;
-
-            Random rand = new Random();
 
             var parentAOrB = rand.Next(2);
 
@@ -688,22 +828,71 @@ namespace SchedulingSystemClassLibrary.Models
             {
                 case 0:
                     child.Days[0] = parentA.Days[0];
-                    child.Days[1] = parentB.Days[1];
                     child.Days[2] = parentA.Days[2];
+                    child.Days[4] = parentA.Days[4];
+                    child.Days[1] = parentB.Days[1];
                     child.Days[3] = parentB.Days[3];
-                    child.Days[4] = parentA.Days[4]; 
                     break;
                 case 1:
                     child.Days[0] = parentB.Days[0];
-                    child.Days[1] = parentA.Days[1];
                     child.Days[2] = parentB.Days[2];
-                    child.Days[3] = parentA.Days[3];
                     child.Days[4] = parentB.Days[4];
+                    child.Days[1] = parentA.Days[1];
+                    child.Days[3] = parentA.Days[3];
                     break; 
             }
 
             return child;
         }
+
+        private byte DetermineWhichParentIsBetterForMwfDays(Schedule parentA, Schedule parentB)
+        {
+            var mwfDays = new byte[] { 0, 2, 4 };
+            
+
+            var parentAMwfConflicts = 0;
+            var parentBMwfConflicts = 0;
+            
+
+            foreach (var day in mwfDays)
+            {
+                parentAMwfConflicts += CalculateFitnessForADay(parentA.Days[day]);
+                parentBMwfConflicts += CalculateFitnessForADay(parentB.Days[day]);
+            }
+
+            if (parentAMwfConflicts > parentBMwfConflicts)
+            {
+                return 1;
+            } 
+            else
+            {
+                return 0;
+            }
+        }
+
+        private byte DetermineWhichParentIsBetterForTthDays(Schedule parentA, Schedule parentB)
+        {
+            var tthDays = new byte[] { 1, 3 };
+
+            var parentATthConflicts = 0;
+            var parentBTthConflicts = 0;
+
+            foreach (var day in tthDays)
+            {
+                parentATthConflicts += CalculateFitnessForADay(parentA.Days[day]);
+                parentBTthConflicts += CalculateFitnessForADay(parentB.Days[day]);
+            }
+
+            if (parentATthConflicts > parentBTthConflicts)
+            {
+                return 1; 
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public void CalculateFitness()
         {
             #region Old Fitness function
@@ -823,20 +1012,24 @@ namespace SchedulingSystemClassLibrary.Models
                     numOfConflicts++;
                 }
 
+
+                //Does the instructor want this day
+                //numOfConflicts += ScheduleHelper.CountInstructorPreferenceConflictsForThisDay(day);
+
+
                 numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheMorning(day);
                 numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheAfternoon(day);
 
                 numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheMorning(day);
-                numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheAfternoon(day); 
+                numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheAfternoon(day);
 
 
             }
 
-            numOfConflicts += CountConflictsBasedOnInstructorBeingFree();
-            numOfConflicts += CountConflictsBasedOnRoomBeingFree();
+            numOfConflicts += 2*CountConflictsBasedOnInstructorBeingFree();
+            numOfConflicts += 2*CountConflictsBasedOnRoomBeingFree();
 
-
-            Fitness = 1.0 / (numOfConflicts + 1);
+            Fitness = 1.0 / (1 + numOfConflicts);
             #endregion
         }
 
@@ -1500,6 +1693,121 @@ namespace SchedulingSystemClassLibrary.Models
                 }
             }
             return false;
+        }
+
+        public byte CalculateFitnessForADay(Day day)
+        {
+            byte numOfConflicts = 0;
+
+
+            {
+                // This checks if the schedule starts first thing in the morning
+                if (!ScheduleHelper.DoesScheduleStartOnFirstPeriodInTheMorning(day))
+                {
+                    numOfConflicts++;
+                }
+
+                // This checks if the schedule starts first thing in the afternoon
+                if (!ScheduleHelper.DoesScheduleStartOnFirstPeriodInTheAfternoon(day))
+                {
+                    numOfConflicts++;
+                }
+
+                // This checks if there is a free gap between periods in the morning
+                if (ScheduleHelper.IsThereAGapBetweenEntriesInTheMorning(day))
+                {
+                    numOfConflicts++;
+                }
+
+                // This checks if there is a free gap between periods in the afternoon
+                if (ScheduleHelper.IsThereAGapBetweenEntriesInTheAfternoon(day))
+                {
+                    numOfConflicts++;
+                }
+
+                // This checks if the lecture entries spans more than 2 periods
+                if (ScheduleHelper.AreThereMoreThanTwoConsecutiveLectureEntriesInTheMorning(day))
+                {
+                    numOfConflicts++;
+                }
+                if (ScheduleHelper.AreThereMoreThanTwoConsecutiveLectureEntriesInTheAfternoon(day))
+                {
+                    numOfConflicts++;
+                }
+
+
+                // Does the instructor want this day
+                //numOfConflicts += ScheduleHelper.CountInstructorPreferenceConflictsForThisDay(day);
+
+
+                numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheMorning(day);
+                numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheAfternoon(day);
+
+                numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheMorning(day);
+                numOfConflicts += ScheduleHelper.CountConflictsBasedOnThreeConsecutiveLabEntriesInTheAfternoon(day);
+
+
+            }
+
+            numOfConflicts += CountConflictsBasedOnInstructorBeingFreeForThisDay(day);
+            numOfConflicts += CountConflictsBasedOnRoomBeingFreeForThisDay(day);
+
+            return numOfConflicts;
+        }
+
+        private byte CountConflictsBasedOnRoomBeingFreeForThisDay(Day day)
+        {
+            byte conflicts = 0;
+
+
+            byte dayNumber = day.DayNumber;
+
+            for (int j = 0; j < GlobalConfig.NUM_OF_PERIODS; j++)
+            {
+                byte period = day.Periods[j].Period;
+
+                var currentEntry = day.Periods[j];
+
+                if (currentEntry.Course != null)
+                {
+                    bool isThereAClash = scheduleEntries.Any(s => s.Day.DayNumber == dayNumber
+                                                                && s.Period == period
+                                                                && s.RoomId == currentEntry.Room.Id);
+                    if (isThereAClash)
+                    {
+                        conflicts++;
+                    }
+                }
+            }
+            
+            return conflicts;
+        }
+
+        private byte CountConflictsBasedOnInstructorBeingFreeForThisDay(Day day)
+        {
+            byte conflicts = 0;
+
+            byte dayNumber = day.DayNumber;
+
+            for (int j = 0; j < GlobalConfig.NUM_OF_PERIODS; j++)
+            {
+                byte period = day.Periods[j].Period;
+
+                var currentEntry = day.Periods[j];
+
+                if (currentEntry.Course != null)
+                {
+                    bool isThereAClash = scheduleEntries.Any(s => s.Day.DayNumber == dayNumber
+                                                                && s.Period == period
+                                                                && s.InstructorId == currentEntry.Instructor.Id);
+                    if (isThereAClash)
+                    {
+                        conflicts++;
+                    }
+                }
+            }
+            
+            return conflicts;
         }
     }
 }

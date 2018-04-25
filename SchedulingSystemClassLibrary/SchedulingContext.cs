@@ -21,13 +21,15 @@ namespace SchedulingSystemClassLibrary
         public virtual DbSet<Building> Buildings { get; set; }
         public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<ScheduleEntry> ScheduleEntries { get; set; }
+        public virtual DbSet<InstructorPreference> InstructorPreferences { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CourseOfferingConfiguration());
             modelBuilder.Configurations.Add(new InstructorConfiguration());
             modelBuilder.Configurations.Add(new DayConfiguration());
             modelBuilder.Configurations.Add(new RoomConfiguration());
-            modelBuilder.Configurations.Add(new ScheduleConfiguration()); 
+            modelBuilder.Configurations.Add(new ScheduleConfiguration());
+            modelBuilder.Configurations.Add(new InstructorPreferenceConfiguration());
 
             base.OnModelCreating(modelBuilder); 
         }

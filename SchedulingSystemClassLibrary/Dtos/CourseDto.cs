@@ -34,5 +34,10 @@ namespace SchedulingSystemClassLibrary.Dtos
 
         [Required]
         public int DeliverySemester { get; set; }
+        [Required]
+        public int Color { get; set; }
+
+        [Required]
+        public string Acronym { get; set; }
     }
 }
