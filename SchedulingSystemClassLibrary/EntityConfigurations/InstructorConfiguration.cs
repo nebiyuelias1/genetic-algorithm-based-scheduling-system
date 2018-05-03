@@ -17,10 +17,9 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
                 .HasForeignKey(i => i.DepartmentId)
                 .WillCascadeOnDelete(false);
 
-            //this.HasRequired(i => i.Department)
-            //    .WithOptional(d => d.DepartmentHead)
-            //    .WillCascadeOnDelete(false);
-
+            this.HasOptional(i => i.InstructorPreference)
+                .WithRequired(p => p.Instructor)
+                .WillCascadeOnDelete(false);
         }
     }
 }

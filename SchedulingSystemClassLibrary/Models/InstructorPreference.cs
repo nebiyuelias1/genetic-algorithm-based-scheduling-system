@@ -10,7 +10,24 @@ namespace SchedulingSystemClassLibrary.Models
     public class InstructorPreference
     {
         public int Id { get; set; }
-        public bool[] Preference { get; set; } = new bool[5];
+        public List<bool> Preference {
+            get
+            {
+                List<bool> preferenceList = new List<bool>(5); 
+
+                var array = PreferenceData.Split(',');
+
+                for (int i = 0; i < 5; i++)
+                {
+                    preferenceList.Add(array[i] == "0" ? false : true);
+                }
+
+                return preferenceList;
+            }
+        }
+        public Instructor Instructor { get; set; }
+        public int InstructorId { get; set; }
+        public string PreferenceData { get; set; }
 
     }
 }

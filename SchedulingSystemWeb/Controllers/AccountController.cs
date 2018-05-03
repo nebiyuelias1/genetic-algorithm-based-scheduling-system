@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SchedulingSystemWeb.Models;
+using SchedulingSystemClassLibrary.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using SchedulingSystemClassLibrary.ViewModels;
+using SchedulingSystemClassLibrary;
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -75,7 +79,7 @@ namespace SchedulingSystemWeb.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -182,7 +186,16 @@ namespace SchedulingSystemWeb.Controllers
                 return View("Error");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+
+            if (result.Succeeded)
+            {
+                var viewModel = new AccountAfterConfirmationViewModel
+                {
+                    UserId = userId
+                };
+                return View("ConfirmEmail", viewModel);
+            }
+            return View("Error");
         }
 
         //
@@ -403,6 +416,93 @@ namespace SchedulingSystemWeb.Controllers
             return View();
         }
 
+        public ActionResult CreateAccountForInstructor()
+        {
+            return View(new InstructorAccountViewModel());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateAccountForInstructor(InstructorAccountViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = viewModel.EmailAdress, Email = viewModel.EmailAdress};
+                var result = await UserManager.CreateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    var identityResult = UserManager.AddToRole(user.Id, RoleName.IsAnInstructor);
+
+                    if (identityResult.Succeeded)
+                    {
+                        using (var schedulingContext = new SchedulingContext())
+                        {
+                            var instructorInDb = schedulingContext.Instructors.SingleOrDefault(i => i.Id == viewModel.InstructorId);
+
+                            if (instructorInDb != null)
+                            {
+                                instructorInDb.AccountId = user.Id;
+                                schedulingContext.SaveChanges();
+                            }
+                        }
+                    }
+                }
+
+                if (!result.Succeeded)
+                {
+                    viewModel = new InstructorAccountViewModel
+                    {
+                        ErrorMessages = result.Errors
+                    };
+                    return View("CreateAccountForInstructor", viewModel);
+                }
+            }
+            return RedirectToAction("CreateAccountForInstructor");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Confirm()
+        {
+            return View(); 
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult> Confirm(InstructorAccountViewModel viewModel)
+        {
+            var user = await UserManager.FindByEmailAsync(viewModel.EmailAdress);
+
+            //Send an email with this link
+            
+
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return View("EmailConfirmation");
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult> CreateAccountAfterConfirmation(AccountAfterConfirmationViewModel viewModel)
+        {
+            var user = await UserManager.FindByIdAsync(viewModel.UserId);
+
+            var passwordChangeResult  = await UserManager.AddPasswordAsync(user.Id, viewModel.Password);
+            if (passwordChangeResult.Succeeded)
+            {
+                user.UserName = viewModel.Username;
+                var updateResult = await UserManager.UpdateAsync(user);
+                if (updateResult.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -449,6 +549,8 @@ namespace SchedulingSystemWeb.Controllers
             {
                 return Redirect(returnUrl);
             }
+
+            
             return RedirectToAction("Index", "Home");
         }
 

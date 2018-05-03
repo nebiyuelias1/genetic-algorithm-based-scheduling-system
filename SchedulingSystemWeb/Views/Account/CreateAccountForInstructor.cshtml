@@ -1,0 +1,143 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.InstructorAccountViewModel
+@{
+    ViewBag.Title = "CreateAccountForInstructor";
+}
+
+<h2>CreateAccountForInstructor</h2>
+@if (Model.ErrorMessages != null)
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <ul>
+            @foreach (var errorMessage in Model.ErrorMessages)
+            {
+                <li><strong>Error!</strong> @errorMessage</li>
+            }
+        </ul>
+    </div>
+}
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create Account for <span id="instructorDetail"></span></h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("CreateAccountForInstructor", "Account", FormMethod.Post, new { @id = "userAccountForm" }))
+                {
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.EmailAdress, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.EmailAdress, new { htmlAttributes = new { @class = "form-control" , @autofocus = "autofocus"} })
+                                @Html.ValidationMessageFor(model => model.EmailAdress, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                        @Html.HiddenFor(model => model.InstructorId)
+                    </div>
+
+                }
+            </div>
+            <div class="modal-footer">
+                <button id="submitButton" type="submit" class="btn btn-primary">Create</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table id="instructors" class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Father Name</th>
+            <th>Grand Father Name</th>
+            <th>Department</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#instructors").DataTable({
+                ajax: {
+                    url: "/api/instructors",
+                    method: "GET",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        className: 'firstName',
+                        data: 'firstName'
+                    },
+                    {
+                        className: 'fatherName',
+                        data: 'fatherName'
+                    },
+                    {
+                        className: 'grandFatherName',
+                        data: 'grandFatherName'
+                    },
+                    {
+                        className: 'department',
+                        data: 'department.name'
+                    },
+                    {
+                        data: '',
+                        render: function (data, type, instructor) {
+                            if (instructor.accountId == null)
+                                return '<button class="create btn btn-primary" data-js-create="' + instructor.id + '">Create</button>';
+                            else
+                                return '<button class="btn btn-success">Modify</button>';
+                        }
+                    }
+                ]
+            });
+
+            $('#instructors').on('click', 'button.create', function () {
+                var button = $(this);
+                var row = button.closest('tr');
+
+                var firstName = row.children('.firstName').text();
+                var fatherName = row.children('.fatherName').text();
+                var grandFatherName = row.children('.grandFatherName').text();
+                var department = row.children('.department').text();
+
+                var header = firstName + ' ' + fatherName + ' ' + grandFatherName + ' from ' + department + ' department';
+                var id = button.attr('data-js-create');
+
+                $('#InstructorId').val(id);
+                $('#instructorDetail').text(header);
+                $('#myModal').modal();
+            });
+
+            $('#submitButton').click(function () {
+                $("#userAccountForm").submit();
+                table.draw();
+            });
+        });
+    </script>
+}

@@ -38,6 +38,42 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -60,6 +96,7 @@
     <Compile Include="Dtos\ScheduleDto.cs" />
     <Compile Include="Dtos\ScheduleEntryDto.cs" />
     <Compile Include="Dtos\SectionDto.cs" />
+    <Compile Include="EntityConfigurations\InstructorPreferenceConfiguration.cs" />
     <Compile Include="Dtos\SectionDtoMinimal.cs" />
     <Compile Include="EntityConfigurations\DepartmentConfiguration.cs" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
@@ -112,6 +149,20 @@
     <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.Designer.cs">
       <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804221133205_ModifyInstructorsTable.cs" />
+    <Compile Include="Migrations\201804221133205_ModifyInstructorsTable.Designer.cs">
+      <DependentUpon>201804221133205_ModifyInstructorsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.cs" />
+    <Compile Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.Designer.cs">
+      <DependentUpon>201804221158549_AddInstructorPreferenceConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804282026224_AddAccountIdPropertyToInstructorsTable.cs" />
+    <Compile Include="Migrations\201804282026224_AddAccountIdPropertyToInstructorsTable.Designer.cs">
+      <DependentUpon>201804282026224_AddAccountIdPropertyToInstructorsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.cs" />
     <Compile Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.Designer.cs">
       <DependentUpon>201805031608125_AddDepartmentHeadToDepartmentsTable.cs</DependentUpon>
@@ -202,6 +253,7 @@
     <Compile Include="Models\Faculty.cs" />
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\InstructorPreference.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\RoomAssignmentInfo.cs" />
     <Compile Include="Models\Schedule.cs" />
@@ -209,10 +261,12 @@
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchedulingContext.cs" />
+    <Compile Include="ViewModels\AccountAfterConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CollegeDeanHomeViewModel.cs" />
     <Compile Include="ViewModels\CourseOfferingsFormViewModel.cs" />
     <Compile Include="ViewModels\CoursesFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
+    <Compile Include="ViewModels\InstructorAccountViewModel.cs" />
     <Compile Include="ViewModels\RoomsFormViewModel.cs" />
     <Compile Include="ViewModels\SectionsFormViewModel.cs" />
   </ItemGroup>
@@ -297,6 +351,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.resx">
       <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804221133205_ModifyInstructorsTable.resx">
+      <DependentUpon>201804221133205_ModifyInstructorsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.resx">
+      <DependentUpon>201804221158549_AddInstructorPreferenceConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804282026224_AddAccountIdPropertyToInstructorsTable.resx">
+      <DependentUpon>201804282026224_AddAccountIdPropertyToInstructorsTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.resx">
       <DependentUpon>201805031608125_AddDepartmentHeadToDepartmentsTable.cs</DependentUpon>
