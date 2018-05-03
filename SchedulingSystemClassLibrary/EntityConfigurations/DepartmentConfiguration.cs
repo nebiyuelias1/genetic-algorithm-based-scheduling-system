@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace SchedulingSystemClassLibrary.EntityConfigurations
 {
-    public class SectionConfiguration : EntityTypeConfiguration<Section>
+    public class DepartmentConfiguration : EntityTypeConfiguration<Department>
     {
-        public SectionConfiguration()
+        public DepartmentConfiguration()
         {
-            this.HasRequired(s => s.Department)
-                .WithMany(d => d.Sections)
-                .HasForeignKey(s => s.DepartmentId)
-                .WillCascadeOnDelete(false);
+            //this.HasOptional(d => d.DepartmentHead)
+            //    .WithRequired(i => i.Department)
+            //    .WillCascadeOnDelete(false);
         }
     }
 }

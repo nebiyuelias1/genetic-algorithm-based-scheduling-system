@@ -15,6 +15,9 @@ namespace SchedulingSystemClassLibrary.Models
         public string Email { get; set; }
         public Faculty Faculty { get; set; }
         public int FacultyId { get; set; }
+        public List<Section> Sections { get; set; }
         public List<Instructor> Instructors { get; set; }
+        public Instructor DepartmentHead { get; set; }
+        public int? DepartmentHeadId { get; set; }
     }
 }

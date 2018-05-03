@@ -27,7 +27,8 @@ namespace SchedulingSystemClassLibrary
             modelBuilder.Configurations.Add(new InstructorConfiguration());
             modelBuilder.Configurations.Add(new DayConfiguration());
             modelBuilder.Configurations.Add(new RoomConfiguration());
-            modelBuilder.Configurations.Add(new ScheduleConfiguration()); 
+            modelBuilder.Configurations.Add(new ScheduleConfiguration());
+            modelBuilder.Configurations.Add(new SectionConfiguration());
 
             base.OnModelCreating(modelBuilder); 
         }

@@ -23,7 +23,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
 
             IntializePopulation();
             
-            for (int j = 0; j < 40; j++)
+            for (int j = 0; j < 100; j++)
             {
                 //for (int i = 0; i < Population.Count; i++)
                 //{
@@ -43,7 +43,20 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 //    child.CalculateFitness();
                 //    Population[i] = child;
                 //}
-                RouletteWheelSelection();
+                //RouletteWheelSelection();
+                var noConflictCount = 0;
+                Console.WriteLine($"Generation - {j + 1}");
+                Console.WriteLine($"Best Fitness={Population.Max(s => s.Fitness)}");
+                Console.WriteLine($"Worst Fitnes={Population.Min(s => s.Fitness)}");
+                Population.ForEach(s =>
+                    {
+                        if (!s.IsThereAnyClash())
+                        {
+                            noConflictCount++;
+                        }
+                    }
+                );
+                Console.WriteLine($"No conflicts count: {noConflictCount}");
                 var matingPool = NaturalSelection();
                 CreateNextGeneration(matingPool);
             }
@@ -81,7 +94,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                                             .Include(s => s.CourseOfferings.Select(c => c.Instructor))
                                             .Include(s => s.AssignedLectureRoom)
                                             .Include(s => s.AssignedLabRoom)
-                                            .SingleOrDefault(s => s.Id == 4);
+                                            .SingleOrDefault(s => s.Id == 1);
 
             var scheduleEntries = _context.ScheduleEntries
                                     .Include(s => s.Instructor)

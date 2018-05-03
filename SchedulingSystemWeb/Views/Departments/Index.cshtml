@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Departments";
+}
+
+<h2>Departments</h2>
+
+<p>
+    @Html.ActionLink("Create New", "New")
+</p>
+<table id="departments" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number of Instructors</th>
+            <th>Number of Sections</th>
+            <th>Department Head</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#departments').DataTable({
+                ajax: {
+                    url: "/api/departments",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                    },
+                    {
+                        data: "instructors.length"
+                    },
+                    {
+                        data: "sections.length"
+                    },
+                    {
+                        data: "departmentHead"
+                    },
+                ]
+            });
+        });
+    </script>
+}
+
+

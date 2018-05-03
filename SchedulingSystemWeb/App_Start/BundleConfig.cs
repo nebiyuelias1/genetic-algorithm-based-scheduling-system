@@ -32,7 +32,8 @@ namespace SchedulingSystemWeb
                         "~/content/datatables/css/datatables.bootstrap.css",
                         "~/Content/site.css",
                         "~/Content/spectrum.css",
-                        "~/Content/fullcalendar/fullcalendar.css"));
+                        "~/Content/fullcalendar/fullcalendar.css",
+                        "~/Content/font-awesome.css"));
         }
     }
 }

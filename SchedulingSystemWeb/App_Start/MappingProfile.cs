@@ -14,10 +14,12 @@ namespace SchedulingSystemWeb.App_Start
         public MappingProfile()
         {
             Mapper.CreateMap<Section, SectionDto>();
+            Mapper.CreateMap<Section, SectionDtoMinimal>();
             Mapper.CreateMap<Department, DepartmentDto>();
             Mapper.CreateMap<Room, RoomDto>();
             Mapper.CreateMap<Building, BuildingDto>();
             Mapper.CreateMap<Instructor, InstructorDto>();
+            Mapper.CreateMap<Instructor, InstructorDtoMinimal>();
             Mapper.CreateMap<Course, CourseDto>();
             Mapper.CreateMap<CourseOffering, CourseOfferingDto>();
             Mapper.CreateMap<CourseOffering, CourseOfferingsFormViewModel>();

@@ -55,10 +55,13 @@
     <Compile Include="Dtos\DayDto.cs" />
     <Compile Include="Dtos\DepartmentDto.cs" />
     <Compile Include="Dtos\InstructorDto.cs" />
+    <Compile Include="Dtos\InstructorDtoMinimal.cs" />
     <Compile Include="Dtos\RoomDto.cs" />
     <Compile Include="Dtos\ScheduleDto.cs" />
     <Compile Include="Dtos\ScheduleEntryDto.cs" />
     <Compile Include="Dtos\SectionDto.cs" />
+    <Compile Include="Dtos\SectionDtoMinimal.cs" />
+    <Compile Include="EntityConfigurations\DepartmentConfiguration.cs" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
     <Compile Include="GeneticAlgorithm\ScheduleHelper.cs" />
     <Compile Include="Migrations\201804031823176_AddBuildingsTable.cs" />
@@ -108,6 +111,18 @@
     <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.cs" />
     <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.Designer.cs">
       <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.cs" />
+    <Compile Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.Designer.cs">
+      <DependentUpon>201805031608125_AddDepartmentHeadToDepartmentsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805031613530_AddSectionsToDepartmentsTable.cs" />
+    <Compile Include="Migrations\201805031613530_AddSectionsToDepartmentsTable.Designer.cs">
+      <DependentUpon>201805031613530_AddSectionsToDepartmentsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805031624091_ModelChangeIntroduced.cs" />
+    <Compile Include="Migrations\201805031624091_ModelChangeIntroduced.Designer.cs">
+      <DependentUpon>201805031624091_ModelChangeIntroduced.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Building.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
@@ -194,6 +209,7 @@
     <Compile Include="Models\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchedulingContext.cs" />
+    <Compile Include="ViewModels\CollegeDeanHomeViewModel.cs" />
     <Compile Include="ViewModels\CourseOfferingsFormViewModel.cs" />
     <Compile Include="ViewModels\CoursesFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
@@ -281,6 +297,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.resx">
       <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.resx">
+      <DependentUpon>201805031608125_AddDepartmentHeadToDepartmentsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805031613530_AddSectionsToDepartmentsTable.resx">
+      <DependentUpon>201805031613530_AddSectionsToDepartmentsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805031624091_ModelChangeIntroduced.resx">
+      <DependentUpon>201805031624091_ModelChangeIntroduced.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

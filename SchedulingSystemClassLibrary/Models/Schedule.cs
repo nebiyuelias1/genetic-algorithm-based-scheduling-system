@@ -832,8 +832,8 @@ namespace SchedulingSystemClassLibrary.Models
 
             }
 
-            numOfConflicts += CountConflictsBasedOnInstructorBeingFree();
-            numOfConflicts += CountConflictsBasedOnRoomBeingFree();
+            numOfConflicts += 2*CountConflictsBasedOnInstructorBeingFree();
+            numOfConflicts += 2*CountConflictsBasedOnRoomBeingFree();
 
 
             Fitness = 1.0 / (numOfConflicts + 1);
