@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchedulingSystemClassLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,10 @@ namespace SchedulingSystemWeb.Controllers
     {
         public ActionResult Index()
         {
+            if (User.IsInRole(RoleName.IsACollegeDean))
+            {
+                return View("CollegeDeanHome");
+            }
             return View();
         }
 

@@ -14,5 +14,7 @@ namespace SchedulingSystemClassLibrary.Dtos
         public string GrandFatherName { get; set; }
         public DepartmentDto Department { get; set; }
         public int DepartmentId { get; set; }
+        public string AccountId { get; set; }
+
     }
 }

@@ -6,6 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
+using AutoMapper;
+using SchedulingSystemClassLibrary.Dtos;
 
 namespace SchedulingSystemWeb.Controllers.Api
 {
@@ -18,6 +21,7 @@ namespace SchedulingSystemWeb.Controllers.Api
             _context = new SchedulingContext(); 
         }
 
+        // POST - /api/instructors/
         public void SetPreference(InstructorPreference preference)
         {
             var instructorInDb = _context.Instructors.Single(i => i.Id == preference.InstructorId);
@@ -28,6 +32,15 @@ namespace SchedulingSystemWeb.Controllers.Api
 
         }
 
+        public IHttpActionResult GetInstructors()
+        {
+            var instructors = _context.Instructors
+                                .Include(i => i.Department)
+                                .ToList()
+                                .Select(Mapper.Map<Instructor, InstructorDto>);
+
+            return Ok(instructors); 
+        }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose(); 

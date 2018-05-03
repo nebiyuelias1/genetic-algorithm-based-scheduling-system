@@ -11,15 +11,23 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using SchedulingSystemWeb.Models;
+using SchedulingSystemClassLibrary.Models;
+using System.Net.Mail;
 
 namespace SchedulingSystemWeb
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            MailMessage emailMessage = new MailMessage("debreberhanuniversity@gmail.com", message.Destination);
+            emailMessage.Subject = message.Subject;
+            emailMessage.Body = message.Body;
+
+            using (SmtpClient smtpClient = new SmtpClient())
+            {
+                await smtpClient.SendMailAsync(emailMessage);
+            }
         }
     }
 

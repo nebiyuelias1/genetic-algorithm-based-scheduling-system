@@ -19,6 +19,7 @@ namespace SchedulingSystemClassLibrary.Models
         public int DepartmentId { get; set; }
         public InstructorPreference InstructorPreference { get; set; }
         public int InstructorPreferenceId { get; set; }
+        public string AccountId { get; set; }
 
     }
 }
