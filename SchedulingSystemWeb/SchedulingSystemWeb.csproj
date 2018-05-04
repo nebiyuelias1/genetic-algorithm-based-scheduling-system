@@ -200,6 +200,7 @@
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\FacultiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InstructorsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
@@ -474,6 +475,12 @@
     <Content Include="Views\Home\CollegeDeanHome.cshtml" />
     <Content Include="Views\Home\CollegeDeanHome.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
+    <Content Include="Views\Departments\DepartmentForm.cshtml" />
+    <Content Include="Views\Departments\Instructors.cshtml" />
+    <Content Include="Views\Departments\Sections.cshtml" />
+    <Content Include="Views\Sections\CourseOfferings.cshtml" />
+    <Content Include="Views\Instructors\CourseOfferings.cshtml" />
+    <Content Include="Views\Instructors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

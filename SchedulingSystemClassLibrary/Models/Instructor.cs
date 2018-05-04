@@ -18,8 +18,13 @@ namespace SchedulingSystemClassLibrary.Models
         public Department Department { get; set; }
         public int DepartmentId { get; set; }
         public InstructorPreference InstructorPreference { get; set; }
-        public int InstructorPreferenceId { get; set; }
+        public int? InstructorPreferenceId { get; set; }
         public string AccountId { get; set; }
+
+        public string FullName { get {
+
+                return $"{FirstName} {FatherName} {GrandFatherName}";
+            } }
 
     }
 }

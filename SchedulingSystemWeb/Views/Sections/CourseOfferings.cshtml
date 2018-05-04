@@ -1,0 +1,61 @@
+﻿@model SchedulingSystemClassLibrary.Models.Section
+
+@{
+    ViewBag.Title = $"Courses for Section {Model.Name}";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Courses for Section @Model.Name</h3>
+            <h5>Total: @Model.CourseOfferings.Count</h5>
+        </div>
+    </div>
+</header>
+
+<table id="courses" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Course
+            </th>
+            <th>
+                Credit
+            </th>
+            <th>
+                Lecture
+            </th>
+            <th>
+                Lab
+            </th>
+            <th>
+                Tutor
+            </th>
+            <th>
+                Instructor
+            </th>
+        </tr>
+    </thead>    
+    <tbody>
+        @foreach(var course in Model.CourseOfferings)
+        {
+            <tr>
+                <td>@course.Course.Title</td>
+                <td>@course.Course.Credit</td>
+                <td>@course.Course.Lecture</td>
+                <td>@course.Course.Laboratory</td>
+                <td>@course.Course.Tutor</td>
+                <td>@course.Instructor.FullName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#courses').DataTable();
+        });
+    </script>  
+}

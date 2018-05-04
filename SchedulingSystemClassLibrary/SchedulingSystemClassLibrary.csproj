@@ -161,6 +161,10 @@
     <Compile Include="Migrations\201804282026224_AddAccountIdPropertyToInstructorsTable.Designer.cs">
       <DependentUpon>201804282026224_AddAccountIdPropertyToInstructorsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805040958393_AddEvenMoreChangeToTheDb.cs" />
+    <Compile Include="Migrations\201805040958393_AddEvenMoreChangeToTheDb.Designer.cs">
+      <DependentUpon>201805040958393_AddEvenMoreChangeToTheDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.cs" />
@@ -266,7 +270,11 @@
     <Compile Include="ViewModels\CourseOfferingsFormViewModel.cs" />
     <Compile Include="ViewModels\CoursesFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentInstructorsViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentSectionsViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentsFormViewModel.cs" />
     <Compile Include="ViewModels\InstructorAccountViewModel.cs" />
+    <Compile Include="ViewModels\InstructorCourseOfferingsViewModel.cs" />
     <Compile Include="ViewModels\RoomsFormViewModel.cs" />
     <Compile Include="ViewModels\SectionsFormViewModel.cs" />
   </ItemGroup>
@@ -369,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805031624091_ModelChangeIntroduced.resx">
       <DependentUpon>201805031624091_ModelChangeIntroduced.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805040958393_AddEvenMoreChangeToTheDb.resx">
+      <DependentUpon>201805040958393_AddEvenMoreChangeToTheDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

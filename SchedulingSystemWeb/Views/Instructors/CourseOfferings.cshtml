@@ -1,0 +1,53 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.InstructorCourseOfferingsViewModel
+
+@{
+    ViewBag.Title = $"Course Offerings for {Model.InstructorFullName}";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Course Offerings for @Model.InstructorFullName</h3>
+            <h5>Total: @Model.CourseOfferings.Count</h5>
+        </div>
+    </div>
+</header>
+
+<table id="courseOfferings" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Credit</th>
+            <th>Lab</th>
+            <th>Lecture</th>
+            <th>Tutor</th>
+            <th>Section</th>
+            <th>Year</th>
+            <th>Department</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var courseOffering in Model.CourseOfferings)
+        {
+            <tr>
+                <td>@courseOffering.Course.Title</td>
+                <td>@courseOffering.Course.Credit</td>
+                <td>@courseOffering.Course.Laboratory</td>
+                <td>@courseOffering.Course.Lecture</td>
+                <td>@courseOffering.Course.Tutor</td>
+                <td>@courseOffering.Section.Name</td>
+                <td>@((2010-courseOffering.Section.EntranceYear)+1)</td>
+                <td>@courseOffering.Section.Department.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#courseOfferings').DataTable();
+        });
+    </script>    
+}

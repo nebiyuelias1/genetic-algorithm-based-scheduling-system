@@ -1,51 +1,119 @@
 ﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.Section>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sections";
 }
 
-<h2>Index</h2>
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Sections</h3>
+            <h5>Total: @Model.Count()</h5>
+        </div>
+    </div>
+</header>
 
 <p>
-    @Html.ActionLink("Create New Section", "New")
+    @Html.ActionLink("Create New Section", "New", null, new { @class = "btn btn-primary"})
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EntranceYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StudentCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DepartmentId)
-        </th>
-        <th></th>
-    </tr>
+<table id="sections" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Year
+            </th>
+            <th>
+                Department
+            </th>
+            <th>
+                Students Count
+            </th>
+            <th>
+                Lecture Room
+            </th>
+            <th>
+                Lab Room
+            </th>
+            <th>
+                Courses
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @((2010 - item.EntranceYear) + 1)
+                </td>
+                <td>
+                    @item.Department.Name
+                </td>
+                <td>
+                    @item.StudentCount
+                </td>
+                <td>
+                    @if (item.AssignedLectureRoom != null)
+                    {
+                        @item.AssignedLectureRoom.Name
+                    }
+                    else
+                    {
+                        <span>Not Assigned</span>
+                    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EntranceYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StudentCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DepartmentId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+                </td>
+                <td>
+                    @if (item.AssignedLabRoom != null)
+                    {
+                        @item.AssignedLabRoom.Name
+                    }
+                    else
+                    {
+                        <span>Not Assigned</span>
+                    }
+                </td>
+                <td>
+                    <a href="/Sections/CourseOfferings/@item.Id">View courses</a>
+                </td>
+                <td>
+                    <a href="/Sections/Edit/@item.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+                    <button class="btn btn-danger js-delete" data-section-id="@item.Id" data-section-name="@item.Name"><i class="fa fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#sections').DataTable();
+
+            $('#sections').on('click', '.js-delete', function () {
+                var button = $(this);
+
+                bootbox.confirm('Are you sure you want to delete section <strong>' + button.attr('data-section-name') + '</strong>?', function (result) {
+                    if (result)
+                    {
+                        $.ajax({
+                            url: '/api/sections/' + button.attr('data-section-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        })
+                    }
+                });
+            });
+        });
+    </script>
+}

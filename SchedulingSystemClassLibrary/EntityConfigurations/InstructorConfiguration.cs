@@ -20,6 +20,8 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
             this.HasOptional(i => i.InstructorPreference)
                 .WithRequired(p => p.Instructor)
                 .WillCascadeOnDelete(false);
+
+            this.Ignore(i => i.FullName);
         }
     }
 }

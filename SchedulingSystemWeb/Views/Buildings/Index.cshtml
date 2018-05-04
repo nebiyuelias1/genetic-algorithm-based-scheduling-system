@@ -1,15 +1,22 @@
 ﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.Building>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Buildings";
 }
 
-<h2>Index</h2>
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Buildings</h3>
+            <h5>Total: @Model.Count()</h5>
+        </div>
+    </div>
+</header>
 
 <p>
-    @Html.ActionLink("Create New", "New")
+    @Html.ActionLink("Create New Building", "New", null,new { @class = "btn btn-primary"})
 </p>
-<table id="buildings" class="table">
+<table id="buildings" class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
             <th></th>
@@ -19,6 +26,15 @@
             <th>
                 Number
             </th>
+            <th>
+                Total Lecture Rooms
+            </th>
+            <th>
+                Total Lab Rooms
+            </th>
+            <td>
+
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -34,7 +50,7 @@
         function format(d) {
             // `d` is the original data object for the row
             var rooms = d.rooms;
-            var html = ''; 
+            var html = '';
 
             if (rooms.length > 0) {
                 html = '<table class="inner-table" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
@@ -52,9 +68,9 @@
 
                 html += '</table>';
             }
-           
-            
-            return html; 
+
+
+            return html;
         }
 
         $(document).ready(function () {
@@ -72,6 +88,35 @@
                     },
                     { data: "name" },
                     { data: "number" },
+                    {
+                        data: "rooms",
+                        render: function (data, type, building) {
+                            var lectureRooms = 0;
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i].isLectureRoom)
+                                    lectureRooms++;
+                            }
+                            return lectureRooms;
+                        }
+                    },
+                    {
+                        data: "rooms",
+                        render: function (data, type, building) {
+                            var labRooms = 0;
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i].isLabRoom)
+                                    labRooms++;
+                            }
+                            return labRooms;
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function (data, type, building) {
+                            return '<a href="/Buildings/Edit/' + data + '" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a> '
+                                    + '<button class="btn btn-danger js-delete" data-building-id="' + building.Id + '"><i class="fa fa-trash"></i> Delete</button>';
+                        }
+                    }
                 ],
                 "order": [[1, 'asc']]
             });

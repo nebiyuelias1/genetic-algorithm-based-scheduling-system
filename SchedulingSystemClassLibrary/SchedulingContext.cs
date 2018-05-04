@@ -30,7 +30,6 @@ namespace SchedulingSystemClassLibrary
             modelBuilder.Configurations.Add(new RoomConfiguration());
             modelBuilder.Configurations.Add(new ScheduleConfiguration());
             modelBuilder.Configurations.Add(new InstructorPreferenceConfiguration());
-            modelBuilder.Configurations.Add(new ScheduleConfiguration());
             modelBuilder.Configurations.Add(new SectionConfiguration());
 
             base.OnModelCreating(modelBuilder); 

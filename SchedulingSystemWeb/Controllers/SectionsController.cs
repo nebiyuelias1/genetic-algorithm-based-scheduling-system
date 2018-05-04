@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity; 
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -19,7 +20,12 @@ namespace SchedulingSystemWeb.Controllers
         // GET: Sections
         public ActionResult Index()
         {
-            var sections = _context.Sections.ToList(); 
+            var sections = _context
+                        .Sections
+                        .Include(s => s.Department)
+                        .Include(s => s.AssignedLectureRoom)
+                        .Include(s => s.AssignedLabRoom)
+                        .ToList(); 
 
             return View(sections);
         }
@@ -72,6 +78,18 @@ namespace SchedulingSystemWeb.Controllers
             return RedirectToAction("Index", "Sections"); 
         }
 
+        public ActionResult CourseOfferings(int id)
+        {
+            var section = _context
+                        .Sections
+                        .Include(s => s.CourseOfferings
+                        .Select(c => c.Course))
+                        .Include(s => s.CourseOfferings
+                        .Select(c => c.Instructor))
+                        .Single(s => s.Id == id); 
+                        
+            return View(section);
+        }
         public ActionResult Assign()
         {
             return View();

@@ -1,5 +1,6 @@
 ﻿
 using SchedulingSystemClassLibrary;
+using SchedulingSystemClassLibrary.Models;
 using SchedulingSystemClassLibrary.ViewModels;
 using SchedulingSystemWeb.Models;
 using System;

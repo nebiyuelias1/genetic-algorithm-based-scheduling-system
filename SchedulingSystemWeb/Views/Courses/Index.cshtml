@@ -1,46 +1,54 @@
 ﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.Course>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Courses";
 }
 
-<h2>Index</h2>
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Courses</h3>
+            <h5>Total: @Model.Count()</h5>
+        </div>
+    </div>
+</header>
 
 <p>
-    @Html.ActionLink("Create New Course", "New")
+    @Html.ActionLink("Create New Course", "New", null, new { @class = "btn btn-primary"})
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Credit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lecture)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Laboratory)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tutor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeliveryYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeliverySemester)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Curriculum)
-        </th>
-        <th></th>
-    </tr>
-
+<table id="courses" class="table table-bordered table-striped table-hover" >
+    <thead>
+        <tr>
+            <th class="col-sm-1">
+                Course Code
+            </th>
+            <th class="col-sm-2">
+                Title
+            </th>
+            <th class="col-sm-1">
+                Credit
+            </th>
+            <th class="col-sm-1">
+                Lecture
+            </th>
+            <th class="col-sm-1">
+                Laboratory
+            </th>
+            <th class="col-sm-1">
+                Tutor
+            </th>
+            <th class="col-sm-1">
+                Delivery Year
+            </th>
+            <th class="col-sm-1">
+                Delivery Semester
+            </th>
+            <th class="col-sm-1">
+                Curriculum
+            </th>
+            <th class="col-sm-2"></th>
+        </tr>
+    </thead>
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -68,14 +76,38 @@
             @Html.DisplayFor(modelItem => item.DeliverySemester)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CurriculumId)
+            @Html.DisplayFor(modelItem => item.Curriculum.Nomenclature)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <a href="/Courses/Edit/@item.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-danger js-delete" data-course-id="@item.Id" data-course-title="@item.Title"><i class="fa fa-trash"></i> Delete</button>
         </td>
     </tr>
 }
 
 </table>
+
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#courses').DataTable();
+        });
+
+        $('#courses').on('click', '.js-delete', function () {
+            var button = $(this);
+
+            bootbox.confirm("Are you sure you want to delete the course <strong>" + button.attr('data-course-title') + "</strong>?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '/api/courses/' + button.attr('data-course-id'),
+                        method: 'DELETE',
+                        success: function() {
+                            location.reload(true);
+                        }
+                    });
+                }
+            });
+        });
+    </script>    
+}
