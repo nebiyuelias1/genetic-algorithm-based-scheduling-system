@@ -12,3 +12,43 @@
     </div>
 </header>
 
+<table id="instructors" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Total Course Offerings</th>
+            <th>Credit Load</th>
+            <th>Department</th>
+            <th>Preference</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var instructor in Model)
+        {
+            <tr>
+                <td>@instructor.FullName</td>
+                <td><a href="/Instructors/CourseOfferings/@instructor.Id">@instructor.CurrentlyAssignedCourses.Count</a></td>
+                @{
+                    var totalCredit = 0;
+                }
+                @foreach (var courseOffering in instructor.CurrentlyAssignedCourses)
+                {
+                    totalCredit += courseOffering.Course.Credit;
+
+                }
+                <td>@(totalCredit)</td>
+                <td>@instructor.Department.Name</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#instructors').DataTable();
+        });
+    </script>
+}

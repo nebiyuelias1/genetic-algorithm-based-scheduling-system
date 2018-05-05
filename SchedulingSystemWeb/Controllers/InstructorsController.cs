@@ -20,7 +20,12 @@ namespace SchedulingSystemWeb.Controllers
         // GET: Instructors
         public ActionResult Index()
         {
-            var model = _context.Instructors.ToList();
+            var model = _context
+                        .Instructors
+                        .Include(i => i.Department)
+                        .Include(i => i.CurrentlyAssignedCourses
+                        .Select(c => c.Course))
+                        .ToList();
             return View(model);
         }
 
