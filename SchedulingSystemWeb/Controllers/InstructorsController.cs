@@ -6,6 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using SchedulingSystemClassLibrary.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -18,15 +21,35 @@ namespace SchedulingSystemWeb.Controllers
             _context = new SchedulingContext();
         }
         // GET: Instructors
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var model = _context
+            if (User.IsInRole(RoleName.IsACollegeDean))
+            {
+                var model = _context
                         .Instructors
                         .Include(i => i.Department)
                         .Include(i => i.CurrentlyAssignedCourses
                         .Select(c => c.Course))
                         .ToList();
-            return View(model);
+                return View(model);
+            }
+            else
+            {
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var deptHead = user == null ? null : _context.Instructors.Include(i => i.Department).Single(i => i.AccountId == user.Id);
+
+                var model = _context
+                        .Instructors
+                        .Include(i => i.Department)
+                        .Include(i => i.CurrentlyAssignedCourses
+                        .Select(c => c.Course))
+                        .Where(i => i.DepartmentId == deptHead.DepartmentId)
+                        .ToList();
+
+                return View("DepartmentHeadIndex", model);
+            }
+            
         }
 
         public ActionResult CourseOfferings(int id)

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SchedulingSystemClassLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchedulingSystemClassLibrary.Models
+namespace SchedulingSystemClassLibrary.ViewModels.DepartmentHead
 {
-    public class Section
+    public class SectionsViewModel
     {
         public int Id { get; set; }
 
@@ -26,13 +27,5 @@ namespace SchedulingSystemClassLibrary.Models
         [Required]
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
-        // TODO - Which one is better IList, List, IEnumerable
-        public Room AssignedLectureRoom { get; set; }
-        public int? AssignedLectureRoomId { get; set; }
-        public Room AssignedLabRoom { get; set; }
-        public int? AssignedLabRoomId { get; set; }
-        public List<CourseOffering> CourseOfferings { get; set; }
-
-        public byte CurrentYear { get; set; }
     }
 }

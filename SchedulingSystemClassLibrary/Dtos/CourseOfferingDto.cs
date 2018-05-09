@@ -16,7 +16,7 @@ namespace SchedulingSystemClassLibrary.Dtos
         public int? InstructorId { get; set; }
         public CourseDto Course { get; set; }
         public int CourseId { get; set; }
-        public int Year { get; set; }
-        public int Semester { get; set; }
+        public AcademicSemesterDto AcademicSemester { get; set; }
+        public int AcademicSemesterId { get; set; }
     }
 }

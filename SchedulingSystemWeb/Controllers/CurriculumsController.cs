@@ -24,8 +24,6 @@ namespace SchedulingSystemWeb.Controllers
         {
             var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var user = await userManager.FindByNameAsync(User.Identity.Name);
-
-           
             var deptHead = user == null ? null : _context.Instructors.Include(i => i.Department).Single(i => i.AccountId == user.Id);
 
             var viewModel = new CurriculumsIndexViewModel

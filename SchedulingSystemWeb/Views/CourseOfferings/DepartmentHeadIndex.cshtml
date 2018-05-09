@@ -1,0 +1,85 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.CourseOfferingsViewModel
+
+@{
+    ViewBag.Title = "Course Offerings ";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Course Offerings in @Model.Department.Name Department</h3>
+            <h5>Total: @Model.CourseOfferingsCount</h5>
+        </div>
+    </div>
+</header>
+
+<p>
+    @Html.ActionLink("Create Course Offerings", "Create", null, new { @class = "btn btn-primary"})
+</p>
+<table id="courseofferings" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Course Title</th>
+            <th>Section</th>
+            <th>Instructor</th>
+            <th>Course</th>
+            <th>Year</th>
+            <th>Semester</th>
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+
+    </tbody>
+</table>
+
+
+@section scripts 
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#courseofferings').DataTable({
+                ajax: {
+                    url: "/api/courseofferings/@Model.Department.Id",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "section.name"
+                    },
+                    {
+                        data: "instructor",
+                        render: function (data, type, courseOffering) {
+                            if (data == null)
+                                return '</strong>Not Assigned</strong>'
+                            else
+                                return data.fullName;
+                        }
+                    },
+                    {
+                        data: "course.title"
+                    },
+                    {
+                        data: "academicSemester.academicYear.etYear",
+                        render: function(data, type, courseOffering) {
+                            return data + ' EC';
+                        }
+                    },
+                    {
+                        data: "academicSemester.academicSemesterTitle"
+                    },
+                    {
+                        data: '',
+                        render: function (data, type, courseOffering) {
+                            return '<a href="CourseOfferings/Assign/' + courseOffering.id + '"> Assign Instructor</a>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>    
+}

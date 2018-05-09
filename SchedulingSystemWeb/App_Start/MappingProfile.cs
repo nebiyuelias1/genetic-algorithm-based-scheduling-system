@@ -26,6 +26,8 @@ namespace SchedulingSystemWeb.App_Start
             Mapper.CreateMap<Day, DayDto>();
             Mapper.CreateMap<ScheduleEntry, ScheduleEntryDto>();
             Mapper.CreateMap<Schedule, ScheduleDto>();
+            Mapper.CreateMap<AcademicSemester, AcademicSemesterDto>();
+            Mapper.CreateMap<AcademicYear, AcademicYearDto>();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace SchedulingSystemWeb.Controllers.Api
         {
             var instructors = _context
                                 .Instructors
-                                .Where(i => i.DepartmentId == id && i.AccountId == null)
+                                .Where(i => i.DepartmentId == id)
                                 .Select(Mapper.Map<Instructor, InstructorDto>);
 
             return Ok(instructors);

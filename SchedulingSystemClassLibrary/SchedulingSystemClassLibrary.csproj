@@ -85,6 +85,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\AcademicSemesterDto.cs" />
+    <Compile Include="Dtos\AcademicYearDto.cs" />
     <Compile Include="Dtos\BuildingDto.cs" />
     <Compile Include="Dtos\CourseDto.cs" />
     <Compile Include="Dtos\CourseOfferingDto.cs" />
@@ -175,6 +177,22 @@
     <Compile Include="Migrations\201805081735118_ModifyAcademicYearsTable.cs" />
     <Compile Include="Migrations\201805081735118_ModifyAcademicYearsTable.Designer.cs">
       <DependentUpon>201805081735118_ModifyAcademicYearsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805092100143_ModifyCourseOfferingsTable.cs" />
+    <Compile Include="Migrations\201805092100143_ModifyCourseOfferingsTable.Designer.cs">
+      <DependentUpon>201805092100143_ModifyCourseOfferingsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805092142353_ModifySectionsTable.cs" />
+    <Compile Include="Migrations\201805092142353_ModifySectionsTable.Designer.cs">
+      <DependentUpon>201805092142353_ModifySectionsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805092244023_SeedDatabase.cs" />
+    <Compile Include="Migrations\201805092244023_SeedDatabase.Designer.cs">
+      <DependentUpon>201805092244023_SeedDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805092304508_SeedUsers.cs" />
+    <Compile Include="Migrations\201805092304508_SeedUsers.Designer.cs">
+      <DependentUpon>201805092304508_SeedUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AcademicSemester.cs" />
     <Compile Include="Models\AcademicYear.cs" />
@@ -285,11 +303,13 @@
     <Compile Include="ViewModels\ChangeDepartmentHeadViewModel.cs" />
     <Compile Include="ViewModels\CollegeDeanHomeViewModel.cs" />
     <Compile Include="ViewModels\CourseOfferingsFormViewModel.cs" />
+    <Compile Include="ViewModels\CourseOfferingsViewModel.cs" />
     <Compile Include="ViewModels\CoursesFormViewModel.cs" />
     <Compile Include="ViewModels\CreateDepartmentHeadAccountViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsIndexViewModel.cs" />
     <Compile Include="ViewModels\DepartmentHeadAccountsViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentHead\SectionsViewModel.cs" />
     <Compile Include="ViewModels\DepartmentInstructorsViewModel.cs" />
     <Compile Include="ViewModels\DepartmentSectionsViewModel.cs" />
     <Compile Include="ViewModels\DepartmentsFormViewModel.cs" />
@@ -406,6 +426,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805081735118_ModifyAcademicYearsTable.resx">
       <DependentUpon>201805081735118_ModifyAcademicYearsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805092100143_ModifyCourseOfferingsTable.resx">
+      <DependentUpon>201805092100143_ModifyCourseOfferingsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805092142353_ModifySectionsTable.resx">
+      <DependentUpon>201805092142353_ModifySectionsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805092244023_SeedDatabase.resx">
+      <DependentUpon>201805092244023_SeedDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805092304508_SeedUsers.resx">
+      <DependentUpon>201805092304508_SeedUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

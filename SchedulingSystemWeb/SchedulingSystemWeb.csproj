@@ -494,6 +494,11 @@
     <Content Include="Views\Semesters\Index.cshtml" />
     <Content Include="Views\Semesters\NewAcademicYear.cshtml" />
     <Content Include="Views\Home\DepartmentHeadHome.cshtml" />
+    <Content Include="Views\Sections\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\Sections\DepartmentHeadSectionForm.cshtml" />
+    <Content Include="Views\Buildings\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\Instructors\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\CourseOfferings\DepartmentHeadIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

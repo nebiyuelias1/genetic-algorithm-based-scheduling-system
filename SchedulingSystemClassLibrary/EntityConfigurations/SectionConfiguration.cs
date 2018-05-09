@@ -16,6 +16,8 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
                 .WithMany(d => d.Sections)
                 .HasForeignKey(s => s.DepartmentId)
                 .WillCascadeOnDelete(false);
+
+            this.Ignore(s => s.CurrentYear);
         }
     }
 }

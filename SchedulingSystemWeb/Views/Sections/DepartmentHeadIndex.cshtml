@@ -1,0 +1,119 @@
+﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.Section>
+
+@{
+    ViewBag.Title = "Sections";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            @if (Model.Count() > 0)
+            {
+                <h3>Sections in @Model.First().Department.Name Department</h3>
+            }
+            else
+            {
+                <h3>Sections in your Department</h3>
+            }
+            <h5>Total: @Model.Count()</h5>
+        </div>
+    </div>
+</header>
+
+<p>
+    @Html.ActionLink("Create New Section", "New", null, new { @class = "btn btn-primary" })
+</p>
+<table id="sections" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Year
+            </th>
+            <th>
+                Students Count
+            </th>
+            <th>
+                Lecture Room
+            </th>
+            <th>
+                Lab Room
+            </th>
+            <th>
+                Courses
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @((2010 - item.EntranceYear) + 1)
+                </td>
+                <td>
+                    @item.StudentCount
+                </td>
+                <td>
+                    @if (item.AssignedLectureRoom != null)
+                    {
+                        @item.AssignedLectureRoom.Name
+                    }
+                    else
+                    {
+                        <span>Not Assigned</span>
+                    }
+
+                </td>
+                <td>
+                    @if (item.AssignedLabRoom != null)
+                    {
+                        @item.AssignedLabRoom.Name
+                    }
+                    else
+                    {
+                        <span>Not Assigned</span>
+                    }
+                </td>
+                <td>
+                    <a href="/Sections/CourseOfferings/@item.Id">View courses</a>
+                </td>
+                <td>
+                    <a href="/Sections/Edit/@item.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+                    <button class="btn btn-danger js-delete" data-section-id="@item.Id" data-section-name="@item.Name"><i class="fa fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#sections').DataTable();
+
+            $('#sections').on('click', '.js-delete', function () {
+                var button = $(this);
+
+                bootbox.confirm('Are you sure you want to delete section <strong>' + button.attr('data-section-name') + '</strong>?', function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/sections/' + button.attr('data-section-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        })
+                    }
+                });
+            });
+        });
+    </script>
+}

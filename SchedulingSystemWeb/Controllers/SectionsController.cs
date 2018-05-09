@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity; 
+using System.Data.Entity;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
+using SchedulingSystemClassLibrary.ViewModels.DepartmentHead;
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -18,41 +21,98 @@ namespace SchedulingSystemWeb.Controllers
             _context = new SchedulingContext(); 
         }
         // GET: Sections
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var sections = _context
-                        .Sections
-                        .Include(s => s.Department)
-                        .Include(s => s.AssignedLectureRoom)
-                        .Include(s => s.AssignedLabRoom)
-                        .ToList(); 
+            if (User.IsInRole(RoleName.IsACollegeDean))
+            {
+                var sections = _context
+                                .Sections
+                                .Include(s => s.Department)
+                                .Include(s => s.AssignedLectureRoom)
+                                .Include(s => s.AssignedLabRoom)
+                                .ToList();
 
-            return View(sections);
+                return View(sections);
+            }
+            else
+            {
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+
+                var deptHead = user == null ? null : _context.Instructors.Include(i => i.Department).Single(i => i.AccountId == user.Id);
+
+                var sections = _context
+                                .Sections
+                                .Include(s => s.Department)
+                                .Include(s => s.AssignedLectureRoom)
+                                .Include(s => s.AssignedLabRoom)
+                                .Where(s => s.DepartmentId == deptHead.DepartmentId)
+                                .ToList();
+
+                return View("DepartmentHeadIndex", sections);
+            }
+            
         }
 
-        public ActionResult New()
+        public async Task<ActionResult> New()
         {
-            var departments = _context.Departments.ToList(); 
+            
 
-            var viewModel = new SectionsFormViewModel
+            if (User.IsInRole(RoleName.IsACollegeDean))
             {
-                Departments = departments
-            };
-            return View("SectionForm", viewModel);
+                var departments = _context.Departments.ToList();
+
+                var viewModel = new SectionsFormViewModel
+                {
+                    Departments = departments
+                };
+
+                return View("SectionForm", viewModel);
+            }
+            else
+            {
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var deptHead = user == null ? null : _context.Instructors.Include(i => i.Department).Single(i => i.AccountId == user.Id);
+
+                var viewModel = new SectionsFormViewModel
+                {
+                    DepartmentId = deptHead.DepartmentId
+                };
+
+                return View("DepartmentHeadSectionForm", viewModel);
+            }
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var section = _context.Sections.Single(s => s.Id == id); 
+            var section = _context.Sections.Single(s => s.Id == id);
 
-            var departments = _context.Departments.ToList();
-
-            var viewModel = new SectionsFormViewModel(section)
+            if (User.IsInRole(RoleName.IsACollegeDean))
             {
-                Departments = departments
-            };
+                var departments = _context.Departments.ToList();
 
-            return View("SectionForm", viewModel);
+                var viewModel = new SectionsFormViewModel(section)
+                {
+                    Departments = departments
+                };
+
+                return View("SectionForm", viewModel);
+            }
+            else
+            {
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var deptHead = user == null ? null : _context.Instructors.Include(i => i.Department).Single(i => i.AccountId == user.Id);
+
+                var viewModel = new SectionsFormViewModel(section)
+                {
+                    DepartmentId = deptHead.DepartmentId
+                };
+
+                return View("DepartmentHeadSectionForm", viewModel);
+            }
+            
         }
 
         [HttpPost]

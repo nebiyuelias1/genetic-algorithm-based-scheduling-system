@@ -75,7 +75,8 @@
                 method: 'GET',
                 success: function (data) {
                     $.each(data, function (i, instructor) {
-                        instructors.append('<option value="' + instructor.id + '">' + instructor.fullName + '<option')
+                        if (instructor.accountId == null)
+                            instructors.append('<option value="' + instructor.id + '">' + instructor.fullName + '<option')
                     });
                 }
             });
@@ -91,7 +92,8 @@
                     method: 'GET',
                     success: function (data) {
                         $.each(data, function (i, instructor) {
-                            instructors.append('<option value="'+ instructor.id +'">' + instructor.fullName + '<option')
+                            if (instructor.accountId == null)
+                                instructors.append('<option value="' + instructor.id + '">' + instructor.fullName + '<option')
                         });
                     }
                 });

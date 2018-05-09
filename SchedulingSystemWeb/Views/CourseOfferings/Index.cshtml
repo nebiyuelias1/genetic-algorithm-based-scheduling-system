@@ -1,22 +1,29 @@
-﻿
+﻿@model SchedulingSystemClassLibrary.ViewModels.CourseOfferingsViewModel
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Course Offerings";
 }
 
-<h2>Index</h2>
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Course Offerings in your College</h3>
+            <h5>Total: @Model.CourseOfferingsCount</h5>
+        </div>
+    </div>
+</header>
 
-<p>
-    @Html.ActionLink("Create New", "New")
-</p>
 <table id="courseofferings" class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>Course Offering Name</th>
+            <th>Course Title</th>
             <th>Section</th>
+            <th>Department</th>
             <th>Instructor</th>
             <th>Course</th>
             <th>Year</th>
             <th>Semester</th>
+            <th></th>
         </tr>
     </thead>
     
@@ -37,10 +44,10 @@
                 },
                 columns: [
                     {
-                        data: "name",
-                        render: function (data, type, courseOffering) {
-                            return '<a href="CourseOfferings/Assign/' + courseOffering.id + '">' + courseOffering.name + '</a>';
-                        }
+                        data: "name"
+                    },
+                    {
+                        data: "section.department.name"
                     },
                     {
                         data: "section.name"
@@ -56,7 +63,8 @@
                     },
                     {
                         data: "semester"
-                    }
+                    },
+                    
                 ]
             });
         });

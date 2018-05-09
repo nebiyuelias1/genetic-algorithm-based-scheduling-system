@@ -21,11 +21,25 @@ namespace SchedulingSystemWeb.Controllers
             _context = new SchedulingContext(); 
         }
         // GET: Courses
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var courses = _context.Courses.Include(c => c.Curriculum).ToList(); 
+            if (User.IsInRole(RoleName.IsACollegeDean))
+            {
+                var courses = _context.Courses.Include(c => c.Curriculum).ToList();
 
-            return View(courses);
+                return View(courses);
+            }
+            else if (User.IsInRole(RoleName.IsADepartmentHead))
+            {
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var deptId = _context.Instructors.SingleOrDefault(i => i.AccountId == user.Id).DepartmentId; 
+
+                var courses = _context.Courses.Include(c => c.Curriculum.Department).Where(c => c.Curriculum.DepartmentId == deptId).ToList();
+                return View(courses);
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
         public async Task<ActionResult> New()
@@ -57,20 +71,40 @@ namespace SchedulingSystemWeb.Controllers
                 return View("CourseForm", viewModel);
             }
 
-            return RedirectToAction("Login", "Accounts");
+            return RedirectToAction("Login", "Account");
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var course = _context.Courses.Single(c => c.Id == id); 
-            var curriculums = _context.Curriculums.ToList();
-
-            var viewModel = new CoursesFormViewModel(course)
+            var course = _context.Courses.Single(c => c.Id == id);
+            if (User.IsInRole(RoleName.IsACollegeDean))
             {
-                Curriculums = curriculums
-            };
+                var curriculums = _context.Curriculums.ToList();
 
-            return View("CourseForm", viewModel);
+                var viewModel = new CoursesFormViewModel(course)
+                {
+                    Curriculums = curriculums
+                };
+
+                return View("CourseForm", viewModel);
+            }
+            else if (User.IsInRole(RoleName.IsADepartmentHead))
+            {
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var deptHead = _context.Instructors.Single(i => i.AccountId == user.Id);
+
+                var curriculums = _context.Curriculums.Where(c => c.DepartmentId == deptHead.DepartmentId).ToList();
+
+                var viewModel = new CoursesFormViewModel(course)
+                {
+                    Curriculums = curriculums
+                };
+
+                return View("CourseForm", viewModel);
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]

@@ -16,7 +16,7 @@ namespace SchedulingSystemClassLibrary.Models
         public int? InstructorId { get; set; }
         public Course Course { get; set; }
         public int CourseId { get; set; }
-        public int Year { get; set; }
-        public int Semester { get; set; }
+        public AcademicSemester AcademicSemester { get; set; }
+        public int AcademicSemesterId { get; set; }
     }
 }
