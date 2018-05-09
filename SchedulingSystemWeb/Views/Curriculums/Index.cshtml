@@ -1,15 +1,29 @@
-﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.Curriculum>
+﻿@model SchedulingSystemClassLibrary.ViewModels.CurriculumsIndexViewModel
 
 @{
-    ViewBag.Title = "Index";
-}
+    ViewBag.Title = "Curriculums";
+} 
 
-<h2>Index</h2>
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            @if (Model.DepartmentName != null)
+            {
+                <h3>Curriculums in @Model.DepartmentName Department</h3>
+                <h5>Total: @Model.CurriculumsCount</h5>
+            }
+            else
+            {
+                <h3>Curriculums</h3>
+            }
+        </div>
+    </div>
+</header>
 
 <p>
-    @Html.ActionLink("Create New Curriculum", "New")
+    @Html.ActionLink("Create New Curriculum", "New", null, new { @class = "btn btn-primary"})
 </p>
-<table id="curriculums" class="table table-bordered table-responsive table-hover">
+<table id="curriculums" class="table table-bordered table-hover table-striped">
     <thead>
         <tr>
             <th>
@@ -34,10 +48,6 @@
                 Minimum Credit
             </th>
             <th>
-                Department
-            </th>
-            <th>
-                Delete
             </th>
         </tr>
     </thead>
@@ -51,16 +61,13 @@
         $(document).ready(function () {
             var table = $("#curriculums").DataTable({
                 ajax: {
-                    url: "/api/curriculums",
+                    url: "/api/curriculums/@Model.DepartmentId" ,
                     dataSrc: ""
                 },
                 columns:
                     [
                         {
-                            data: "fieldOfStudy",
-                            render: function(data, type, curriculum) {
-                                return "<a href='/curriculums/edit/" + curriculum.id + "'>" + data + "</a>";
-                            }
+                            data: "fieldOfStudy"
                         },
                         {
                             data: "nomenclature"
@@ -81,12 +88,10 @@
                             data: "minimumCredit"
                         },
                         {
-                            data: "department.name"
-                        },
-                        {
                             data: "id",
                             render: function(data) {
-                                return "<button class='btn-link js-delete' data-curriculum-id=" + data + ">Delete</button>";
+                                return '<a class="btn btn-success" href="/Curriculums/Edit/' + data + '"><i class="fa fa-edit"></i> Edit </a>' +
+                                ' <button class="btn btn-danger js-delete" data-curriculum-id="' + data + '"><i class="fa fa-trash"></i> Delete</button>';
                         }
                     }
                 ]

@@ -38,12 +38,6 @@ namespace SchedulingSystemClassLibrary.ViewModels
         [Display(Name = "Minimum Credit")]
         public int MinimumCredit { get; set; }
 
-        public Department Department { get; set; }
-
-        [Required]
-        [Display(Name = "Department")]
-        public int DepartmentId { get; set; }
-        public IEnumerable<Department> Departments { get; set; }
 
         public CurriculumsFormViewModel(Curriculum curriculum)
         {
@@ -54,7 +48,6 @@ namespace SchedulingSystemClassLibrary.ViewModels
             this.StayYear = curriculum.StayYear;
             this.FieldOfStudy = curriculum.FieldOfStudy;
             this.AdmissionClassification = curriculum.AdmissionClassification;
-            this.DepartmentId = curriculum.DepartmentId;
             this.MinimumCredit = curriculum.MinimumCredit;
         }
 

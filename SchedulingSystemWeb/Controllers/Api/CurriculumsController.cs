@@ -19,10 +19,11 @@ namespace SchedulingSystemWeb.Controllers.Api
         }
 
         // GET /api/curriculums
-        public IHttpActionResult GetCurriculums()
+        public IHttpActionResult GetCurriculums(int id)
         {
             var curriculums = _context.Curriculums
                 .Include(c => c.Department)
+                .Where(c => c.DepartmentId == id)
                 .ToList();
 
             return Ok(curriculums);

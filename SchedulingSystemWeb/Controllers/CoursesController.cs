@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using SchedulingSystemClassLibrary.ViewModels;
 using SchedulingSystemClassLibrary.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading.Tasks;
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -26,16 +28,36 @@ namespace SchedulingSystemWeb.Controllers
             return View(courses);
         }
 
-        public ActionResult New()
+        public async Task<ActionResult> New()
         {
-            var curriculums = _context.Curriculums.ToList();
-
-            var viewModel = new CoursesFormViewModel
+            if (User.IsInRole(RoleName.IsACollegeDean))
             {
-                Curriculums = curriculums
-            };
+                var curriculums = _context.Curriculums.ToList();
 
-            return View("CourseForm", viewModel);
+                var viewModel = new CoursesFormViewModel
+                {
+                    Curriculums = curriculums
+                };
+
+                return View("CourseForm", viewModel);
+            }
+            else if (User.IsInRole(RoleName.IsADepartmentHead))
+            {
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var deptHead = _context.Instructors.Single(i => i.AccountId == user.Id);
+
+                var curriculums = _context.Curriculums.Where(c => c.DepartmentId == deptHead.DepartmentId).ToList();
+
+                var viewModel = new CoursesFormViewModel
+                {
+                    Curriculums = curriculums
+                };
+
+                return View("CourseForm", viewModel);
+            }
+
+            return RedirectToAction("Login", "Accounts");
         }
 
         public ActionResult Edit(int id)
