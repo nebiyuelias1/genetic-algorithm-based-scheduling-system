@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Departments";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Departments</h3>
+            <h5>Click the links to view the schedule</h5>
+        </div>
+    </div>
+</header>
+
+
+<table id="departments" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number of Sections</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#departments').DataTable({
+                ajax: {
+                    url: "/api/departments",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, department) {
+                            return '<a href="/Schedules/ByDepartment/'+ department.id +'">' + data + '</a>';
+                        }
+                    },
+                    {
+                        data: "sections.length",
+                        render: function (data, type, department) {
+                            if (data > 0)
+                                return '<a href="/Schedules/Sections/' + department.id + '">' + data + '</a>';
+                            else
+                                return data;
+                        }
+                    },
+                ]
+            });
+        });
+    </script>
+}
+
+
+
+

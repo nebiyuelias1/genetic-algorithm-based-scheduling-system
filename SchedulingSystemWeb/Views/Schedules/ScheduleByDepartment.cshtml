@@ -1,0 +1,211 @@
+﻿@model SchedulingSystemClassLibrary.Models.Department
+
+@{
+    ViewBag.Title = "Schedule By Department";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Schedule for Department of @Model.Name</h3>
+            <h5>Total Sections: @Model.Sections.Count</h5>
+        </div>
+    </div>
+</header>
+
+<div id='calendar'></div>
+
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+
+            var events = [];
+            var resources = [];
+
+            $.ajax({
+                url: '/api/Schedules/1',
+                method: 'GET',
+                success: function (data) {
+                    $.each(data, function (k, schedule) {
+                        var year = 2011 - schedule.section.entranceYear;
+                        resources.push({
+                            id: schedule.sectionId,
+                            title: schedule.section.name + '(' + year + ')'
+                        });
+                        $.each(schedule.days, function (i, day) {
+                            $.each(day.periods, function (j, period) {
+                                events.push({
+                                    resourceId: schedule.sectionId,
+                                    title: period.course != null ? period.course.acronym : null,
+                                    description: period.course != null ? period.course.title : null,
+                                    start: moment().weekday(day.dayNumber + 1).set({
+                                        hour: determineStartHour(period.period),
+                                        minute: determineStartMinute(period.period),
+                                        second: 0
+                                    }),
+                                    end: moment().weekday(day.dayNumber + 1).set({
+                                        hour: determineEndHour(period.period),
+                                        minute: determineEndMinute(period.period),
+                                        second: 0
+                                    }),
+                                    color: period.course != null ? '#' + period.course.color.toString(16) : '#fbb202',
+                                    dayName: day.dayName,
+                                    periodData: period
+
+                                });
+                            });
+                        });
+                    });
+                    
+                    displaySchedule(events, resources);
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            });
+
+
+
+            function displaySchedule(events) {
+
+                $('#calendar').fullCalendar('destroy');
+                // page is now ready, initialize the calendar...
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    defaultView: 'agendaFiveDay', // options are: month, basicWeek, agendaWeek, agendaDay
+                    //defaultView: 'agendaFourDay',
+                    header: {
+                        left: 'prev,next today',
+                        right: 'agendaDay,agendaFiveDay,agendaWeek,month'
+                    },
+                    views: {
+                        agendaFiveDay: {
+                            type: 'agenda',
+                            duration: { days: 6 },
+                            // views that are more than a day will NOT do this behavior by default
+                            // so, we need to explicitly enable it
+                            //groupByResource: true
+
+                            //// uncomment this line to group by day FIRST with resources underneath
+                            groupByDateAndResource: true
+                        }
+                    },
+                    //defaultDate: '2018-03-12',
+                    contentHeight: 'auto',
+                    navLinks: true, // can click week names to navigate views
+                    columnHeaderFormat: 'dddd', // Determines the text that will be displayed on the calendar’s column headings
+                    allDaySlot: false, // Determines if the “all-day” slot is displayed at the top of the calendar
+                    allDayText: 'my-day', // The text titling the “all-day” slot at the top of the calendar.
+                    minTime: "02:30:00",
+                    maxTime: "11:30:00",
+                    slotDuration: "00:50:00",
+                    weekNumbers: false, //Determines if week numbers should be displayed on the calendar
+                    displayEventEnd: true, // Whether or not to display an event’s end time
+                    eventRender: function (event, element) {
+                        element.css("font-size", "1.2em");
+                        //element.css("padding", "15px");
+                    },
+                    weekends: false, // will hide Saturdays and Sundays
+                    //dayClick: function () {
+                    //    //alert('a day has been clicked!');
+                    //},
+                    resources: resources,
+                    events: events,
+
+                    eventClick: function (calEvent, jsEvent, view) {
+                        var period = calEvent.periodData.period + 1;
+                        $('#myModal #eventTitle').text(calEvent.dayName + '(' + period + ')');
+                        $('#myModal #courseTitle').val(calEvent.description);
+
+                        $('#myModal').modal('show');
+                    }
+                })
+            }
+        });
+
+        function determineStartHour(period) {
+            switch (period) {
+                case 0:
+                    return 2;
+                case 1:
+                    return 3;
+                case 2:
+                    return 4;
+                case 3:
+                    return 5;
+                case 4:
+                    return 7;
+                case 5:
+                    return 8;
+                case 6:
+                    return 9;
+                case 7:
+                    return 10;
+            }
+        }
+
+        function determineEndHour(period) {
+            switch (period) {
+                case 0:
+                    return 3;
+                case 1:
+                    return 4;
+                case 2:
+                    return 5;
+                case 3:
+                    return 6;
+                case 4:
+                    return 8;
+                case 5:
+                    return 9;
+                case 6:
+                    return 10;
+                case 7:
+                    return 11;
+            }
+        }
+
+        function determineStartMinute(period) {
+            switch (period) {
+                case 0:
+                    return 30;
+                case 1:
+                    return 25;
+                case 2:
+                    return 20;
+                case 3:
+                    return 15;
+                case 4:
+                    return 30;
+                case 5:
+                    return 25;
+                case 6:
+                    return 20;
+                case 7:
+                    return 15;
+            }
+        }
+
+        function determineEndMinute(period) {
+            switch (period) {
+                case 0:
+                    return 20;
+                case 1:
+                    return 15;
+                case 2:
+                    return 10;
+                case 3:
+                    return 5;
+                case 4:
+                    return 20;
+                case 5:
+                    return 15;
+                case 6:
+                    return 10;
+                case 7:
+                    return 5;
+            }
+        }
+    </script>    
+}

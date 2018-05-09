@@ -1,0 +1,101 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.CreateDepartmentHeadAccountViewModel
+@{
+    ViewBag.Title = "Create a Department Head Account";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Create a Department Head Account</h3>
+        </div>
+    </div>
+</header>
+
+@if (Model.Errors != null)
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <ul>
+            @foreach (var errorMessage in Model.Errors)
+            {
+                <li><strong>Error!</strong> @errorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@using (Html.BeginForm("CreateAccount", "Departments", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control", @id = "departments" })
+                @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InstructorId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="instructors" class="form-control" name="InstructorId" data-val="true" data-val-required="The Department Head field is required.">
+
+                </select>
+                @Html.ValidationMessageFor(model => model.InstructorId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, null, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-2">
+                <input type="submit" value="Create Account" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            var instructors = $('#instructors');
+            $.ajax({
+                url: '/api/instructors/' + $('#departments').val(),
+                method: 'GET',
+                success: function (data) {
+                    $.each(data, function (i, instructor) {
+                        instructors.append('<option value="' + instructor.id + '">' + instructor.fullName + '<option')
+                    });
+                }
+            });
+            
+
+            $('#departments').change(function () {
+                var department = $(this);
+                
+                instructors.empty();
+
+                $.ajax({
+                    url: '/api/instructors/' + department.val(),
+                    method: 'GET',
+                    success: function (data) {
+                        $.each(data, function (i, instructor) {
+                            instructors.append('<option value="'+ instructor.id +'">' + instructor.fullName + '<option')
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

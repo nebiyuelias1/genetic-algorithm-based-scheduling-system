@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Sections";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Sections in @Model.DepartmentName</h3>
+            <h5>Total: @Model.Sections.Count</h5>
+        </div>
+    </div>
+</header>
+
+<table id="sections" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Year
+            </th>
+            <th>
+                Section
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var section in Model.Sections)
+        {
+            <tr>
+                <td>
+                    @(section.Name)
+                </td>
+                <td>
+                    @($"{(2010 - section.EntranceYear) + 1}")
+                </td>
+                <td>
+                    @(section.StudentCount)
+                </td>
+                <td>
+                    @if (section.AssignedLectureRoom == null)
+                    {
+                        @("Not Assigned")
+                    }
+                    else
+                    {
+                        @(section.AssignedLectureRoom.Name)
+                    }
+                </td>
+                <td>
+                    @if (section.AssignedLabRoom == null)
+                    {
+                        @("Not Assigned")
+                    }
+                    else
+                    {
+                        @(section.AssignedLabRoom.Name)
+                    }
+                </td>
+                <td>
+                    @if (section.CourseOfferings != null)
+                    {
+                        <a href="/Sections/CourseOfferings/@(section.Id)">View courses</a>
+                    }
+                </td>
+                <td>
+                    <a href="/Sections/Edit/@(section.Id)" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+                    <button class="btn btn-danger js-delete" data-section-id="@(section.Id)"><i class="fa fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#sections").DataTable();
+
+            $('#sections').on('click', '.js-delete', function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this section?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/sections/' + button.attr('data-section-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                })
+            });
+        });
+    </script>
+}

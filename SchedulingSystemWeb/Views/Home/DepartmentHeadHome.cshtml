@@ -8,13 +8,10 @@
         <div class="page-header">
             <div>
                 <div class="h1">
-                    College of Computing
+                    Department of
 
                     <div class="pull-right h5">
                         <ul style="list-style:none;">
-                            <li class="text-right">
-                                <a class="" href="/Semesters">Set up new semester!</a>
-                            </li>
                             <li class="text-right">
                                 Academic Year:
                                 @if (Model.Semester != null)
@@ -27,7 +24,7 @@
                                 }
                             </li>
                             <li class="text-right">
-                                Semester: 
+                                Semester:
                                 @if (Model.Semester != null)
                                 {
                                     <span>@Model.Semester.AcademicSemesterTitle</span>
@@ -64,7 +61,6 @@
                         <span class="glyphicon glyphicon-cog"></span> Dashboard
                     </a>
                     <a href="/Courses" class="list-group-item list-group-item-action"><i class="fa fa-book" aria-hidden="true"></i> Courses <span class="badge">@Model.CoursesCount</span></a>
-                    <a href="/Departments" class="list-group-item list-group-item-action"><i class="fa fa-university" aria-hidden="true"></i> Departments <span class="badge">@Model.DepartmentsCount</span></a>
                     <a href="/Sections" class="list-group-item list-group-item-action"><i class="fa fa-users" aria-hidden="true"></i> Sections <span class="badge">@Model.SectionsCount</span></a>
                     <a href="/Buildings" class="list-group-item list-group-item-action"><i class="fa fa-building-o" aria-hidden="true"></i> Buildings <span class="badge">@Model.BuildingsCount</span></a>
                     <a href="/Instructors" class="list-group-item list-group-item-action"><i class="fa fa-user-o" aria-hidden="true"></i> Instructors <span class="badge">@Model.InstructorsCount</span></a>

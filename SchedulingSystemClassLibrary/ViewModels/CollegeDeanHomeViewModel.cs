@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchedulingSystemClassLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,6 @@ namespace SchedulingSystemClassLibrary.ViewModels
         public int RoomsCount { get; set; }
         public int CourseOfferingsCount { get; set; }
         public int DepartmentHeadsCount { get; set; }
+        public AcademicSemester Semester { get; set; }
     }
 }
