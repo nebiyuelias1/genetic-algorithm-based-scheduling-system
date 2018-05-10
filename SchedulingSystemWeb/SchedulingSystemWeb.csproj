@@ -499,6 +499,7 @@
     <Content Include="Views\Buildings\DepartmentHeadIndex.cshtml" />
     <Content Include="Views\Instructors\DepartmentHeadIndex.cshtml" />
     <Content Include="Views\CourseOfferings\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\Sections\AssignLectureRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

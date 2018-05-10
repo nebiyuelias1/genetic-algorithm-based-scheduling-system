@@ -309,6 +309,8 @@
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsIndexViewModel.cs" />
     <Compile Include="ViewModels\DepartmentHeadAccountsViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentHead\AssignRoomViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentHead\DepartmentHeadHomeViewModel.cs" />
     <Compile Include="ViewModels\DepartmentHead\SectionsViewModel.cs" />
     <Compile Include="ViewModels\DepartmentInstructorsViewModel.cs" />
     <Compile Include="ViewModels\DepartmentSectionsViewModel.cs" />

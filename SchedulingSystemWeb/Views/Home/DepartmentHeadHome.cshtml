@@ -1,4 +1,4 @@
-﻿@model SchedulingSystemClassLibrary.ViewModels.CollegeDeanHomeViewModel
+﻿@model SchedulingSystemClassLibrary.ViewModels.DepartmentHead.DepartmentHeadHomeViewModel
 @{
     ViewBag.Title = "Home";
 }
@@ -7,8 +7,8 @@
     <div class="container">
         <div class="page-header">
             <div>
-                <div class="h1">
-                    Department of
+                <div class="h2">
+                    Department of @Model.Department.Name
 
                     <div class="pull-right h5">
                         <ul style="list-style:none;">
@@ -65,7 +65,7 @@
                     <a href="/Sections" class="list-group-item list-group-item-action"><i class="fa fa-users" aria-hidden="true"></i> Sections <span class="badge">@Model.SectionsCount</span></a>
                     <a href="/Buildings" class="list-group-item list-group-item-action"><i class="fa fa-building-o" aria-hidden="true"></i> Buildings <span class="badge">@Model.BuildingsCount</span></a>
                     <a href="/Instructors" class="list-group-item list-group-item-action"><i class="fa fa-user-o" aria-hidden="true"></i> Instructors <span class="badge">@Model.InstructorsCount</span></a>
-                    <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Students <span class="badge">@Model.StudentsCount</span></a>
+                    <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Students <span class="badge">0</span></a>
                 </div>
             </div>
             <div class="col-md-9">

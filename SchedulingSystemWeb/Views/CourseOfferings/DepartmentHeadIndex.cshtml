@@ -21,8 +21,8 @@
         <tr>
             <th>Course Title</th>
             <th>Section</th>
+            <th>Year</th>
             <th>Instructor</th>
-            <th>Course</th>
             <th>Year</th>
             <th>Semester</th>
             <th></th>
@@ -52,6 +52,9 @@
                         data: "section.name"
                     },
                     {
+                        data: "section.currentYear"
+                    },
+                    {
                         data: "instructor",
                         render: function (data, type, courseOffering) {
                             if (data == null)
@@ -59,9 +62,6 @@
                             else
                                 return data.fullName;
                         }
-                    },
-                    {
-                        data: "course.title"
                     },
                     {
                         data: "academicSemester.academicYear.etYear",

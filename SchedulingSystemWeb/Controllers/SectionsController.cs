@@ -150,9 +150,41 @@ namespace SchedulingSystemWeb.Controllers
                         
             return View(section);
         }
-        public ActionResult Assign()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Assign(AssignRoomViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var sectionInDb = _context.Sections.Single(s => s.Id == model.SectionId);
+
+                if (model.LectureRoomId > 0)
+                {
+                    sectionInDb.AssignedLectureRoomId = model.LectureRoomId;
+                }
+                else if (model.LabRoomId > 0)
+                {
+                    sectionInDb.AssignedLabRoomId = model.LabRoomId;
+                }
+
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult AssignLectureRoom(int id)
+        {
+            var section = _context.Sections.Single(s => s.Id == id);
+            var rooms = _context.Rooms.Where(r => r.IsLectureRoom);
+            var viewModel = new AssignRoomViewModel
+            {
+                SectionId = id, 
+                Section = section, 
+                Rooms = rooms
+            };
+
+            return View(viewModel);
         }
         protected override void Dispose(bool disposing)
         {

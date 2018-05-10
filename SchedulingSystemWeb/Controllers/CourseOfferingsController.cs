@@ -100,7 +100,7 @@ namespace SchedulingSystemWeb.Controllers
 
             foreach (var section in sections)
             {
-                section.CurrentYear = (byte)((int.Parse(currentSemester.AcademicYear.EtYear) - section.EntranceYear) + 1);
+                //section.CurrentYear = (byte)((int.Parse(currentSemester.AcademicYear.EtYear) - section.EntranceYear) + 1);
                 var courses = _context
                                 .Courses
                                 .Where(c => c.DeliveryYear == section.CurrentYear && c.DeliverySemester == currentSemester.Semester);

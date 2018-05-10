@@ -24,6 +24,8 @@ namespace SchedulingSystemWeb.Controllers.Api
         // GET - /api/courseofferings
         public IHttpActionResult GetCourseOfferings()
         {
+            var currentSemester = _context.AcademicSemesters.SingleOrDefault(s => s.CurrentSemester);
+            
             var courseOfferings = _context.CourseOfferings
                                     .Include(c => c.Course)
                                     .Include(c => c.Instructor)

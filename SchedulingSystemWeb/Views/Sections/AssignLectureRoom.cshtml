@@ -1,0 +1,59 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.DepartmentHead.AssignRoomViewModel
+
+@{
+    ViewBag.Title = "Assign Lecture Room";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Assign Section to a Lecture Room</h3>
+            <h5><strong>Section:</strong> @Model.Section.Name</h5>
+            <h5><strong>Year:</strong> @Model.Section.CurrentYear</h5>
+        </div>
+    </div>
+</header>
+
+@using (Html.BeginForm("Assign", "Sections", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Section.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Section.Name, new { htmlAttributes = new { @class = "form-control", @disabled = "" } })
+                @Html.ValidationMessageFor(model => model.Section.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Section.CurrentYear, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Section.CurrentYear, new { htmlAttributes = new { @class = "form-control", @disabled = "" } })
+                @Html.ValidationMessageFor(model => model.Section.CurrentYear, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LectureRoomId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.LectureRoomId, new SelectList(Model.Rooms, "Id", "Name"), new { @class = "form-control"} )
+                @Html.ValidationMessageFor(model => model.LectureRoomId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.SectionId)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Assign" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
