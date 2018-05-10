@@ -32,6 +32,19 @@ namespace SchedulingSystemWeb.Controllers.Api
             return Ok(departments);
         }
 
+        // DELETE /api/departments/1 
+        [HttpDelete]
+        public void DeleteDepartment(int id)
+        {
+            var departmentInDb = _context.Departments.SingleOrDefault(x => x.Id == id);
+
+            if (departmentInDb == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            _context.Departments.Remove(departmentInDb);
+            _context.SaveChanges();
+        }
+
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();

@@ -481,6 +481,7 @@
     <Content Include="Views\Sections\CourseOfferings.cshtml" />
     <Content Include="Views\Instructors\CourseOfferings.cshtml" />
     <Content Include="Views\Instructors\Index.cshtml" />
+    <Content Include="Views\Instructors\InstructorForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

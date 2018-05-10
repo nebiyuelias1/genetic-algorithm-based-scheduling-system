@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity; 
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -20,7 +21,10 @@ namespace SchedulingSystemWeb.Controllers
         // GET: Rooms
         public ActionResult Index()
         {
-            var rooms = _context.Rooms.ToList(); 
+            var rooms = _context
+                        .Rooms
+                        .Include(r => r.Building)
+                        .ToList(); 
 
             return View(rooms);
         }
@@ -37,11 +41,17 @@ namespace SchedulingSystemWeb.Controllers
 
         public ActionResult Edit(int id)
         {
-            var room = _context.Rooms.Single(r => r.Id == id); 
+            var room = _context.Rooms.Single(r => r.Id == id);
+            var buildings = _context.Buildings.ToList();
+            var viewModel = new RoomsFormViewModel(room)
+            {
+               Buildings = buildings
 
-            return View("RoomForm", room);
+            };
+
+            return View("RoomForm", viewModel);
         }
-
+       
         [HttpPost]
         public ActionResult Save(Room room)
         {

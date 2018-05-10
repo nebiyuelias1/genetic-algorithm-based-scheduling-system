@@ -3,6 +3,7 @@
     ViewBag.Title = "Instructors";
 }
 
+
 <header>
     <div class="container-fluid">
         <div class="page-header">
@@ -11,6 +12,10 @@
         </div>
     </div>
 </header>
+
+<p>
+    @Html.ActionLink("Create New Instructor", "New", null, new { @class = "btn btn-primary" })
+</p>
 
 <table id="instructors" class="table table-bordered table-striped table-hover">
     <thead>
@@ -38,7 +43,11 @@
                 }
                 <td>@(totalCredit)</td>
                 <td>@instructor.Department.Name</td>
-                <td></td>
+                <td>
+                    <a href="/Instructors/Edit/@instructor.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+                    <button class="btn btn-danger js-delete" data-instructor-id="@instructor.Id" data-instructor-fullname="@instructor.FirstName @instructor.FatherName @instructor.GrandFatherName">
+                    <i class="fa fa-trash"></i> Delete</button>
+                </td>
             </tr>
         }
     </tbody>
@@ -49,6 +58,22 @@
     <script>
         $(document).ready(function () {
             var table = $('#instructors').DataTable();
+        });
+        
+        $('#instructors').on('click', '.js-delete', function () {
+            var button = $(this);
+
+            bootbox.confirm("Are you sure you want to delete the Instructor <strong>" + button.attr('data-instructor-fullName') + "</strong>?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '/api/instructors/' + button.attr('data-instructor-id'),
+                        method: 'DELETE',
+                        success: function () {
+                            location.reload(true);
+                        }
+                    });
+                }
+            });
         });
     </script>
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity; 
 
 namespace SchedulingSystemWeb.Controllers.Api
 {
@@ -30,10 +31,16 @@ namespace SchedulingSystemWeb.Controllers.Api
         [HttpDelete]
         public void DeleteRoom(int id)
         {
-            var roomInDb = _context.Rooms.SingleOrDefault(x => x.Id == id);
+            var roomInDb = _context.Rooms
+            .Include(r => r.AssignedLabSections)
+            .Include(r => r.AssignedLectureSections)
+            .SingleOrDefault(x => x.Id == id);
 
             if (roomInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            roomInDb.AssignedLabSections = null;
+            roomInDb.AssignedLectureSections = null; 
 
             _context.Rooms.Remove(roomInDb);
             _context.SaveChanges();

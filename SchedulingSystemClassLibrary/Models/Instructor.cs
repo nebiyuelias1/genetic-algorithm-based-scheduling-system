@@ -9,8 +9,6 @@ namespace SchedulingSystemClassLibrary.Models
     public class Instructor
     {
         public int Id { get; set; }
-        //public Employee Employee { get; set; }
-        //public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string FatherName { get; set; }
         public string GrandFatherName { get; set; }

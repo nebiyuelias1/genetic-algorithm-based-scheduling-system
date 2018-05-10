@@ -15,6 +15,7 @@
             <th>Number of Instructors</th>
             <th>Number of Sections</th>
             <th>Department Head</th>
+            <th></th>
         </tr>
     </thead>
 
@@ -35,10 +36,7 @@
                 },
                 columns: [
                     {
-                        data: "name",
-                        render: function (data, type, department) {
-                            return '<a href="/Departments/Edit/' + department.id + '">' + department.name + '</a>';
-                        }
+                        data: "name"
                     },
                     {
                         data: "instructors.length",
@@ -61,7 +59,30 @@
                     {
                         data: "departmentHead"
                     },
+                    {
+                        data: 'id',
+                        render: function (data, type, department) {
+                            return '<a href="/Departments/Edit/' + data + '" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>' +
+                            ' <button class="btn btn-danger js-delete" data-department-id="' + data + '" data-department-name="' + department.name
+                            + '"><i class="fa fa-trash"></i> Delete</button>';
+                        }
+                    }
                 ]
+            });
+
+            $('#departments').on('click', '.js-delete', function () {
+                var button = $(this);
+                bootbox.confirm('Are you sure you want to delete <strong>' + button.attr('data-department-name') + '</strong> Department?', function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/departments/' + button.attr('data-department-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>

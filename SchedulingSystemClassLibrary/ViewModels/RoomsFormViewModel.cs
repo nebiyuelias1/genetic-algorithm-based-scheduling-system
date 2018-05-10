@@ -19,8 +19,12 @@ namespace SchedulingSystemClassLibrary.ViewModels
         [Display(Name = "Building")]
         [Required]
         public int BuildingId { get; set; }
+        
+        [Range(1, 300)]
+        [Required]
+        [Display(Name = "Room Size")]
         public int Size { get; set; }
-        // TODO - should you add IsLab, IsShared properties? 
+        
         [Display(Name = "Is this a Lab room?")]
         public bool IsLabRoom { get; set; }
         [Display(Name = "Is this a Lecture room?")]
@@ -30,6 +34,15 @@ namespace SchedulingSystemClassLibrary.ViewModels
         public RoomsFormViewModel()
         {
 
+        }
+        public RoomsFormViewModel(Room room)
+        {
+            this.Name = room.Name;
+            this.BuildingId = room.BuildingId;
+            this.Size = room.Size;
+            this.IsLabRoom = room.IsLabRoom;
+            this.IsLectureRoom = room.IsLectureRoom;
+       
         }
     }
 }

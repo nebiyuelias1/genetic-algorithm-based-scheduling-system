@@ -9,22 +9,24 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dissmiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><span id="eventTitle"></span></h4>
+
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="courseTitle">Course Title</label>
-                    <input class="form-control" type="text" id="courseTitle" disabled />
+                    <div id="classType" class="pull-right">Lecture</div>
+                    <label for="courseTitle">Course Title</label> 
+                     <input class="form-control" type="text" id="courseTitle" disabled />
+                    <label for="instrucotr">Instructor Name</label>  
+                    <input class="form-control" type="text" id="instructorName" disabled />
+                    <label for="room">Room</label> 
+                    <input class="form-control" type="text" id="Room" disabled />
+                    
+                    
+                   
                 </div>
 
-
-                <div class="checkbox checkbox-inline">
-                    <label>
-                        <input type="checkbox" id="isLabCheckBox" disabled />
-                        is Lecture?
-                    </label>
-                </div>
             </div>
         </div>
     </div>
@@ -50,6 +52,8 @@
                             events.push({
                                 title: period.course != null ? period.course.acronym : null,
                                 description: period.course != null ? period.course.title : null,
+
+                                //description:period.instructor !=null ? period.instructor.name:null,
                                 start: moment().weekday(day.dayNumber + 1).set({
                                     hour: determineStartHour(period.period),
                                     minute: determineStartMinute(period.period),
@@ -121,7 +125,11 @@
                         var period = calEvent.periodData.period + 1;
                         $('#myModal #eventTitle').text(calEvent.dayName + '(' + period + ')');
                         $('#myModal #courseTitle').val(calEvent.description);
-
+                        $('#myModal #instructorName').val(calEvent.periodData.instructor.fullName)
+                        $('#myModal #Room').val(calEvent.periodData.room.name)
+                        if (calEvent.isLab) {
+                            $('#classType').html('Lab');
+                        }
                         $('#myModal').modal('show');
                     }
 

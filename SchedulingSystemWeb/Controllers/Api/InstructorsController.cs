@@ -41,6 +41,16 @@ namespace SchedulingSystemWeb.Controllers.Api
 
             return Ok(instructors); 
         }
+        public void DeleteInstructor(int id)
+        {
+            var instructorInDb = _context.Instructors.SingleOrDefault(x => x.Id == id);
+
+            if (instructorInDb == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            _context.Instructors.Remove(instructorInDb);
+            _context.SaveChanges();
+        }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose(); 

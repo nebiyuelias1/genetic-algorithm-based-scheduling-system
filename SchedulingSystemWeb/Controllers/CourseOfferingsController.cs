@@ -24,7 +24,15 @@ namespace SchedulingSystemWeb.Controllers
         {
             return View();
         }
-
+       /* public ActionResult New()
+        {
+            var instructors = _context.Instructors.ToList();
+            var viewModel = new CourseOfferingsFormViewModel
+            {
+                Instructors = instructors
+            };
+            return View("CourseOfferingForm", viewModel);
+        }*/
         public ActionResult Assign(int id)
         {
             var courseOffering = _context.CourseOfferings

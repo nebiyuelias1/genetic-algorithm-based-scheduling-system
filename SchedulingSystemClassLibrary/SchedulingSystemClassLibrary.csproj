@@ -275,6 +275,7 @@
     <Compile Include="ViewModels\DepartmentsFormViewModel.cs" />
     <Compile Include="ViewModels\InstructorAccountViewModel.cs" />
     <Compile Include="ViewModels\InstructorCourseOfferingsViewModel.cs" />
+    <Compile Include="ViewModels\InstructorsFormViewModel.cs" />
     <Compile Include="ViewModels\RoomsFormViewModel.cs" />
     <Compile Include="ViewModels\SectionsFormViewModel.cs" />
   </ItemGroup>

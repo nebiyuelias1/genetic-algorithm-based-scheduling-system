@@ -34,6 +34,32 @@ namespace SchedulingSystemWeb.Controllers.Api
 
             return Ok(buildings); 
         }
+
+        // DELETE - /api/buildings 
+        [HttpDelete]
+        public void DeleteBuildings(int id) 
+        {
+            var buildingInDb = _context
+                                .Buildings
+                                .Include(b => b.Rooms.Select(r => r.AssignedLectureSections))
+                                .Include(b => b.Rooms.Select(r => r.AssignedLabSections))
+                                .SingleOrDefault(x => x.Id == id);
+
+            if (buildingInDb == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            
+            var rooms = buildingInDb.Rooms;
+            buildingInDb.Rooms = null;
+            foreach (var room in rooms)
+            {
+                room.AssignedLabSections = null;
+                room.AssignedLectureSections = null;
+                _context.Rooms.Remove(room);
+            }
+            _context.Buildings.Remove(buildingInDb);
+            _context.SaveChanges();
+        }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose(); 

@@ -44,6 +44,7 @@
 </table>
 
 @section scripts
+
 {
     <script>
         /* Formatting function for row details - modify as you need */
@@ -114,7 +115,8 @@
                         data: 'id',
                         render: function (data, type, building) {
                             return '<a href="/Buildings/Edit/' + data + '" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a> '
-                                    + '<button class="btn btn-danger js-delete" data-building-id="' + building.Id + '"><i class="fa fa-trash"></i> Delete</button>';
+                                    + '<button class="btn btn-danger js-delete" data-building-id="' +
+                                     building.id + '"><i class="fa fa-trash"></i> Delete</button>';
                         }
                     }
                 ],
@@ -136,6 +138,22 @@
                     row.child(format(row.data())).show();
                     tr.addClass('shown');
                 }
+            });
+           
+            $('#buildings').on('click', '.js-delete', function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this building?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/buildings/' + button.attr('data-building-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>

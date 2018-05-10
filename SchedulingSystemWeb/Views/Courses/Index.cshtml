@@ -48,7 +48,7 @@
             </th>
             <th class="col-sm-2"></th>
         </tr>
-    </thead>
+    <thead>
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -80,7 +80,8 @@
         </td>
         <td>
             <a href="/Courses/Edit/@item.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-            <button class="btn btn-danger js-delete" data-course-id="@item.Id" data-course-title="@item.Title"><i class="fa fa-trash"></i> Delete</button>
+            <button class="btn btn-danger js-delete" data-course-id="@item.Id" data-course-title="@item.Title">
+            <i class="fa fa-trash"></i> Delete</button>
         </td>
     </tr>
 }
@@ -92,22 +93,25 @@
     <script>
         $(document).ready(function () {
             var table = $('#courses').DataTable();
-        });
+            $('#courses').on('click', '.js-delete', function () {
+                var button = $(this);
 
-        $('#courses').on('click', '.js-delete', function () {
-            var button = $(this);
-
-            bootbox.confirm("Are you sure you want to delete the course <strong>" + button.attr('data-course-title') + "</strong>?", function (result) {
-                if (result) {
-                    $.ajax({
-                        url: '/api/courses/' + button.attr('data-course-id'),
-                        method: 'DELETE',
-                        success: function() {
-                            location.reload(true);
-                        }
-                    });
-                }
+                bootbox.confirm("Are you sure you want to delete the course <strong>" + button.attr('data-course-title') + "</strong>?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/courses/' + button.attr('data-course-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                });
             });
+           
         });
+       
+
+       
     </script>    
 }
