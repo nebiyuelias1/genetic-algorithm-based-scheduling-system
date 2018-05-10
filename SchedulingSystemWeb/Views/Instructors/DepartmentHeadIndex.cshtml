@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.Instructor>
+@{
+    ViewBag.Title = "Instructors";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            @if (Model.Count() > 0)
+            {
+                <h3>Instructors in @Model.First().Department.Name Departmentt</h3>
+            }
+            else
+            {
+                <h3>Instructors in your Department</h3>
+            }
+
+            <h5>Total: @Model.Count()</h5>
+        </div>
+    </div>
+</header>
+
+<table id="instructors" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Total Course Offerings</th>
+            <th>Credit Load</th>
+            <th>Preference</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var instructor in Model)
+        {
+            <tr>
+                <td>@instructor.FullName</td>
+                <td><a href="/Instructors/CourseOfferings/@instructor.Id">@instructor.CurrentlyAssignedCourses.Count</a></td>
+                @{
+                    var totalCredit = 0;
+                }
+                @foreach (var courseOffering in instructor.CurrentlyAssignedCourses)
+                {
+                    totalCredit += courseOffering.Course.Credit;
+
+                }
+                <td>@(totalCredit)</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#instructors').DataTable();
+        });
+    </script>
+}

@@ -19,9 +19,13 @@ namespace SchedulingSystemWeb.Controllers
         // GET: Buildings
         public ActionResult Index()
         {
-            var buildings = _context.Buildings.ToList(); 
+            var buildings = _context.Buildings.ToList();
 
-            return View(buildings);
+            if (User.IsInRole(RoleName.IsACollegeDean))
+            {
+                return View(buildings);
+            }
+            return View("DepartmentHeadIndex", buildings);
         }
 
         public ActionResult New()

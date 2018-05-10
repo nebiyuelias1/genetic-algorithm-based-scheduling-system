@@ -41,6 +41,16 @@ namespace SchedulingSystemWeb.Controllers.Api
 
             return Ok(instructors); 
         }
+
+        public IHttpActionResult GetInstructorsInADepartment(int id)
+        {
+            var instructors = _context
+                                .Instructors
+                                .Where(i => i.DepartmentId == id)
+                                .Select(Mapper.Map<Instructor, InstructorDto>);
+
+            return Ok(instructors);
+        }
         public void DeleteInstructor(int id)
         {
             var instructorInDb = _context.Instructors.SingleOrDefault(x => x.Id == id);

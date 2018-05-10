@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity; 
 
 namespace SchedulingSystemClassLibrary.Models
 {
@@ -32,5 +33,21 @@ namespace SchedulingSystemClassLibrary.Models
         public Room AssignedLabRoom { get; set; }
         public int? AssignedLabRoomId { get; set; }
         public List<CourseOffering> CourseOfferings { get; set; }
+
+        public byte CurrentYear {
+            get 
+            {
+                using (var context = new SchedulingContext())
+                {
+                    var currentSemester = context
+                                        .AcademicSemesters
+                                        .Include(a => a.AcademicYear)
+                                        .Single(s => s.CurrentSemester);
+
+                    return (byte)((int.Parse(currentSemester.AcademicYear.EtYear) - this.EntranceYear) + 1);
+                }
+
+            }
+        }
     }
 }

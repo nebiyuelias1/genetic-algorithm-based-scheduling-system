@@ -1,0 +1,71 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.ChangeDepartmentHeadViewModel
+
+@{
+    ViewBag.Title = $"Change Head for {Model.Name} Department";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Change Department Head</h3>
+            <h5>For @Model.Name Department</h5>
+            <h5>Current Department Head: @Model.OldDepartmentHead.FullName</h5>
+            <h5>Total Instructors: @Model.Instructors.Count</h5>
+        </div>
+    </div>
+</header>
+
+@if (Model.Errors != null)
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <ul>
+            @foreach (var errorMessage in Model.Errors)
+            {
+                <li><strong>Error!</strong> @errorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@using (Html.BeginForm("ChangeHead", "Departments", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentHeadId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DepartmentHeadId, new SelectList(Model.Instructors, "Id", "FullName"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DepartmentHeadId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.OldDepartmentHead.Id)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

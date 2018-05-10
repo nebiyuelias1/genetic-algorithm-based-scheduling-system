@@ -13,6 +13,7 @@ using SchedulingSystemClassLibrary.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SchedulingSystemClassLibrary.ViewModels;
 using SchedulingSystemClassLibrary;
+using System.Data.Entity; 
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -21,9 +22,10 @@ namespace SchedulingSystemWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private SchedulingContext _context; 
         public AccountController()
         {
+            _context = new SchedulingContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -157,6 +159,7 @@ namespace SchedulingSystemWeb.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -416,9 +419,18 @@ namespace SchedulingSystemWeb.Controllers
             return View();
         }
 
-        public ActionResult CreateAccountForInstructor()
+        public async Task<ActionResult> CreateAccountForInstructor()
         {
-            return View(new InstructorAccountViewModel());
+            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var deptHead = user == null ? null : _context.Instructors.Include(i => i.Department.Instructors).Single(i => i.AccountId == user.Id);
+
+            var viewModel = new InstructorAccountViewModel
+            {
+                Department = deptHead.Department
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -517,6 +529,12 @@ namespace SchedulingSystemWeb.Controllers
                 {
                     _signInManager.Dispose();
                     _signInManager = null;
+                }
+
+                if (_context != null)
+                {
+                    _context.Dispose();
+                    _context = null;
                 }
             }
 

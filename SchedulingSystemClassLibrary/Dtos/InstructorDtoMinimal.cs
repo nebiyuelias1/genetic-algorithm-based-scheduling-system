@@ -13,5 +13,13 @@ namespace SchedulingSystemClassLibrary.Dtos
         public string FatherName { get; set; }
         public string GrandFatherName { get; set; }
         public int DepartmentId { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {FatherName} {GrandFatherName}";
+            }
+        }
     }
 }

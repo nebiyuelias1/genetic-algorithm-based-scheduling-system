@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity; 
 
 namespace SchedulingSystemClassLibrary.Dtos
 {
@@ -16,5 +17,7 @@ namespace SchedulingSystemClassLibrary.Dtos
         public int DepartmentId { get; set; }
         public int? AssignedLectureRoomId { get; set; }
         public int? AssignedLabRoomId { get; set; }
+        public byte CurrentYear { get; set; }
+
     }
 }

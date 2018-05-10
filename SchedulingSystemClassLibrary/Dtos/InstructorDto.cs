@@ -17,5 +17,13 @@ namespace SchedulingSystemClassLibrary.Dtos
         public string AccountId { get; set; }
         public string FullName { get; set; }
 
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {FatherName} {GrandFatherName}";
+            }
+        }
+
     }
 }

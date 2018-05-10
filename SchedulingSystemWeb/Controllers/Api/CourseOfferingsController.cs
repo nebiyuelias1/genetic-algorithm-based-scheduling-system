@@ -24,14 +24,33 @@ namespace SchedulingSystemWeb.Controllers.Api
         // GET - /api/courseofferings
         public IHttpActionResult GetCourseOfferings()
         {
+            var currentSemester = _context.AcademicSemesters.SingleOrDefault(s => s.CurrentSemester);
+            
             var courseOfferings = _context.CourseOfferings
                                     .Include(c => c.Course)
                                     .Include(c => c.Instructor)
-                                    .Include(c => c.Section)
+                                    .Include(c => c.Section.Department)
+                                    .Include(c => c.AcademicSemester.AcademicYear)
+                                    .Where(c => c.AcademicSemester.CurrentSemester)
                                     .ToList()
                                     .Select(Mapper.Map<CourseOffering, CourseOfferingDto>);
 
             return Ok(courseOfferings); 
+        }
+
+        // GET - /api/courseofferings/id
+        public IHttpActionResult GetCourseOfferingsForDepartment(int id)
+        {
+            var courseOfferings = _context.CourseOfferings
+                                    .Include(c => c.Course.Curriculum)
+                                    .Include(c => c.Instructor)
+                                    .Include(c => c.Section.Department)
+                                    .Include(c => c.AcademicSemester.AcademicYear)
+                                    .Where(c => c.AcademicSemester.CurrentSemester && c.Course.Curriculum.DepartmentId == id)
+                                    .ToList()
+                                    .Select(Mapper.Map<CourseOffering, CourseOfferingDto>);
+
+            return Ok(courseOfferings);
         }
 
         protected override void Dispose(bool disposing)

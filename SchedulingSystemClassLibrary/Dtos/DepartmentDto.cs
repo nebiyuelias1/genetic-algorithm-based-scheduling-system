@@ -12,7 +12,7 @@ namespace SchedulingSystemClassLibrary.Dtos
         public string Name { get; set; }
         public List<SectionDtoMinimal> Sections { get; set; }
         public List<InstructorDtoMinimal> Instructors { get; set; }
-        public InstructorDto DepartmentHead { get; set; }
+        public InstructorDtoMinimal DepartmentHead { get; set; }
         public int? DepartmentHeadId { get; set; }
     }
 }

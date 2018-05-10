@@ -3,7 +3,16 @@
     ViewBag.Title = "CreateAccountForInstructor";
 }
 
-<h2>CreateAccountForInstructor</h2>
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Create Account for Instructors</h3>
+            <h5>Department: @Model.Department.Name</h5>
+            <h5>Total Instructors: @Model.Department.Instructors.Count()</h5>
+        </div>
+    </div>
+</header>
+
 @if (Model.ErrorMessages != null)
 {
     <div class="alert alert-danger">
@@ -64,13 +73,12 @@
     </div>
 </div>
 
-<table id="instructors" class="table">
+<table id="instructors" class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
             <th>First Name</th>
             <th>Father Name</th>
             <th>Grand Father Name</th>
-            <th>Department</th>
             <th></th>
         </tr>
     </thead>
@@ -84,7 +92,7 @@
         $(document).ready(function () {
             var table = $("#instructors").DataTable({
                 ajax: {
-                    url: "/api/instructors",
+                    url: "/api/instructors/@Model.Department.Id",
                     method: "GET",
                     dataSrc: ""
                 },
@@ -100,10 +108,6 @@
                     {
                         className: 'grandFatherName',
                         data: 'grandFatherName'
-                    },
-                    {
-                        className: 'department',
-                        data: 'department.name'
                     },
                     {
                         data: '',

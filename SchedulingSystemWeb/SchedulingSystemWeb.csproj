@@ -205,6 +205,7 @@
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Controllers\SectionsController.cs" />
+    <Compile Include="Controllers\SemestersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -328,6 +329,7 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\FullCalendar\scheduler.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -409,6 +411,7 @@
     <Content Include="Scripts\DataTables\responsive.foundation.min.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
+    <Content Include="Scripts\FullCalendar\scheduler.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -473,7 +476,6 @@
     <Content Include="Views\Account\Confirm.cshtml" />
     <Content Include="Views\Account\EmailConfirmation.cshtml" />
     <Content Include="Views\Home\CollegeDeanHome.cshtml" />
-    <Content Include="Views\Home\CollegeDeanHome.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Departments\DepartmentForm.cshtml" />
     <Content Include="Views\Departments\Instructors.cshtml" />
@@ -481,13 +483,28 @@
     <Content Include="Views\Sections\CourseOfferings.cshtml" />
     <Content Include="Views\Instructors\CourseOfferings.cshtml" />
     <Content Include="Views\Instructors\Index.cshtml" />
+    <Content Include="Views\Departments\AssignHead.cshtml" />
+    <Content Include="Views\Departments\Account.cshtml" />
+    <Content Include="Views\Departments\ChangeHead.cshtml" />
+    <Content Include="Views\Schedules\Departments.cshtml" />
+    <Content Include="Views\Schedules\ScheduleByDepartment.cshtml" />
+    <Content Include="Views\Schedules\Sections.cshtml" />
+    <Content Include="Views\Departments\NewAccount.cshtml" />
+    <Content Include="Views\Departments\DepartmentHeadAccountCreated.cshtml" />
+    <Content Include="Views\Semesters\Index.cshtml" />
+    <Content Include="Views\Semesters\NewAcademicYear.cshtml" />
+    <Content Include="Views\Home\DepartmentHeadHome.cshtml" />
+    <Content Include="Views\Sections\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\Sections\DepartmentHeadSectionForm.cshtml" />
+    <Content Include="Views\Buildings\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\Instructors\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\CourseOfferings\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\Sections\AssignLectureRoom.cshtml" />
     <Content Include="Views\Instructors\InstructorForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\FullCalendar\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Scripts\FullCalendar\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

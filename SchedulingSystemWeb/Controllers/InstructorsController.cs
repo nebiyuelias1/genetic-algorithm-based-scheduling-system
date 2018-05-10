@@ -7,6 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using SchedulingSystemClassLibrary.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
+using SchedulingSystemClassLibrary.Models;
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -19,42 +22,36 @@ namespace SchedulingSystemWeb.Controllers
             _context = new SchedulingContext();
         }
         // GET: Instructors
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var model = _context
+            if (User.IsInRole(RoleName.IsACollegeDean))
+            {
+                var model = _context
                         .Instructors
                         .Include(i => i.Department)
                         .Include(i => i.CurrentlyAssignedCourses
                         .Select(c => c.Course))
                         .ToList();
-            return View(model);
-        }
-         public ActionResult New()
-        {
-            var departments = _context.Departments  .ToList();
-
-            var viewModel = new InstructorsFormViewModel
+                return View(model);
+            }
+            else
             {
-                Departments = departments
-            };
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var deptHead = user == null ? null : _context.Instructors.Include(i => i.Department).Single(i => i.AccountId == user.Id);
 
-            return View("InstructorForm", viewModel);
+                var model = _context
+                        .Instructors
+                        .Include(i => i.Department)
+                        .Include(i => i.CurrentlyAssignedCourses
+                        .Select(c => c.Course))
+                        .Where(i => i.DepartmentId == deptHead.DepartmentId)
+                        .ToList();
+
+                return View("DepartmentHeadIndex", model);
+            }
+            
         }
-
-        [HttpPost]
-        public ActionResult Save(InstructorsFormViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (model.Id == 0)
-                {
-                    var instructor = new Instructor
-                    {
-                        FirstName = model.FirstName,
-                        FatherName = model.FatherName,
-                        GrandFatherName = model.GrandFatherName,
-                        DepartmentId = model.DepartmentId
-                    };
 
                     _context.Instructors.Add(instructor);
                 }

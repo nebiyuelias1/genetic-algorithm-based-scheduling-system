@@ -1,0 +1,72 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.DepartmentHeadAccountsViewModel
+@{
+    ViewBag.Title = "Instructors with Accounts";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Instructors with Accounts</h3>
+            <h5>Total: @Model.Instructors.Count</h5>
+        </div>
+    </div>
+</header>
+
+<p>
+    @Html.ActionLink("Create New Account", "NewAccount", null, new { @class = "btn btn-primary" })
+</p>
+
+<table id="instructors" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Department</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var instructor in Model.Instructors)
+        {
+            
+            <tr>
+                <td>@instructor.FullName.</td>
+                <td>@instructor.Department.Name</td>
+                <td><button class="btn btn-success js-assign" data-department-id="@instructor.Department.Id" data-department-name="@instructor.Department.Name" data-instructor-id="@instructor.Id" data-instructor-name="@instructor.FullName">Assign as a Department Head</button></td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function (){
+            var table = $('#instructors').DataTable();
+
+            $('#instructors').on('click', '.js-assign', function () {
+                var button = $(this);
+
+                bootbox.confirm('Are you sure you want to assign <strong>' + button.attr('data-instructor-name') + '</strong> as a head of <strong>' + button.attr('data-department-name') + '</strong> department?', function (result) {
+                    if (result) {
+
+                        var dataObject = {
+                            departmentId: button.attr('data-department-id'), 
+                            instructorId: button.attr('data-instructor-id')
+                        }
+
+                        $.ajax({
+                            url: '/api/departments',
+                            method: 'POST',
+                            data: dataObject,
+                            success: function (){
+                                alert('department head changed');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+
+    </script>
+}

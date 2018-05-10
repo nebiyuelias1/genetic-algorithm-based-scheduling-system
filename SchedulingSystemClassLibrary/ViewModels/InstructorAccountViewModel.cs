@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchedulingSystemClassLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -31,5 +32,7 @@ namespace SchedulingSystemClassLibrary.ViewModels
         public string EmailAdress { get; set; }
 
         public IEnumerable<string> ErrorMessages { get; set; }
+
+        public Department Department { get; set; }
     }
 }

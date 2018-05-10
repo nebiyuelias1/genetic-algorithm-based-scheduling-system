@@ -22,7 +22,8 @@ namespace SchedulingSystemClassLibrary.Models
         public string FullName { get {
 
                 return $"{FirstName} {FatherName} {GrandFatherName}";
-            } }
+            }
+        }
 
     }
 }

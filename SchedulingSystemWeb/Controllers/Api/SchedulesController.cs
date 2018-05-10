@@ -41,6 +41,26 @@ namespace SchedulingSystemWeb.Controllers.Api
 
             return Ok(schedules);
         }
+
+        public IHttpActionResult GetScheduleForADepartment(int id)
+        {
+            var schedules = _context
+                            .Schedules
+                            .Include(s => s.Section)
+                            .Include(s => s.Days
+                            .Select(d => d.Periods
+                            .Select(p => p.Course)))
+                            .Include(s => s.Days
+                            .Select(d => d.Periods
+                            .Select(p => p.Instructor)))
+                            .Include(s => s.Days
+                            .Select(d => d.Periods
+                            .Select(p => p.Room)))
+                            .Where(s => s.Section.DepartmentId == id)
+                            .Select(Mapper.Map<Schedule, ScheduleDto>); 
+                            
+            return Ok(schedules);
+        }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();

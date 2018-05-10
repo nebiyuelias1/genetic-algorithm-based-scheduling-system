@@ -17,7 +17,8 @@ namespace SchedulingSystemWeb
                         "~/scripts/datatables/datatables.bootstrap.js",
                         "~/scripts/spectrum.js",
                         "~/scripts/moment.js",
-                        "~/scripts/fullcalendar/fullcalendar.js"));
+                        "~/scripts/fullcalendar/fullcalendar.js", 
+                        "~/scripts/fullcalendar/scheduler.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -33,6 +34,7 @@ namespace SchedulingSystemWeb
                         "~/Content/site.css",
                         "~/Content/spectrum.css",
                         "~/Content/fullcalendar/fullcalendar.css",
+                        "~/Content/fullcalendar/scheduler.css",
                         "~/Content/font-awesome.css"));
         }
     }

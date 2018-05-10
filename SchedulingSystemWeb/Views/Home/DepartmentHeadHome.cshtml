@@ -1,0 +1,131 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.DepartmentHead.DepartmentHeadHomeViewModel
+@{
+    ViewBag.Title = "Home";
+}
+
+<header id="header">
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <div class="h2">
+                    Department of @Model.Department.Name
+
+                    <div class="pull-right h5">
+                        <ul style="list-style:none;">
+                            <li class="text-right">
+                                Academic Year:
+                                @if (Model.Semester != null)
+                                {
+                                    <span>@Model.Semester.AcademicYear.AcademicYearTitle</span>
+                                }
+                                else
+                                {
+                                    <span>Not set Yet</span>
+                                }
+                            </li>
+                            <li class="text-right">
+                                Semester:
+                                @if (Model.Semester != null)
+                                {
+                                    <span>@Model.Semester.AcademicSemesterTitle</span>
+                                }
+                                else
+                                {
+                                    <span>Not set Yet</span>
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Library</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data</li>
+    </ol>
+</nav>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        <span class="glyphicon glyphicon-cog"></span> Dashboard
+                    </a>
+                    <a href="/Curriculums" class="list-group-item list-group-item-action"><i class="fa fa-file" aria-hidden="true"></i> Curriculums <span class="badge">1</span></a>
+                    <a href="/Courses" class="list-group-item list-group-item-action"><i class="fa fa-book" aria-hidden="true"></i> Courses <span class="badge">@Model.CoursesCount</span></a>
+                    <a href="/Sections" class="list-group-item list-group-item-action"><i class="fa fa-users" aria-hidden="true"></i> Sections <span class="badge">@Model.SectionsCount</span></a>
+                    <a href="/Buildings" class="list-group-item list-group-item-action"><i class="fa fa-building-o" aria-hidden="true"></i> Buildings <span class="badge">@Model.BuildingsCount</span></a>
+                    <a href="/Instructors" class="list-group-item list-group-item-action"><i class="fa fa-user-o" aria-hidden="true"></i> Instructors <span class="badge">@Model.InstructorsCount</span></a>
+                    <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Students <span class="badge">0</span></a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Overview</h3>
+                    </div>
+                </div>
+                <div class="panel-body border">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="well dash-box">
+                                <h3><i class="fa fa-user-circle" aria-hidden="true"></i> 203</h3>
+                                <h4>Users</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="home-link" href="/Rooms">
+                                <div class="well dash-box">
+                                    <h3><i class="fa fa-home" aria-hidden="true"></i> @Model.RoomsCount</h3>
+                                    <h4>Rooms</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="home-link" href="/CourseOfferings">
+                                <div class="well dash-box">
+                                    <h3><i class="fa fa-book" aria-hidden="true"></i> @Model.CourseOfferingsCount</h3>
+                                    <h4>Course Offerings</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a class="home-link" href="/Account/CreateAccountForInstructor">
+                                <div class="well dash-box">
+                                    <h3><i class="glyphicon glyphicon-user" aria-hidden="true"></i></h3>
+                                    <h4>Instructor Accounts</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/Schedules/Departments" class="home-link">
+                                <div class="well dash-box">
+                                    <h3><i class="fa fa-calendar" aria-hidden="true"></i></h3>
+                                    <h4>Schedules</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="well dash-box">
+                                <h3><i class="fa fa-user-circle" aria-hidden="true"></i> 203</h3>
+                                <h4>Academic Calendar</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
