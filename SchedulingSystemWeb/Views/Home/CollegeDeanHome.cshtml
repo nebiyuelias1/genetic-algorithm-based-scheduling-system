@@ -47,13 +47,14 @@
     </div>
 </header>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Library</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Data</li>
-    </ol>
-</nav>
+<section id="breadcrumb">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/" class="active">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="/Courses">Courses</a></li>
+        </ol>
+    </div>
+</section>
 
 <section id="main">
     <div class="container">
@@ -68,7 +69,7 @@
                     <a href="/Sections" class="list-group-item list-group-item-action"><i class="fa fa-users" aria-hidden="true"></i> Sections <span class="badge">@Model.SectionsCount</span></a>
                     <a href="/Buildings" class="list-group-item list-group-item-action"><i class="fa fa-building-o" aria-hidden="true"></i> Buildings <span class="badge">@Model.BuildingsCount</span></a>
                     <a href="/Instructors" class="list-group-item list-group-item-action"><i class="fa fa-user-o" aria-hidden="true"></i> Instructors <span class="badge">@Model.InstructorsCount</span></a>
-                    <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Students <span class="badge">@Model.StudentsCount</span></a>
+                    <a href="/LabAssistants" class="list-group-item list-group-item-action"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Lab Assistants <span class="badge">@Model.StudentsCount</span></a>
                 </div>
             </div>
             <div class="col-md-9">

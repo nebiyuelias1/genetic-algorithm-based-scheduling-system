@@ -20,6 +20,15 @@
     </div>
 </header>
 
+<section id="breadcrumb">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">Sections</li>
+        </ol>
+    </div>
+</section>
+
 <p>
     @Html.ActionLink("Create New Section", "New", null, new { @class = "btn btn-primary" })
 </p>
@@ -55,7 +64,7 @@
                     @item.Name
                 </td>
                 <td>
-                    @((2010 - item.EntranceYear) + 1)
+                    @(item.CurrentYear)
                 </td>
                 <td>
                     @item.StudentCount
@@ -63,7 +72,7 @@
                 <td>
                     @if (item.AssignedLectureRoom != null)
                     {
-                        @item.AssignedLectureRoom.Name
+                        @item.AssignedLectureRoom.Name<button class="btn btn-link js-lecture-remove" data-section-id="@item.Id">[Remove Assignment!]</button>
                     }
                     else
                     {
@@ -74,7 +83,7 @@
                 <td>
                     @if (item.AssignedLabRoom != null)
                     {
-                        @item.AssignedLabRoom.Name
+                        @item.AssignedLabRoom.Name<button class="btn btn-link js-lab-remove" data-section-id="@item.Id">[Remove Assignment!]</button>
                     }
                     else
                     {
@@ -111,6 +120,38 @@
                                 location.reload(true);
                             }
                         })
+                    }
+                });
+            });
+
+            $('#sections').on('click', '.js-lab-remove', function () {
+                var button = $(this);
+
+                bootbox.confirm('Are you sure you want to remove this section from this room?', function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/sections/removelab/' + button.attr('data-section-id'),
+                            method: 'PUT',
+                            success: function() {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                });
+            });
+
+            $('#sections').on('click', '.js-lecture-remove', function () {
+                var button = $(this);
+
+                bootbox.confirm('Are you sure you want to remove this section from this room?', function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/sections/removelecture/' + button.attr('data-section-id'),
+                            method: 'PUT',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        });
                     }
                 });
             });

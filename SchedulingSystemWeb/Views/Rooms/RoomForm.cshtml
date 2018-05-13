@@ -14,10 +14,10 @@ else
 }
 
 
-@using (Html.BeginForm("Save", "Rooms")) 
+@using (Html.BeginForm("Save", "Rooms"))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Room</h4>
         <hr />
@@ -33,7 +33,7 @@ else
         <div class="form-group">
             @Html.LabelFor(model => model.BuildingId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.BuildingId, new SelectList(Model.Buildings, "Id", "BuildingTitle"),new { @class = "form-control" } )
+                @Html.DropDownListFor(model => model.BuildingId, new SelectList(Model.Buildings, "Id", "BuildingTitle"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Building, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -47,21 +47,28 @@ else
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IsLabRoom, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-offset-2 col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.IsLabRoom)
-                    @Html.ValidationMessageFor(model => model.IsLabRoom, "", new { @class = "text-danger" })
+                    @Html.CheckBoxFor(m => m.IsLabRoom)
+                    @Html.LabelFor(m => m.IsLabRoom)
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IsLectureRoom, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-offset-2 col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.IsLectureRoom)
-                    @Html.ValidationMessageFor(model => model.IsLectureRoom, "", new { @class = "text-danger" })
+                    @Html.CheckBoxFor(m => m.IsLectureRoom)
+                    @Html.LabelFor(m => m.IsLectureRoom)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.IsSharedRoom)
+                    @Html.LabelFor(m => m.IsSharedRoom)
                 </div>
             </div>
         </div>

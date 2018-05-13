@@ -1,0 +1,74 @@
+﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.LabAssistant>
+
+@{
+    ViewBag.Title = "Lab Assistances";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Lab Assistances</h3>
+            <h5>Total: @Model.Count()</h5>
+        </div>
+    </div>
+</header>
+
+<p>
+    @Html.ActionLink("Create New Lab Assistant", "New", null, new { @class = "btn btn-primary" })
+</p>
+
+<table id="labAssistants" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Father Name</th>
+            <th>Grand Father Name</th>
+            <th>Lab Room</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var labAssistant in Model)
+        {
+            <tr>
+                <td>@labAssistant.FirstName</td>
+                <td>@labAssistant.FatherName</td>
+                <td>@labAssistant.GrandFatherName</td>
+                <td></td>
+                <td>
+                    <a href="/LabAssistants/Edit/@labAssistant.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+                    <button class="btn btn-danger js-delete" data-lab-assistant-id="@labAssistant.Id" data-lab-assistant-fullname="@labAssistant.FullName">
+                        <i class="fa fa-trash"></i> Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#labAssistants').DataTable();
+
+            $('#labAssistants').on('click', '.js-delete', function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete the Lab Assistant <strong>" + button.attr('data-lab-assistant-fullname') + "</strong>?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/labassistants/' + button.attr('data-lab-assistant-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+        
+    </script>
+}

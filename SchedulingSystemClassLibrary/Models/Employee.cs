@@ -12,10 +12,13 @@ namespace SchedulingSystemClassLibrary.Models
         public string FirstName { get; set; }
         public string FatherName { get; set; }
         public string GrandFatherName { get; set; }
-        public string Sex { get; set; }
-        public DateTime DOB { get; set; }
-        public DateTime HiredDate { get; set; }
-        public Department Department { get; set; }
-        public int DepartmentId { get; set; }
+        public string AccountId { get; set; }
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {FatherName} {GrandFatherName}";
+            }
+        }
     }
 }

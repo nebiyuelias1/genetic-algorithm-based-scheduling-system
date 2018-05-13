@@ -58,7 +58,7 @@
                         data: "instructor",
                         render: function (data, type, courseOffering) {
                             if (data == null)
-                                return '</strong>Not Assigned</strong>'
+                                return '';
                             else
                                 return data.fullName;
                         }
@@ -75,7 +75,10 @@
                     {
                         data: '',
                         render: function (data, type, courseOffering) {
-                            return '<a href="CourseOfferings/Assign/' + courseOffering.id + '"> Assign Instructor</a>';
+                            if(courseOffering.instructor == null)
+                                return '<a href="CourseOfferings/Assign/' + courseOffering.id + '"> Assign Instructor</a>';
+                            else 
+                                return '<a href="CourseOfferings/Remove/' + courseOffering.id + '"> Remove Instructor</a>';
                         }
                     }
                 ]

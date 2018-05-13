@@ -190,6 +190,7 @@
     <Compile Include="Controllers\Api\DepartmentsController.cs" />
     <Compile Include="Controllers\Api\FacultiesController.cs" />
     <Compile Include="Controllers\Api\InstructorsController.cs" />
+    <Compile Include="Controllers\Api\LabAssistantsController.cs" />
     <Compile Include="Controllers\Api\RoomsController.cs" />
     <Compile Include="Controllers\Api\SchedulesController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Controllers\FacultiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorsController.cs" />
+    <Compile Include="Controllers\LabAssistantsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
@@ -501,6 +503,12 @@
     <Content Include="Views\CourseOfferings\DepartmentHeadIndex.cshtml" />
     <Content Include="Views\Sections\AssignLectureRoom.cshtml" />
     <Content Include="Views\Instructors\InstructorForm.cshtml" />
+    <Content Include="Views\Rooms\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\LabAssistants\Index.cshtml" />
+    <Content Include="Views\LabAssistants\LabAssistantsForm.cshtml" />
+    <Content Include="Views\Sections\AssignLabRoom.cshtml" />
+    <Content Include="Views\Schedules\DepartmentHeadIndex.cshtml" />
+    <Content Include="Views\Schedules\ViewSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

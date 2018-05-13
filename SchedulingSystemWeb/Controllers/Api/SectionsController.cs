@@ -95,6 +95,26 @@ namespace SchedulingSystemWeb.Controllers.Api
             }
             _context.SaveChanges();
         }
+
+        [Route("api/sections/removelab/{id}")]
+        [HttpPut]
+        public void RemoveLab(int id)
+        {
+            var sectionInDb = _context.Sections.Single(s => s.Id == id);
+            sectionInDb.AssignedLabRoom = null;
+            sectionInDb.AssignedLabRoomId = null;
+            _context.SaveChanges();
+        }
+
+        [Route("api/sections/removelecture/{id}")]
+        [HttpPut]
+        public void RemoveLecture(int id)
+        {
+            var sectionInDb = _context.Sections.Single(s => s.Id == id);
+            sectionInDb.AssignedLectureRoom = null;
+            sectionInDb.AssignedLectureRoomId = null;
+            _context.SaveChanges();
+        }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();

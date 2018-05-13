@@ -11,5 +11,6 @@ namespace SchedulingSystemClassLibrary.ViewModels
     {
         public List<Section> Sections { get; set; }
         public string DepartmentName { get; set; }
+
     }
 }

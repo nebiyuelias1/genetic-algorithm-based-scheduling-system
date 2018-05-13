@@ -10,10 +10,11 @@ namespace SchedulingSystemClassLibrary.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public BuildingDto Building { get; set; }
         public int BuildingId { get; set; }
         public int Size { get; set; }
         public bool IsLabRoom { get; set; }
         public bool IsLectureRoom { get; set; }
+        public bool IsSharedRoom { get; set; }
+        public string Title { get; set; }
     }
 }

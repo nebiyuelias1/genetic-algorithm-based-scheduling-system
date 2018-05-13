@@ -9,7 +9,6 @@ using System.Data.Entity;
 using SchedulingSystemClassLibrary.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
-using SchedulingSystemClassLibrary.Models;
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -21,6 +20,7 @@ namespace SchedulingSystemWeb.Controllers
         {
             _context = new SchedulingContext();
         }
+
         // GET: Instructors
         public async Task<ActionResult> Index()
         {
@@ -53,25 +53,41 @@ namespace SchedulingSystemWeb.Controllers
             
         }
 
-                    _context.Instructors.Add(instructor);
-                }
-                else
-                {
-                    var instructorInDB = _context.Instructors.Single(c => c.Id == model.Id);
+        public ActionResult New()
+        {
+            var departments = _context.Departments.ToList();
 
-                    instructorInDB.FirstName = model.FirstName;
-                    instructorInDB.FatherName = model.FatherName;
-                    instructorInDB.GrandFatherName = model.GrandFatherName;
-                    instructorInDB.DepartmentId = model.DepartmentId;
+            var viewModel = new InstructorsFormViewModel()
+            {
+                Departments = departments
+            };
 
-
-                }
-
-                _context.SaveChanges();
+            return View("InstructorForm", viewModel);
+        }
+        public ActionResult Save(Instructor instructor)
+        {
+            if (instructor.Id == 0)
+            {
+                _context.Instructors.Add(instructor);
             }
-            
+            else
+            {
+                var instructorInDB = _context.Instructors.Single(c => c.Id == instructor.Id);
+
+                instructorInDB.FirstName = instructor.FirstName;
+                instructorInDB.FatherName = instructor.FatherName;
+                instructorInDB.GrandFatherName = instructor.GrandFatherName;
+                instructorInDB.DepartmentId = instructor.DepartmentId;
+
+
+            }
+
+            _context.SaveChanges();
+                        
             return RedirectToAction("Index", "Instructors");
         }
+        
+                   
 
         public ActionResult Edit(int id) 
         {

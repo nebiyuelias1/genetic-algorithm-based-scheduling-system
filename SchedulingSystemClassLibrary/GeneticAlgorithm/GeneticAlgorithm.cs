@@ -1,7 +1,8 @@
 ﻿using SchedulingSystemClassLibrary.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity; 
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,16 +15,17 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
 
         private List<Schedule> Population = new List<Schedule>(GlobalConfig.POPULATION_SIZE);
 
-        public GeneticAlgorithm()
+        private int SectionId; 
+        public GeneticAlgorithm(int id)
         {
             _context = new SchedulingContext();
+            this.SectionId = id;     
+        }
+        public Schedule FindBestSchedule()
+        {
+            IntializePopulation(SectionId);
 
-            
-            Random rand = new Random(); 
-
-            IntializePopulation();
-
-            for (int j = 0; j < 100; j++)
+            for (int j = 0; j < 10; j++)
             {
                 //for (int i = 0; i < Population.Count; i++)
                 //{
@@ -43,21 +45,23 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 //    child.CalculateFitness();
                 //    Population[i] = child;
                 //}
-                Console.WriteLine($"Generation - {j+1}");
-                var noClashCount = 0;
-                Population.ForEach(s => {
 
-                    if (!s.IsThereAnyClash())
-                    {
-                        noClashCount++; 
-                    }
-                });
-                Console.WriteLine($"No Clash count - {noClashCount}");
 
-                int distinctElementsCount = Population.GroupBy(s => s.Fitness).Count();
-                Console.WriteLine($"from {distinctElementsCount} distinct elements");
+                //Debug.WriteLine($"Generation - {j+1}");
+                //var noClashCount = 0;
+                //Population.ForEach(s => {
 
-                Console.WriteLine($"Max Fitness - {Population.Max(s => s.Fitness)} Min Fitness - {Population.Min(s => s.Fitness)}");
+                //    if (!s.IsThereAnyClash())
+                //    {
+                //        noClashCount++; 
+                //    }
+                //});
+                //Debug.WriteLine($"No Clash count - {noClashCount}");
+
+                //int distinctElementsCount = Population.GroupBy(s => s.Fitness).Count();
+                //Debug.WriteLine($"from {distinctElementsCount} distinct elements");
+
+                //Debug.WriteLine($"Max Fitness - {Population.Max(s => s.Fitness)} Min Fitness - {Population.Min(s => s.Fitness)}");
                 //CreateNextGeneration();
                 var matingPool = NaturalSelection();
                 CreateNextGeneration(matingPool);
@@ -67,15 +71,15 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
 
 
             var best = Population.OrderByDescending(p => p.Fitness).First();
-            
-            best.PrintSchedule();
-            best.CalculateFitness();
-            var isThereClash = best.IsThereAnyClash();
 
-            
-            _context.Schedules.Add(best);
-            _context.SaveChanges();
+            //best.PrintSchedule();
+            //best.CalculateFitness();
+            //var isThereClash = best.IsThereAnyClash();
 
+
+            //_context.Schedules.Add(best);
+            //_context.SaveChanges();
+            return best;
         }
 
         private void CreateNextGeneration()
@@ -118,7 +122,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             Population = population;
         }
 
-        public Schedule PickRandomParent()
+        private Schedule PickRandomParent()
         {
             Random rand = new Random();
             while (true)
@@ -132,13 +136,13 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             }
             
         }
-        public void IntializePopulation()
+        private void IntializePopulation(int id)
         {
             var section = _context.Sections.Include(s => s.CourseOfferings.Select(c => c.Course))
                                             .Include(s => s.CourseOfferings.Select(c => c.Instructor).Select(c => c.InstructorPreference))
-                                            .Include(s => s.AssignedLectureRoom)
-                                            .Include(s => s.AssignedLabRoom)
-                                            .SingleOrDefault(s => s.Id == 4);
+                                            .Include(s => s.AssignedLectureRoom.Building)
+                                            .Include(s => s.AssignedLabRoom.Building)
+                                            .SingleOrDefault(s => s.Id == id);
 
             var scheduleEntries = _context.ScheduleEntries
                                     .Include(s => s.Instructor)
@@ -204,7 +208,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 Population.Add(s);
             }
         }
-        public Schedule RouletteWheelSelection(double fitnessSum)
+        private Schedule RouletteWheelSelection(double fitnessSum)
         {
             Random rand = new Random(); 
 
@@ -224,7 +228,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             return null; 
         }
 
-        public Schedule TournamentSelection()
+        private Schedule TournamentSelection()
         {
             Random rand = new Random();
 
@@ -239,7 +243,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
 
             return schedules.OrderByDescending(s => s.Fitness).First(); 
         }
-        public List<Schedule> NaturalSelection()
+        private List<Schedule> NaturalSelection()
         {
             List<Schedule> matingPool = new List<Schedule>();
 
@@ -255,7 +259,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             return matingPool; 
         }
 
-        public void CreateNextGeneration(List<Schedule> matingPool)
+        private void CreateNextGeneration(List<Schedule> matingPool)
         {
             Random rand = new Random();
 

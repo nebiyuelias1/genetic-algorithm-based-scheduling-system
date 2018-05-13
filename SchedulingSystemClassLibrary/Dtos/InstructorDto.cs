@@ -15,8 +15,6 @@ namespace SchedulingSystemClassLibrary.Dtos
         public DepartmentDto Department { get; set; }
         public int DepartmentId { get; set; }
         public string AccountId { get; set; }
-        public string FullName { get; set; }
-
         public string FullName
         {
             get

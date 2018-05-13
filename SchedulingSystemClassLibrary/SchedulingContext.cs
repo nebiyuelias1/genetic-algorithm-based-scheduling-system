@@ -24,6 +24,7 @@ namespace SchedulingSystemClassLibrary
         public virtual DbSet<InstructorPreference> InstructorPreferences { get; set; }
         public virtual DbSet<AcademicSemester> AcademicSemesters { get; set; }
         public virtual DbSet<AcademicYear> AcademicYears { get; set; }
+        public virtual DbSet<LabAssistant> LabAssistances { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CourseOfferingConfiguration());
@@ -33,6 +34,8 @@ namespace SchedulingSystemClassLibrary
             modelBuilder.Configurations.Add(new ScheduleConfiguration());
             modelBuilder.Configurations.Add(new InstructorPreferenceConfiguration());
             modelBuilder.Configurations.Add(new SectionConfiguration());
+            modelBuilder.Configurations.Add(new LabAssistanceConfiguration());
+            modelBuilder.Configurations.Add(new BuildingConfiguration());
 
             base.OnModelCreating(modelBuilder); 
         }

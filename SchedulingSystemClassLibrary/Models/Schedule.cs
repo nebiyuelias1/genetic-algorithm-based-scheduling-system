@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using SchedulingSystemClassLibrary.GeneticAlgorithm;
+using System.Diagnostics;
 
 namespace SchedulingSystemClassLibrary.Models
 {
@@ -16,6 +17,8 @@ namespace SchedulingSystemClassLibrary.Models
         public double MaximumScore { get; set; }
         public Section Section { get; set; }
         public int SectionId { get; set; }
+        public AcademicSemester AcademicSemester { get; set; }
+        public int AcademicSemesterId { get; set; }
         public virtual List<Day> Days { get; set; }
 
         public IList<ScheduleEntry> scheduleEntries { get; set; }
@@ -1639,18 +1642,18 @@ namespace SchedulingSystemClassLibrary.Models
                 {
                     if (period.Course != null)
                     {
-                        Console.Write(period.Course.Title + "(" + period.Period + ")");
+                        Debug.Write(period.Course.Title + "(" + period.Period + ")");
                         if (period.IsLab)
-                            Console.Write("(Lab)");
+                            Debug.Write("(Lab)");
                         if (period.IsLecture)
-                            Console.Write("(Lecture)");
+                            Debug.Write("(Lecture)");
                         if (period.IsTutor)
-                            Console.Write("(Tutor)");
-                        Console.Write("|");
+                            Debug.Write("(Tutor)");
+                        Debug.Write("|");
                     }
                     else
                     {
-                        Console.Write("\t|");
+                        Debug.Write("\t|");
                     }
                         
 
@@ -1658,9 +1661,9 @@ namespace SchedulingSystemClassLibrary.Models
                     
 
                 }
-                Console.WriteLine();
+                Debug.WriteLine("");
             }
-            Console.WriteLine(); 
+            Debug.WriteLine(""); 
         }
 
         public bool IsThereAnyClash()

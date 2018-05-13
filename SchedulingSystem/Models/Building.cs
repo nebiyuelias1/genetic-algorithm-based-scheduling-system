@@ -12,5 +12,11 @@ namespace SchedulingSystem.Models
         public int Name { get; set; }
         public int Number { get; set; }
         public List<Room> Rooms { get; set; }
+        public string Title {
+            get
+            {
+                return $"{Name}-{Number}";
+            }
+        }
     }
 }

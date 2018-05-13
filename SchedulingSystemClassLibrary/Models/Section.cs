@@ -33,7 +33,7 @@ namespace SchedulingSystemClassLibrary.Models
         public Room AssignedLabRoom { get; set; }
         public int? AssignedLabRoomId { get; set; }
         public List<CourseOffering> CourseOfferings { get; set; }
-
+        public List<Schedule> Schedules { get; set; }
         public byte CurrentYear {
             get 
             {

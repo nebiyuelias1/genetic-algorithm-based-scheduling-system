@@ -26,6 +26,12 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
                 .WithMany(b => b.Rooms)
                 .HasForeignKey(r => r.BuildingId)
                 .WillCascadeOnDelete(false);
+
+            //this.HasOptional(r => r.LabAssistance)
+            //    .WithOptionalPrincipal(l => l.Room)
+            //    .Map(x => x.MapKey("RoomId"));
+
+            this.Ignore(r => r.Title);
         }
     }
 }

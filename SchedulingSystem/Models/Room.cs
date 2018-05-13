@@ -17,5 +17,12 @@ namespace SchedulingSystem.Models
         // TODO - should you add IsLab, IsShared properties? 
         public bool IsLabRoom { get; set; }
         public bool IsLectureRoom { get; set; }
+        public string Title
+        {
+            get
+            {
+                return $"{Name} in {Building.Title}";
+            }
+        }
     }
 }

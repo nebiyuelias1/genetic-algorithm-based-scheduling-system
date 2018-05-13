@@ -28,6 +28,7 @@ namespace SchedulingSystemWeb.Controllers
         {
             if (User.IsInRole(RoleName.IsACollegeDean))
             {
+                var semester = _context.AcademicSemesters.Count() > 0 ? _context.AcademicSemesters.Include(s => s.AcademicYear).Single(s => s.CurrentSemester) : null;
                 var viewModel = new CollegeDeanHomeViewModel
                 {
                     CoursesCount = _context.Courses.Count(),
@@ -38,7 +39,7 @@ namespace SchedulingSystemWeb.Controllers
                     //UsersCount = applicationDbContext.Users.Count()
                     RoomsCount = _context.Rooms.Count(),
                     CourseOfferingsCount = _context.CourseOfferings.Count(),
-                    Semester = _context.AcademicSemesters.Include(s => s.AcademicYear).Single(s => s.CurrentSemester)
+                    Semester = semester
                 };
 
                 return View("CollegeDeanHome", viewModel);

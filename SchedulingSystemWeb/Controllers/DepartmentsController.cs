@@ -107,7 +107,7 @@ namespace SchedulingSystemWeb.Controllers
             var viewModel = new DepartmentSectionsViewModel
             {
                 Sections = sections,
-                DepartmentName = departmentName
+                DepartmentName = departmentName, 
             };
 
             return View(viewModel);

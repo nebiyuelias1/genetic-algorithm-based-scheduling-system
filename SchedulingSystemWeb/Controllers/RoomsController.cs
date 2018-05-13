@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity; 
+using System.Data.Entity;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -21,12 +23,26 @@ namespace SchedulingSystemWeb.Controllers
         // GET: Rooms
         public ActionResult Index()
         {
-            var rooms = _context
+            if (User.IsInRole(RoleName.IsACollegeDean))
+            {
+                var rooms = _context
                         .Rooms
                         .Include(r => r.Building)
-                        .ToList(); 
+                        .ToList();
 
-            return View(rooms);
+                return View(rooms);
+            }
+            else if(User.IsInRole(RoleName.IsADepartmentHead))
+            {
+                var rooms = _context
+                            .Rooms
+                            .Include(c => c.Building)
+                            .ToList();
+
+                return View("DepartmentHeadIndex", rooms);
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult New()
@@ -67,7 +83,8 @@ namespace SchedulingSystemWeb.Controllers
                 roomInDb.IsLabRoom = room.IsLabRoom;
                 roomInDb.IsLectureRoom = room.IsLectureRoom;
                 roomInDb.Name = room.Name;
-                roomInDb.Size = room.Size; 
+                roomInDb.Size = room.Size;
+                roomInDb.IsSharedRoom = room.IsSharedRoom;
             }
 
             _context.SaveChanges(); 

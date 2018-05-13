@@ -1,0 +1,309 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.DepartmentHead.ViewScheduleViewModel
+@{
+    ViewBag.Title = "Schedule for ";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Class Schedule for Section @Model.Section.Name</h3>
+            <h5>Year: @Model.Section.CurrentYear</h5>
+            <h5>Department: @Model.Section.Department.Name</h5>
+            <h5>Semester: @Model.AcademicSemester.AcademicSemesterTitle @Model.AcademicSemester.AcademicYear.AcademicYearTitle</h5>
+            <h5>Lecture Room: @Model.Section.AssignedLectureRoom.Title</h5>
+            <h5>Lecture Room: @Model.Section.AssignedLabRoom.Title</h5>
+
+        </div>
+    </div>
+</header>
+<div>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Course Code</th>
+                <th>Course Title</th>
+                <th>Lecture</th>
+                <th>Lab</th>
+                <th>Tutor</th>
+                <th>ECTS</th>
+                <th>Assigned Instructor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var totalLecture = 0;
+                var totalLab = 0;
+                var totalTutor = 0;
+                var totalCredit = 0;
+            }
+            @foreach (var courseOffering in Model.Section.CourseOfferings)
+            {
+                
+                <tr>
+                    <td>@courseOffering.Course.CourseCode</td>
+                    <td>@courseOffering.Course.Title</td>
+                    <td>@courseOffering.Course.Lecture</td>
+                    <td>@courseOffering.Course.Laboratory</td>
+                    <td>@courseOffering.Course.Tutor</td>
+                    <td>@courseOffering.Course.Credit</td>
+                    <td>@courseOffering.Instructor.FullName</td>
+                </tr>
+                    totalLecture += courseOffering.Course.Lecture;
+                    totalLab += courseOffering.Course.Laboratory;
+                    totalTutor += courseOffering.Course.Tutor;
+                    totalCredit += courseOffering.Course.Credit;
+            }
+            
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2" class="text-right">Total</th>
+                <td>@(totalLecture)</td>
+                <td>@(totalLab)</td>
+                <td>@(totalTutor)</td>
+                <td>@(totalCredit)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span id="eventTitle"></span></h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div id="classType" class="pull-right">Lecture</div>
+                    <label for="courseTitle">Course Title</label>
+                    <input class="form-control" type="text" id="courseTitle" disabled />
+                    <label for="instrucotr">Instructor Name</label>
+                    <input class="form-control" type="text" id="instructorName" disabled />
+                    <label for="room">Room</label>
+                    <input class="form-control" type="text" id="Room" disabled />
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='calendar'></div>
+<div id="placeholder"></div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            var events = [];
+
+            $.ajax({
+                url: '/api/schedules/sections/@Model.Section.Id',
+                method: 'GET',
+                success: function (data, textStatus, xhr) {
+                    //if (data != null) {
+                    //    $.each(data[0].days, function (i, day) {
+
+                    //        $.each(day.periods, function (j, period) {
+                    //            events.push({
+                    //                title: period.course != null ? period.course.acronym : null,
+                    //                description: period.course != null ? period.course.title : null,
+
+                    //                //description:period.instructor !=null ? period.instructor.name:null,
+                    //                start: moment().weekday(day.dayNumber + 1).set({
+                    //                    hour: determineStartHour(period.period),
+                    //                    minute: determineStartMinute(period.period),
+                    //                    second: 0
+                    //                }),
+                    //                end: moment().weekday(day.dayNumber + 1).set({
+                    //                    hour: determineEndHour(period.period),
+                    //                    minute: determineEndMinute(period.period),
+                    //                    second: 0
+                    //                }),
+                    //                color: period.course != null ? '#' + period.course.color.toString(16) : '#fbb202',
+                    //                dayName: day.dayName,
+                    //                periodData: period
+
+                    //            });
+                    //        });
+                    //    });
+                    //    displaySchedule(events);
+                    //} else {
+                    //    alert('Generate');
+                    //}
+
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == 404) {
+                        $('#placeholder').css("width", "100%");
+                        $('#placeholder').css("border", "1px dashed black")
+                        $('#placeholder').css("padding", "1%")
+                        $('#placeholder').css("border-radius", "2%");
+                        $('#placeholder').append('<p>Schedule not generated for this section. <button id="generate" class="btn btn-link text-primary">Click this link to generate the Schedule!</button></p>');
+                    }
+                    $('#generate').click(function () {
+                        $.ajax({
+                            url: '/api/schedules/generate/@Model.Section.Id',
+                            success: function (data, textStatus, xhr) {
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+
+                            }
+                        })
+                    });
+                }
+            });
+
+
+
+            function displaySchedule(events) {
+
+                $('#calendar').fullCalendar('destroy');
+                // page is now ready, initialize the calendar...
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    defaultView: 'agendaWeek', // options are: month, basicWeek, agendaWeek, agendaDay
+                    //defaultView: 'agendaFourDay',
+                    //views: {
+                    //    agendaFourDay: {
+                    //        type: 'agenda',
+                    //        duration: { days: 3 }
+                    //    }
+                    //},
+                    //defaultDate: '2018-03-12',
+                    //contentHeight: 'auto',
+                    navLinks: true, // can click week names to navigate views
+                    columnHeaderFormat: 'dddd', // Determines the text that will be displayed on the calendar’s column headings
+                    allDaySlot: false, // Determines if the “all-day” slot is displayed at the top of the calendar
+                    allDayText: 'my-day', // The text titling the “all-day” slot at the top of the calendar.
+                    minTime: "02:30:00",
+                    maxTime: "11:30:00",
+                    slotDuration: "00:50:00",
+                    weekNumbers: false, //Determines if week numbers should be displayed on the calendar
+                    contentHeight: 400,
+                    displayEventEnd: true, // Whether or not to display an event’s end time
+                    eventRender: function (event, element) {
+                        element.css("font-size", "1.2em");
+                        //element.css("padding", "15px");
+                    },
+                    header: {
+                        left: 'title',
+                        center: 'today',
+                        right: 'prev,next basicWeek, basicDay, agenda'
+                    },
+                    weekends: false, // will hide Saturdays and Sundays
+                    //dayClick: function () {
+                    //    //alert('a day has been clicked!');
+                    //},
+                    events: events,
+
+                    eventClick: function (calEvent, jsEvent, view) {
+                        var period = calEvent.periodData.period + 1;
+                        $('#myModal #eventTitle').text(calEvent.dayName + '(' + period + ')');
+                        $('#myModal #courseTitle').val(calEvent.description);
+                        $('#myModal #instructorName').val(calEvent.periodData.instructor.fullName)
+                        $('#myModal #Room').val(calEvent.periodData.room.name)
+                        if (calEvent.isLab) {
+                            $('#classType').html('Lab');
+                        }
+                        $('#myModal').modal('show');
+                    }
+                })
+            }
+        });
+
+        function determineStartHour(period) {
+            switch (period) {
+                case 0:
+                    return 2;
+                case 1:
+                    return 3;
+                case 2:
+                    return 4;
+                case 3:
+                    return 5;
+                case 4:
+                    return 7;
+                case 5:
+                    return 8;
+                case 6:
+                    return 9;
+                case 7:
+                    return 10;
+            }
+        }
+
+        function determineEndHour(period) {
+            switch (period) {
+                case 0:
+                    return 3;
+                case 1:
+                    return 4;
+                case 2:
+                    return 5;
+                case 3:
+                    return 6;
+                case 4:
+                    return 8;
+                case 5:
+                    return 9;
+                case 6:
+                    return 10;
+                case 7:
+                    return 11;
+            }
+        }
+
+        function determineStartMinute(period) {
+            switch (period) {
+                case 0:
+                    return 30;
+                case 1:
+                    return 25;
+                case 2:
+                    return 20;
+                case 3:
+                    return 15;
+                case 4:
+                    return 30;
+                case 5:
+                    return 25;
+                case 6:
+                    return 20;
+                case 7:
+                    return 15;
+            }
+        }
+
+        function determineEndMinute(period) {
+            switch (period) {
+                case 0:
+                    return 20;
+                case 1:
+                    return 15;
+                case 2:
+                    return 10;
+                case 3:
+                    return 5;
+                case 4:
+                    return 20;
+                case 5:
+                    return 15;
+                case 6:
+                    return 10;
+                case 7:
+                    return 5;
+            }
+        }
+    </script>
+}

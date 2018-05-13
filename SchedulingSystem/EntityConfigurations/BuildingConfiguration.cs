@@ -16,6 +16,8 @@ namespace SchedulingSystem.EntityConfigurations
             //    .WithRequired(r => r.Building)
             //    .HasForeignKey(b => b.BuildingId)
             //    .WillCascadeOnDelete(false); 
+
+            
         }
         
     }

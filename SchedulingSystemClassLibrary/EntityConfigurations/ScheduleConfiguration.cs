@@ -14,7 +14,11 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
         public ScheduleConfiguration()
         {
             this.Ignore(s => s.MaximumScore)
-                .Ignore(s => s.scheduleEntries); 
+                .Ignore(s => s.scheduleEntries);
+
+            //this.HasRequired(s => s.Section)
+            //    .WithRequiredDependent()
+            //    .WillCascadeOnDelete(false);
         }
     }
 }

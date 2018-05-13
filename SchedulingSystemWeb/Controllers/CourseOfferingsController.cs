@@ -63,15 +63,7 @@ namespace SchedulingSystemWeb.Controllers
             }
 
         }
-       /* public ActionResult New()
-        {
-            var instructors = _context.Instructors.ToList();
-            var viewModel = new CourseOfferingsFormViewModel
-            {
-                Instructors = instructors
-            };
-            return View("CourseOfferingForm", viewModel);
-        }*/
+
         public ActionResult Assign(int id)
         {
             var courseOffering = _context.CourseOfferings
@@ -106,6 +98,13 @@ namespace SchedulingSystemWeb.Controllers
                                     .Include(s => s.AcademicYear)
                                     .Single(s => s.CurrentSemester);
 
+            var previousCourseOfferings = _context.CourseOfferings.Where(c => c.AcademicSemesterId == currentSemester.Id);
+            foreach (var previousCourseOffering in previousCourseOfferings)
+            {
+                _context.CourseOfferings.Remove(previousCourseOffering); 
+            }
+            _context.SaveChanges();
+
             foreach (var section in sections)
             {
                 //section.CurrentYear = (byte)((int.Parse(currentSemester.AcademicYear.EtYear) - section.EntranceYear) + 1);
@@ -137,6 +136,16 @@ namespace SchedulingSystemWeb.Controllers
             var courseOfferingInDb = _context.CourseOfferings.Single(c => c.Id == courseOffering.Id);
 
             courseOfferingInDb.InstructorId = courseOffering.InstructorId;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "CourseOfferings");
+        }
+
+        public ActionResult Remove(int id)
+        {
+            var courseOfferingInDb = _context.CourseOfferings.Single(c => c.Id == id);
+
+            courseOfferingInDb.InstructorId = null;
             _context.SaveChanges();
 
             return RedirectToAction("Index", "CourseOfferings");

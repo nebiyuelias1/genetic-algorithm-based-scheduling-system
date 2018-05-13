@@ -29,6 +29,8 @@ namespace SchedulingSystemClassLibrary.ViewModels
         public bool IsLabRoom { get; set; }
         [Display(Name = "Is this a Lecture room?")]
         public bool IsLectureRoom { get; set; }
+        [Display(Name = "Can this Room be shared?")]
+        public bool IsSharedRoom { get; set; }
         public IEnumerable<Building> Buildings { get; set; }
 
         public RoomsFormViewModel()
@@ -42,7 +44,7 @@ namespace SchedulingSystemClassLibrary.ViewModels
             this.Size = room.Size;
             this.IsLabRoom = room.IsLabRoom;
             this.IsLectureRoom = room.IsLectureRoom;
-       
+            this.IsSharedRoom = room.IsSharedRoom;
         }
     }
 }

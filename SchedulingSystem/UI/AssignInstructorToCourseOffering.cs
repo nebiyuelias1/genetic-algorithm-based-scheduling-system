@@ -19,7 +19,7 @@ namespace SchedulingSystem.UI
         {
             InitializeComponent();
             _context = new SchedulingSystemClassLibrary.SchedulingContext();
-            new GeneticAlgorithm(); 
+            //new GeneticAlgorithm(); 
         }
 
         private void AssignInstructorToCourseOffering_Load(object sender, EventArgs e)

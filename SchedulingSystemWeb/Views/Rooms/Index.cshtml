@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SchedulingSystemClassLibrary.Models.Room>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Rooms";
 }
 
 <h2>Index</h2>
@@ -12,51 +12,45 @@
     <table id="rooms" class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-                <th class="col-sm-2">
-                   Name
-                </th>
-                <th class="col-sm-2">
-                   Building
-                </th>
-                <th class="col-sm-2">
-                    Size
-                </th>
-                <th class="col-sm-2">
-                    Is Lab Room
-                </th>
-                <th class="col-sm-2">
-                  Is Class Room
-                
-                <th class="col-sm-2"></th>
+                <th>Name</th>
+                <th>Building</th>
+                <th>Size</th>
+                <th>Is Lab Room</th>
+                <th>Is Lecture Room</th>
+                <th>Is Shared Room</th>
+                <th></th>
             </tr>
         <thead>
         <tbody>
             @foreach (var room in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => room.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => room.Building.BuildingTitle)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => room.Size)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => room.IsLabRoom)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => room.IsLectureRoom)
-                </td>
-                <td>
-                    <a href="/Rooms/Edit/@room.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <button class="btn btn-danger js-delete" data-room-id="@room.Id" data-room-name="@room.Name">
-                        <i class="fa fa-trash"></i> Delete
-                    </button>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => room.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => room.Building.BuildingTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => room.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => room.IsLabRoom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => room.IsLectureRoom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => room.IsSharedRoom)
+                    </td>
+                    <td>
+                        <a href="/Rooms/Edit/@room.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+                        <button class="btn btn-danger js-delete" data-room-id="@room.Id" data-room-name="@room.Name">
+                            <i class="fa fa-trash"></i> Delete
+                        </button>
 
-                </td>
-            </tr>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

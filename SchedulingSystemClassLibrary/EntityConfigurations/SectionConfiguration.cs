@@ -18,6 +18,11 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
                 .WillCascadeOnDelete(false);
 
             this.Ignore(s => s.CurrentYear);
+
+            this.HasMany(s => s.Schedules)
+                .WithRequired(s => s.Section)
+                .HasForeignKey(s => s.SectionId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

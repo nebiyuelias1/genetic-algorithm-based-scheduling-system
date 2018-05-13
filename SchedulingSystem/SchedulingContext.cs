@@ -34,7 +34,8 @@ namespace SchedulingSystem
             modelBuilder.Configurations.Add(new CourseOfferingConfiguration());
             modelBuilder.Configurations.Add(new InstructorConfiguration());
             modelBuilder.Configurations.Add(new DayConfiguration());
-            modelBuilder.Configurations.Add(new RoomConfiguration()); 
+            modelBuilder.Configurations.Add(new RoomConfiguration());
+            
 
             base.OnModelCreating(modelBuilder); 
         }

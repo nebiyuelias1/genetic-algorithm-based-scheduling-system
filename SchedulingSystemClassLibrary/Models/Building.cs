@@ -17,7 +17,17 @@ namespace SchedulingSystemClassLibrary.Models
         {
             get
             {
-                return $"{Name} - {Number}";
+                string buildingNumber = "";
+                if (Number < 10)
+                {
+                    buildingNumber = "0" + Number;
+                }
+                else
+                {
+                    buildingNumber = Number.ToString();
+                }
+                
+                return $"{Name}-{buildingNumber}";
             }
         }
     }

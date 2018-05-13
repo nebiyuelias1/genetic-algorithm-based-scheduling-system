@@ -176,7 +176,15 @@ namespace SchedulingSystemWeb.Controllers
         public ActionResult AssignLectureRoom(int id)
         {
             var section = _context.Sections.Single(s => s.Id == id);
-            var rooms = _context.Rooms.Where(r => r.IsLectureRoom);
+            var rooms = _context
+                        .Rooms
+                        .Include(r => r.AssignedLectureSections)
+                        .Include(r => r.Building)
+                        .Where(r => r.IsLectureRoom 
+                                    && r.Size >= section.StudentCount 
+                                    && ((!r.IsSharedRoom && r.AssignedLectureSections.Count == 0)
+                                    || (r.IsSharedRoom)));
+
             var viewModel = new AssignRoomViewModel
             {
                 SectionId = id, 
@@ -185,6 +193,34 @@ namespace SchedulingSystemWeb.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public ActionResult AssignLabRoom(int id)
+        {
+
+            var section = _context.Sections.Single(s => s.Id == id);
+            var rooms = _context
+                        .Rooms
+                        .Include(r => r.AssignedLabSections)
+                        .Include(r => r.Building)
+                        .Where(r => r.IsLabRoom
+                                    && r.Size >= section.StudentCount
+                                    && ((!r.IsSharedRoom && r.AssignedLabSections.Count == 0)
+                                    || (r.IsSharedRoom)));
+
+            var viewModel = new AssignRoomViewModel
+            {
+                SectionId = id,
+                Section = section,
+                Rooms = rooms
+            };
+
+            return View(viewModel);
+        }
+
+        public ActionResult Generate(int id)
+        {
+            return View();
         }
         protected override void Dispose(bool disposing)
         {

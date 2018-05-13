@@ -16,8 +16,8 @@
 <section id="breadcrumb">
     <div class="container-fluid">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/" class="active">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="/Courses">Courses</a></li>
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">Courses</li>
         </ol>
     </div>
 </section>
@@ -58,43 +58,46 @@
             <th class="col-sm-2"></th>
         </tr>
     <thead>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Credit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lecture)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Laboratory)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tutor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeliveryYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeliverySemester)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Curriculum.Nomenclature)
-        </td>
-        <td>
-            <a href="/Courses/Edit/@item.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-            <button class="btn btn-danger js-delete" data-course-id="@item.Id" data-course-title="@item.Title">
-            <i class="fa fa-trash"></i> Delete</button>
-        </td>
-    </tr>
-}
-
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lecture)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Laboratory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tutor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliverySemester)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Curriculum.Nomenclature)
+                </td>
+                <td>
+                    <a href="/Courses/Edit/@item.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+                    <button class="btn btn-danger js-delete" data-course-id="@item.Id" data-course-title="@item.Title">
+                        <i class="fa fa-trash"></i> Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @section Scripts 

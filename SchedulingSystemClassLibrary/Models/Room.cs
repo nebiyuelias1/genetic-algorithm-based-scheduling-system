@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,15 @@ namespace SchedulingSystemClassLibrary.Models
         public int Size { get; set; }
         public List<Section> AssignedLectureSections { get; set; }
         public List<Section> AssignedLabSections { get; set; }
-        // TODO - should you add IsLab, IsShared properties? 
         public bool IsLabRoom { get; set; }
         public bool IsLectureRoom { get; set; }
+        public bool IsSharedRoom { get; set; }
+        public string Title
+        {
+            get
+            {
+                return $"{Name} in {Building.BuildingTitle}";
+            }
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace SchedulingSystem.EntityConfigurations
                 .WithMany(b => b.Rooms)
                 .HasForeignKey(r => r.BuildingId)
                 .WillCascadeOnDelete(false);
+
+            this.Ignore(r => r.Title);
         }
     }
 }
