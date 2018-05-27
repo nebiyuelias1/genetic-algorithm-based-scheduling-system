@@ -23,6 +23,11 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
                 .WithRequired(s => s.Section)
                 .HasForeignKey(s => s.SectionId)
                 .WillCascadeOnDelete(false);
+
+            this.HasMany(s => s.Students)
+                .WithRequired(s => s.Section)
+                .HasForeignKey(s => s.SectionId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

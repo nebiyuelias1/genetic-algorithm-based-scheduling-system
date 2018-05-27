@@ -17,7 +17,7 @@ namespace SchedulingSystemClassLibrary.ViewModels.DepartmentHead
         [Display(Name = "Lecture Room")]
         public int LectureRoomId { get; set; }
 
-        [Display(Name = "Lecture Room")]
+        [Display(Name = "Lab Room")]
         public int LabRoomId { get; set; }
     }
 }

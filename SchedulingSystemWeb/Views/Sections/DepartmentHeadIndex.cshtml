@@ -81,14 +81,7 @@
 
                 </td>
                 <td>
-                    @if (item.AssignedLabRoom != null)
-                    {
-                        @item.AssignedLabRoom.Name<button class="btn btn-link js-lab-remove" data-section-id="@item.Id">[Remove Assignment!]</button>
-                    }
-                    else
-                    {
-                        <a href="/Sections/AssignLabRoom/@item.Id">Click here to Assign!</a>
-                    }
+                    <a href="/Sections/LabGroups/@item.Id">View Lab Groups</a>
                 </td>
                 <td>
                     <a href="/Sections/CourseOfferings/@item.Id">View courses</a>

@@ -1,0 +1,99 @@
+﻿@model SchedulingSystemClassLibrary.Models.Section
+
+@{
+    ViewBag.Title = $"Lab Groups for Section {Model.Name}";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Lab Groups fro Section @Model.Name</h3>
+            <h5>Total: @Model.LabGroups.Count</h5>
+        </div>
+    </div>
+</header>
+
+<section id="breadcrumb">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/Sections">Sections</a></li>
+            <li class="breadcrumb-item active">Section @Model.Name Lab Groups</li>
+        </ol>
+    </div>
+</section>
+
+<table id="labGroups" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Group Name</th>
+            <th>Assigned Room</th>
+            <th>Student Count</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var labGroup in Model.LabGroups)
+        {
+            <tr>
+                <td>@labGroup.Name</td>
+                @if (labGroup.Room != null)
+                {
+                    <td>
+                        @labGroup.Room.Name
+                        <button class="btn btn-link js-lab-remove" data-lab-group-id="@labGroup.Id">[Remove Assignment!]</button>
+                    </td>
+                }
+                else
+                {
+                    <td><a href="/Sections/AssignLabRoom/@labGroup.Id">Click here to Assign!</a></td>
+                }
+                <td>@labGroup.StudentCount</td>
+                <td>
+                    <button class="btn btn-danger js-delete" data-lab-group-id="@labGroup.Id" data-lab-group-name="@labGroup.Name"><i class="fa fa-trash"></i> Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+            $('#labGroups').DataTable();
+
+            $('#labGroups').on('click', '.js-delete', function () {
+                var button = $(this);
+
+                bootbox.confirm('Are you sure you want to delete <strong>' + button.attr('data-lab-group-name') + '</strong>?', function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/labgroups/' + button.attr('data-lab-group-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        })
+                    }
+                });
+            });
+
+            $('#labGroups').on('click', '.js-lab-remove', function () {
+                var button = $(this);
+
+                bootbox.confirm('Are you sure you want to remove this lab group from this room?', function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/sections/removelab/' + button.attr('data-lab-group-id'),
+                            method: 'PUT',
+                            success: function () {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

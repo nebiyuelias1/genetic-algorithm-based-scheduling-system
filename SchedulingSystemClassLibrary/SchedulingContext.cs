@@ -25,6 +25,9 @@ namespace SchedulingSystemClassLibrary
         public virtual DbSet<AcademicSemester> AcademicSemesters { get; set; }
         public virtual DbSet<AcademicYear> AcademicYears { get; set; }
         public virtual DbSet<LabAssistant> LabAssistances { get; set; }
+        public virtual DbSet<AcademicEvent> AcademicEvents { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<LabGroup> LabGroups { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new CourseOfferingConfiguration());

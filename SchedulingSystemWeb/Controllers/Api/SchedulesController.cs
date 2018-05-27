@@ -9,7 +9,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Mvc;
 using SchedulingSystemClassLibrary.GeneticAlgorithm;
 
 namespace SchedulingSystemWeb.Controllers.Api
@@ -50,7 +49,7 @@ namespace SchedulingSystemWeb.Controllers.Api
                                    .AcademicSemesters
                                    .SingleOrDefault(s => s.CurrentSemester);
 
-            if (_context.Schedules.Any(s => s.Id == id && s.AcademicSemesterId == currentSemester.Id))
+            if (_context.Schedules.Any(s => s.SectionId == id && s.AcademicSemesterId == currentSemester.Id))
             {
                 var schedule = _context.Schedules
                 .Include(s => s.Section)
@@ -62,7 +61,7 @@ namespace SchedulingSystemWeb.Controllers.Api
                 .Select(p => p.Instructor)))
                 .Include(s => s.Days
                 .Select(d => d.Periods
-                .Select(p => p.Room)))
+                .Select(p => p.Room.Building)))
                 .ToList()
                 .Select(Mapper.Map<Schedule, ScheduleDto>)
                 .SingleOrDefault(s => s.Section.Id == id);
@@ -104,6 +103,49 @@ namespace SchedulingSystemWeb.Controllers.Api
                             .Select(Mapper.Map<Schedule, ScheduleDto>); 
                             
             return Ok(schedules);
+        }
+
+        [HttpPost]
+        public IHttpActionResult Save(ScheduleDto model)
+        {
+            try
+            {
+                var currentSemester = _context.AcademicSemesters.SingleOrDefault(s => s.CurrentSemester);
+                var schedule = Mapper.Map<ScheduleDto, Schedule>(model);
+                foreach (var day in schedule.Days)
+                {
+                    foreach (var period in day.Periods)
+                    {
+                        if (period.Course.Title == null)
+                        {
+                            day.Periods[period.Period].Course = null;
+                            day.Periods[period.Period].Instructor = null;
+                            day.Periods[period.Period].Room = null;
+                        }
+                        else
+                        {
+                            day.Periods[period.Period].CourseId = day.Periods[period.Period].Course.Id; 
+                            day.Periods[period.Period].Course = null;
+                            day.Periods[period.Period].InstructorId = day.Periods[period.Period].Instructor.Id;
+                            day.Periods[period.Period].Instructor = null;
+                            day.Periods[period.Period].RoomId = day.Periods[period.Period].Room.Id;
+                            day.Periods[period.Period].Room = null; 
+                        }
+                    }
+                }
+                schedule.SectionId = schedule.Section.Id;
+                schedule.Section = null;
+                schedule.AcademicSemesterId = currentSemester.Id; 
+                _context.Schedules.Add(schedule);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
         protected override void Dispose(bool disposing)
         {

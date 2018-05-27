@@ -19,6 +19,10 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
             //this.HasRequired(s => s.Section)
             //    .WithRequiredDependent()
             //    .WillCascadeOnDelete(false);
+            this.HasMany(s => s.Days)
+                .WithRequired(d => d.Schedule)
+                .HasForeignKey(d => d.ScheduleId)
+                .WillCascadeOnDelete(true); 
         }
     }
 }

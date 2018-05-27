@@ -88,6 +88,7 @@
     <Compile Include="Dtos\AcademicSemesterDto.cs" />
     <Compile Include="Dtos\AcademicYearDto.cs" />
     <Compile Include="Dtos\BuildingDto.cs" />
+    <Compile Include="Dtos\BuildingDtoMinimal.cs" />
     <Compile Include="Dtos\CourseDto.cs" />
     <Compile Include="Dtos\CourseOfferingDto.cs" />
     <Compile Include="Dtos\DayDto.cs" />
@@ -208,6 +209,31 @@
     <Compile Include="Migrations\201805131011016_ModifySchedulesTableAndSectionsTable.Designer.cs">
       <DependentUpon>201805131011016_ModifySchedulesTableAndSectionsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.cs" />
+    <Compile Include="Migrations\201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.Designer.cs">
+      <DependentUpon>201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805211822557_AddAcademicEventsTable.cs" />
+    <Compile Include="Migrations\201805211822557_AddAcademicEventsTable.Designer.cs">
+      <DependentUpon>201805211822557_AddAcademicEventsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805211838456_ChangeDescriptionColumnOfAcademicEventToString.cs" />
+    <Compile Include="Migrations\201805211838456_ChangeDescriptionColumnOfAcademicEventToString.Designer.cs">
+      <DependentUpon>201805211838456_ChangeDescriptionColumnOfAcademicEventToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805222113011_AddStudentsTable.cs" />
+    <Compile Include="Migrations\201805222113011_AddStudentsTable.Designer.cs">
+      <DependentUpon>201805222113011_AddStudentsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805251938031_AddLabGroupsTable.cs" />
+    <Compile Include="Migrations\201805251938031_AddLabGroupsTable.Designer.cs">
+      <DependentUpon>201805251938031_AddLabGroupsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.cs" />
+    <Compile Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.Designer.cs">
+      <DependentUpon>201805270615440_AddStudentCountPropertyToLabGroupsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcademicEvent.cs" />
     <Compile Include="Models\AcademicSemester.cs" />
     <Compile Include="Models\AcademicYear.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -303,17 +329,29 @@
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\InstructorPreference.cs" />
     <Compile Include="Models\LabAssistant.cs" />
+    <Compile Include="Models\LabGroup.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\RoomAssignmentInfo.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\ScheduleEntry.cs" />
     <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchedulingContext.cs" />
     <Compile Include="ViewModels\AcademicSemestersViewModel.cs" />
     <Compile Include="ViewModels\AcademicYearsViewModel.cs" />
     <Compile Include="ViewModels\AccountAfterConfirmationViewModel.cs" />
+    <Compile Include="ViewModels\Api\AddExternalLoginBindingModel.cs" />
+    <Compile Include="ViewModels\Api\ChangePasswordBindingModel.cs" />
+    <Compile Include="ViewModels\Api\ExternalLoginViewModel.cs" />
+    <Compile Include="ViewModels\Api\ManageInfoViewModel.cs" />
+    <Compile Include="ViewModels\Api\RegisterBindingModel.cs" />
+    <Compile Include="ViewModels\Api\RegisterExternalBindingModel.cs" />
+    <Compile Include="ViewModels\Api\RemoveLoginBindingModel.cs" />
+    <Compile Include="ViewModels\Api\SetPasswordBindingModel.cs" />
+    <Compile Include="ViewModels\Api\UserInfoViewModel.cs" />
+    <Compile Include="ViewModels\Api\UserLoginInfoViewModel.cs" />
     <Compile Include="ViewModels\AssignDepartmentHeadViewModel.cs" />
     <Compile Include="ViewModels\ChangeDepartmentHeadViewModel.cs" />
     <Compile Include="ViewModels\CollegeDeanHomeViewModel.cs" />
@@ -324,6 +362,7 @@
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsIndexViewModel.cs" />
     <Compile Include="ViewModels\DepartmentHeadAccountsViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentHead\AssignLabRoomViewModel.cs" />
     <Compile Include="ViewModels\DepartmentHead\AssignRoomViewModel.cs" />
     <Compile Include="ViewModels\DepartmentHead\DepartmentHeadHomeViewModel.cs" />
     <Compile Include="ViewModels\DepartmentHead\SectionsViewModel.cs" />
@@ -467,6 +506,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805131011016_ModifySchedulesTableAndSectionsTable.resx">
       <DependentUpon>201805131011016_ModifySchedulesTableAndSectionsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.resx">
+      <DependentUpon>201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805211822557_AddAcademicEventsTable.resx">
+      <DependentUpon>201805211822557_AddAcademicEventsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805211838456_ChangeDescriptionColumnOfAcademicEventToString.resx">
+      <DependentUpon>201805211838456_ChangeDescriptionColumnOfAcademicEventToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805222113011_AddStudentsTable.resx">
+      <DependentUpon>201805222113011_AddStudentsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805251938031_AddLabGroupsTable.resx">
+      <DependentUpon>201805251938031_AddLabGroupsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.resx">
+      <DependentUpon>201805270615440_AddStudentCountPropertyToLabGroupsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

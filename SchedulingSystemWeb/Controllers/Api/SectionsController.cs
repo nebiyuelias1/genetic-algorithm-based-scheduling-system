@@ -100,9 +100,9 @@ namespace SchedulingSystemWeb.Controllers.Api
         [HttpPut]
         public void RemoveLab(int id)
         {
-            var sectionInDb = _context.Sections.Single(s => s.Id == id);
-            sectionInDb.AssignedLabRoom = null;
-            sectionInDb.AssignedLabRoomId = null;
+            var labGroupInDb = _context.LabGroups.Single(s => s.Id == id);
+            labGroupInDb.Room = null;
+            labGroupInDb.RoomId = null;
             _context.SaveChanges();
         }
 

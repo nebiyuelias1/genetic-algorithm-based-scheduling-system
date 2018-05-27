@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SchedulingSystemClassLibrary.ViewModels.DepartmentHead;
+using System.Web.Routing;
 
 namespace SchedulingSystemWeb.Controllers
 {
@@ -120,7 +121,52 @@ namespace SchedulingSystemWeb.Controllers
         {
             if (section.Id == 0)
             {
-                _context.Sections.Add(section); 
+                _context.Sections.Add(section);
+
+                if (section.StudentCount > GlobalConfig.LAB_SPLIT_SIZE)
+                {
+                    var studentCountG1 = 0;
+                    var studentCountG2 = 0;
+
+                    if (section.StudentCount % 2 == 0)
+                    {
+                        studentCountG1 = section.StudentCount / 2;
+                        studentCountG2 = section.StudentCount / 2; 
+                    }
+                    else
+                    {
+                        studentCountG1 = section.StudentCount / 2;
+                        studentCountG2 = studentCountG1 + 1; 
+                    }
+
+                    var g1 = new LabGroup
+                    {
+                        Name = "G-1",
+                        Section = section, 
+                        StudentCount = (byte)studentCountG1
+                    };
+
+                    var g2 = new LabGroup
+                    {
+                        Name = "G-2",
+                        Section = section, 
+                        StudentCount = (byte)studentCountG2
+                    };
+
+                    _context.LabGroups.Add(g1);
+                    _context.LabGroups.Add(g2);
+                }
+                else
+                {
+                    var g1 = new LabGroup
+                    {
+                        Name = "G-1",
+                        Section = section,
+                        StudentCount = (byte)section.StudentCount
+                    };
+
+                    _context.LabGroups.Add(g1);
+                }
             }
             else
             {
@@ -173,6 +219,27 @@ namespace SchedulingSystemWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignLabGroup(AssignLabRoomViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var labGroupInDb = _context
+                                    .LabGroups
+                                    .Include(g => g.Section)
+                                    .Single(s => s.Id == model.LabGroupId);
+
+                labGroupInDb.RoomId = model.LabRoomId;
+
+                _context.SaveChanges();
+
+                return RedirectToAction("LabGroups", "Sections", new { id = labGroupInDb.Section.Id });
+            }
+         
+
+            return RedirectToAction("Index");
+        }
         public ActionResult AssignLectureRoom(int id)
         {
             var section = _context.Sections.Single(s => s.Id == id);
@@ -198,20 +265,25 @@ namespace SchedulingSystemWeb.Controllers
         public ActionResult AssignLabRoom(int id)
         {
 
-            var section = _context.Sections.Single(s => s.Id == id);
+            var labGroup = _context
+                            .LabGroups
+                            .Include(g => g.Section)
+                            .Single(s => s.Id == id);
+
             var rooms = _context
                         .Rooms
                         .Include(r => r.AssignedLabSections)
                         .Include(r => r.Building)
                         .Where(r => r.IsLabRoom
-                                    && r.Size >= section.StudentCount
+                                    && r.Size >= labGroup.StudentCount
                                     && ((!r.IsSharedRoom && r.AssignedLabSections.Count == 0)
-                                    || (r.IsSharedRoom)));
+                                    || (r.IsSharedRoom)))
+                        .ToList();
 
-            var viewModel = new AssignRoomViewModel
+            var viewModel = new AssignLabRoomViewModel
             {
-                SectionId = id,
-                Section = section,
+                LabGroupId = id,
+                LabGroup = labGroup,
                 Rooms = rooms
             };
 
@@ -221,6 +293,17 @@ namespace SchedulingSystemWeb.Controllers
         public ActionResult Generate(int id)
         {
             return View();
+        }
+
+        public ActionResult LabGroups(int id)
+        {
+            var sectionInDb = _context
+                                .Sections
+                                .Include(s => s.LabGroups
+                                .Select(g => g.Room))
+                                .Single(s => s.Id == id);
+
+            return View(sectionInDb);
         }
         protected override void Dispose(bool disposing)
         {

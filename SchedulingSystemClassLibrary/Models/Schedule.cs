@@ -55,10 +55,8 @@ namespace SchedulingSystemClassLibrary.Models
 
 
             this.scheduleEntries = scheduleEntries;
-                                    
 
-
-
+            
             foreach (CourseOffering offering in courseOfferings)
             {
                 var instructor = offering.Instructor;
@@ -250,20 +248,10 @@ namespace SchedulingSystemClassLibrary.Models
         {
             // TODO - Implement this mutate method
             Random rand = new Random();
-            switch (rand.Next(3))
-            {
-                case 0:
-                    //SwapMorningAndAfternoonPeriods();
-                    break;
-                case 1:
-                    //ShiftToEarlyPeriods();
-                    break;
-                case 2:
-                    //SwapPeriods();
-                    break;
-            }
+
             SwapMorningAndAfternoonPeriods();
             ShiftToEarlyPeriods();
+            SwapDays();
             //SwapPeriods();
 
             //Random rand = new Random(); 
@@ -293,6 +281,47 @@ namespace SchedulingSystemClassLibrary.Models
             //        Days[secondRandDay].Periods[secondRandPeriod].IsTutor = temp.IsTutor;
 
             //    }
+        }
+
+        private void SwapDays()
+        {
+            var mwfDays = new byte[] { 0, 2, 4 };
+            var tthDays = new byte[] { 1, 3 };
+
+            Random rand = new Random();
+
+            var r = rand.Next(2);
+            byte randDay;
+            byte secondRandDay; 
+            switch (r)
+            {
+                case 0:
+                    randDay = mwfDays[rand.Next(3)];
+                    secondRandDay = mwfDays[rand.Next(3)];
+
+                    while (randDay == secondRandDay)
+                    {
+                        secondRandDay = mwfDays[rand.Next(3)];
+                    }
+
+                    var temp = this.Days[randDay].Periods;
+                    this.Days[randDay].Periods = this.Days[secondRandDay].Periods;
+                    this.Days[secondRandDay].Periods = temp; 
+                    break;
+                case 1:
+                    randDay = tthDays[rand.Next(2)];
+                    secondRandDay = tthDays[rand.Next(2)];
+
+                    while (randDay == secondRandDay)
+                    {
+                        secondRandDay = tthDays[rand.Next(2)];
+                    }
+
+                    temp = this.Days[randDay].Periods;
+                    this.Days[randDay].Periods = this.Days[secondRandDay].Periods;
+                    this.Days[secondRandDay].Periods = temp;
+                    break; 
+            }
         }
 
         private void SwapPeriods()
@@ -977,21 +1006,19 @@ namespace SchedulingSystemClassLibrary.Models
             #region New Fitness Function
             int numOfConflicts = 0;
 
-            //PrintSchedule();
-
             foreach (var day in Days)
             {
-                // This checks if the schedule starts first thing in the morning
-                if (!ScheduleHelper.DoesScheduleStartOnFirstPeriodInTheMorning(day))
-                {
-                    numOfConflicts++;
-                }
+                //// This checks if the schedule starts first thing in the morning
+                //if (!ScheduleHelper.DoesScheduleStartOnFirstPeriodInTheMorning(day))
+                //{
+                //    numOfConflicts++;
+                //}
 
-                // This checks if the schedule starts first thing in the afternoon
-                if (!ScheduleHelper.DoesScheduleStartOnFirstPeriodInTheAfternoon(day))
-                {
-                    numOfConflicts++;
-                }
+                //// This checks if the schedule starts first thing in the afternoon
+                //if (!ScheduleHelper.DoesScheduleStartOnFirstPeriodInTheAfternoon(day))
+                //{
+                //    numOfConflicts++;
+                //}
 
                 // This checks if there is a free gap between periods in the morning
                 if (ScheduleHelper.IsThereAGapBetweenEntriesInTheMorning(day))
@@ -1029,8 +1056,8 @@ namespace SchedulingSystemClassLibrary.Models
 
             }
 
-            numOfConflicts += 2*CountConflictsBasedOnInstructorBeingFree();
-            numOfConflicts += 2*CountConflictsBasedOnRoomBeingFree();
+            numOfConflicts += CountConflictsBasedOnInstructorBeingFree();
+            numOfConflicts += CountConflictsBasedOnRoomBeingFree();
 
             Fitness = 1.0 / (1 + numOfConflicts);
             #endregion
@@ -1688,6 +1715,7 @@ namespace SchedulingSystemClassLibrary.Models
                         bool isThereARoomClash = scheduleEntries.Any(s => s.Day.DayNumber == day
                                                                     && s.Period == period
                                                                     && s.RoomId == currentEntry.Room.Id);
+
                         if (isThereAnInstructorClash || isThereARoomClash)
                         {
                             return true; 

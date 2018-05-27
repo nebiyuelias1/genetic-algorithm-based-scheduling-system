@@ -49,7 +49,26 @@ namespace SchedulingSystemWeb.Controllers
                     GcYear = model.GcYear
                 };
 
+                var academicYearStartEvent = new AcademicEvent
+                {
+                    Subject = "Academic Year Start Date",
+                    Description = $"{academicYear.EtYear} EC Academic Year Start Date",
+                    Start = model.StartDate
+
+                };
+
+                var academicYearEndEvent = new AcademicEvent
+                {
+                    Subject = "Academic Year End Date",
+                    Description = $"{academicYear.EtYear} EC Academic Year End Date",
+                    Start = model.EndDate
+
+                };
+
                 _context.AcademicYears.Add(academicYear);
+                _context.AcademicEvents.Add(academicYearStartEvent); 
+                _context.AcademicEvents.Add(academicYearEndEvent); 
+
                 _context.SaveChanges();
 
                 return RedirectToAction("Index", "Semesters");
@@ -72,6 +91,22 @@ namespace SchedulingSystemWeb.Controllers
                     EndDate = model.EndDate
                 };
 
+                var academicSemesterStartEvent = new AcademicEvent
+                {
+                    Subject = "Academic Semester Start Date",
+                    Description = $"Semester {academicSemester.AcademicSemesterTitle} Start Date",
+                    Start = model.StartDate
+
+                };
+
+                var academicSemesterEndEvent = new AcademicEvent
+                {
+                    Subject = "Academic Semester End Date",
+                    Description = $"Semester {academicSemester.AcademicSemesterTitle} End Date",
+                    Start = model.EndDate
+
+                };
+
                 var previousSemesters = _context.AcademicSemesters.Where(s => s.CurrentSemester);
 
                 foreach (var semester in previousSemesters)
@@ -80,6 +115,8 @@ namespace SchedulingSystemWeb.Controllers
                 }
 
                 _context.AcademicSemesters.Add(academicSemester);
+                _context.AcademicEvents.Add(academicSemesterStartEvent);
+                _context.AcademicEvents.Add(academicSemesterEndEvent);
                 _context.SaveChanges();
 
                 return RedirectToAction("Index", "Home");

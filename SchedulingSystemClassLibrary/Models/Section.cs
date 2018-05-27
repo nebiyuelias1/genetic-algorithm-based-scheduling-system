@@ -30,10 +30,16 @@ namespace SchedulingSystemClassLibrary.Models
         // TODO - Which one is better IList, List, IEnumerable
         public Room AssignedLectureRoom { get; set; }
         public int? AssignedLectureRoomId { get; set; }
+
+
         public Room AssignedLabRoom { get; set; }
         public int? AssignedLabRoomId { get; set; }
+
+        public List<LabGroup> LabGroups { get; set; }
+
         public List<CourseOffering> CourseOfferings { get; set; }
         public List<Schedule> Schedules { get; set; }
+        public List<Student> Students { get; set; }
         public byte CurrentYear {
             get 
             {

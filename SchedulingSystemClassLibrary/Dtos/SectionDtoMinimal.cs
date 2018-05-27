@@ -12,5 +12,6 @@ namespace SchedulingSystemClassLibrary.Dtos
         public string Name { get; set; }
         public int EntranceYear { get; set; }
         public int StudentCount { get; set; }
+        public byte CurrentYear { get; set; }
     }
 }
