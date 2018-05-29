@@ -284,6 +284,34 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
 
             return dictionary;
         }
+
+        public static bool ShouldSectionBeSplitted(Section section)
+        {
+            if (section.StudentCount <= GlobalConfig.LAB_SPLIT_SIZE)
+            {
+                return false; 
+            }
+            else
+            {
+                var totalHours = 0;
+                foreach (var courseOffering in section.CourseOfferings)
+                {
+                    totalHours += courseOffering.Course.Lecture;
+                    totalHours += courseOffering.Course.Tutor;
+                    totalHours += 2 * courseOffering.Course.Laboratory;
+                }
+
+                if (totalHours > GlobalConfig.MAX_SCHEDULE_ENTRIES)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true; 
+                }
+            }
+        }
+
         private static bool IsCoursePerforated(List<byte> periods)
         {
             bool isPerforated = true;

@@ -17,9 +17,9 @@ namespace SchedulingSystemClassLibrary.EntityConfigurations
                 .HasForeignKey(s => s.AssignedLectureRoomId)
                 .WillCascadeOnDelete(false);
 
-            this.HasMany(r => r.AssignedLabSections)
-                 .WithOptional(r => r.AssignedLabRoom)
-                 .HasForeignKey(s => s.AssignedLabRoomId)
+            this.HasMany(r => r.AssignedLabGroups)
+                 .WithOptional(r => r.Room)
+                 .HasForeignKey(s => s.RoomId)
                  .WillCascadeOnDelete(false);
 
             this.HasRequired(r => r.Building)

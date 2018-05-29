@@ -21,6 +21,8 @@ namespace SchedulingSystemClassLibrary.Models
         public byte Period { get; set; }
         public bool IsLecture { get; set; } = false;
         public bool IsLab { get; set; } = false;
-        public bool IsTutor { get; set; } = false; 
+        public bool IsTutor { get; set; } = false;
+        public LabGroup LabGroup { get; set; }
+        public int? LabGroupId { get; set; }
     }
 }

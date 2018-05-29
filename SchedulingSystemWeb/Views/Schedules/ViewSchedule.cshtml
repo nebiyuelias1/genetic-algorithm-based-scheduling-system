@@ -11,7 +11,7 @@
             <h5>Department: @Model.Section.Department.Name</h5>
             <h5>Semester: @Model.AcademicSemester.AcademicSemesterTitle @Model.AcademicSemester.AcademicYear.AcademicYearTitle</h5>
             <h5>Lecture Room: @Model.Section.AssignedLectureRoom.Title</h5>
-            <h5>Lecture Room: @Model.Section.AssignedLabRoom.Title</h5>
+            
 
         </div>
     </div>
@@ -201,7 +201,6 @@
                     //    //alert('a day has been clicked!');
                     //},
                     events: events,
-
                     eventClick: function (calEvent, jsEvent, view) {
                         var period = calEvent.periodData.period + 1;
                         $('#myModal #eventTitle').text(calEvent.dayName + '(' + period + ')');
@@ -212,8 +211,17 @@
                             $('#classType').html('Lab');
                         }
                         $('#myModal').modal('show');
+                    },
+                    eventStartEditable: true,
+                    eventOverlap: function (stillEvent, movingEvent) {
+                        console.log(stillEvent);
+                        console.log(movingEvent); 
+                        return stillEvent.allDay && movingEvent.allDay;
+                    },
+                    eventDragStop: function (event, jsEvent, ui, view) {
+                        alert('event dropped');
                     }
-                })
+                });
             }
 
             function getEventsData(data) {
@@ -232,7 +240,7 @@
                         }
                         
                         events.push({
-                            title: period.course != null ? period.course.acronym + classType: null,
+                            title: period.course != null ? period.course.acronym + classType : null,
                             description: period.course != null ? period.course.title : null,
 
                             //description:period.instructor !=null ? period.instructor.name:null,
@@ -251,6 +259,7 @@
                             periodData: period
 
                         });
+                        
                     });
                 });
             }

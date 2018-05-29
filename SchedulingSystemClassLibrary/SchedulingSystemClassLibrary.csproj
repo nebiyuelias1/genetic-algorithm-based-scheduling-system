@@ -96,6 +96,7 @@
     <Compile Include="Dtos\DepartmentHeadChangeDto.cs" />
     <Compile Include="Dtos\InstructorDto.cs" />
     <Compile Include="Dtos\InstructorDtoMinimal.cs" />
+    <Compile Include="Dtos\LabGroupDto.cs" />
     <Compile Include="Dtos\RoomDto.cs" />
     <Compile Include="Dtos\ScheduleDto.cs" />
     <Compile Include="Dtos\ScheduleEntryDto.cs" />
@@ -232,6 +233,14 @@
     <Compile Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.cs" />
     <Compile Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.Designer.cs">
       <DependentUpon>201805270615440_AddStudentCountPropertyToLabGroupsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805271831027_ModifySectionsTablePropertyAndRelationships.cs" />
+    <Compile Include="Migrations\201805271831027_ModifySectionsTablePropertyAndRelationships.Designer.cs">
+      <DependentUpon>201805271831027_ModifySectionsTablePropertyAndRelationships.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805271856293_AddLabGroupPropertyToScheduleEntriesTable.cs" />
+    <Compile Include="Migrations\201805271856293_AddLabGroupPropertyToScheduleEntriesTable.Designer.cs">
+      <DependentUpon>201805271856293_AddLabGroupPropertyToScheduleEntriesTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AcademicEvent.cs" />
     <Compile Include="Models\AcademicSemester.cs" />
@@ -524,6 +533,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.resx">
       <DependentUpon>201805270615440_AddStudentCountPropertyToLabGroupsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805271831027_ModifySectionsTablePropertyAndRelationships.resx">
+      <DependentUpon>201805271831027_ModifySectionsTablePropertyAndRelationships.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805271856293_AddLabGroupPropertyToScheduleEntriesTable.resx">
+      <DependentUpon>201805271856293_AddLabGroupPropertyToScheduleEntriesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

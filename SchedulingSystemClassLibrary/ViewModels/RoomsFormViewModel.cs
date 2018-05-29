@@ -39,6 +39,7 @@ namespace SchedulingSystemClassLibrary.ViewModels
         }
         public RoomsFormViewModel(Room room)
         {
+            this.Id = room.Id;
             this.Name = room.Name;
             this.BuildingId = room.BuildingId;
             this.Size = room.Size;

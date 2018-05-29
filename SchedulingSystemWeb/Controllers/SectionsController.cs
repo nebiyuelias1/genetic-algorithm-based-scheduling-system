@@ -225,10 +225,12 @@ namespace SchedulingSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var labGroupInDb = _context
                                     .LabGroups
                                     .Include(g => g.Section)
                                     .Single(s => s.Id == model.LabGroupId);
+
 
                 labGroupInDb.RoomId = model.LabRoomId;
 
@@ -272,11 +274,11 @@ namespace SchedulingSystemWeb.Controllers
 
             var rooms = _context
                         .Rooms
-                        .Include(r => r.AssignedLabSections)
+                        .Include(r => r.AssignedLabGroups)
                         .Include(r => r.Building)
                         .Where(r => r.IsLabRoom
                                     && r.Size >= labGroup.StudentCount
-                                    && ((!r.IsSharedRoom && r.AssignedLabSections.Count == 0)
+                                    && ((!r.IsSharedRoom && r.AssignedLabGroups.Count == 0)
                                     || (r.IsSharedRoom)))
                         .ToList();
 

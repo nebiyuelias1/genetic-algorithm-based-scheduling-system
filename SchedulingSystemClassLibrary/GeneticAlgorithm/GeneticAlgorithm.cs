@@ -63,9 +63,9 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
 
 
 
-                if ((Population.Any(s => s.Fitness >= 0.5)) && (Population.Any(s => !s.IsThereAnyClash())))
+                if ((Population.Any(s => s.Fitness >= 1.0)) && (Population.Any(s => !s.IsThereAnyClash())))
                 {
-                    return Population.Where(s => s.Fitness >= 0.5).First();
+                    return Population.Where(s => s.Fitness >= 1.0).First();
                 }
 
                 generation++; 
@@ -196,7 +196,8 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             var section = _context.Sections.Include(s => s.CourseOfferings.Select(c => c.Course))
                                             .Include(s => s.CourseOfferings.Select(c => c.Instructor).Select(c => c.InstructorPreference))
                                             .Include(s => s.AssignedLectureRoom.Building)
-                                            .Include(s => s.AssignedLabRoom.Building)
+                                            .Include(s => s.LabGroups
+                                            .Select(x => x.Room.Building))
                                             .SingleOrDefault(s => s.Id == id);
 
             var currentSemester = _context
@@ -222,12 +223,18 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                                 .OrderByDescending(c => c.Course.Laboratory);
 
             int mwfPeriodsCount = 0;
-            int tthPeriodsCount = 0; 
+            int tthPeriodsCount = 0;
 
+            var shouldSectionBeSplitted = ScheduleHelper.ShouldSectionBeSplitted(section);
             byte counter = 0;
             foreach (var courseOffering in randomizedCourseOffering)
             {
-                int sum = courseOffering.Course.Lecture + courseOffering.Course.Laboratory + courseOffering.Course.Tutor; 
+                int sum = shouldSectionBeSplitted  
+                            ? courseOffering.Course.Lecture + 2*courseOffering.Course.Laboratory + courseOffering.Course.Tutor
+                            : courseOffering.Course.Lecture + courseOffering.Course.Laboratory + courseOffering.Course.Tutor;
+
+                
+
                 if (counter  % 2 == 0)
                 {
                     if ((mwfPeriodsCount + sum) <= 24)
@@ -259,9 +266,11 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
                 counter++; 
             }
 
+            
+
             for (int i = 0; i < GlobalConfig.POPULATION_SIZE; i++)
             {
-                var s = new Schedule(section, dictionary, scheduleEntries);
+                var s = new Schedule(section, dictionary, scheduleEntries, shouldSectionBeSplitted);
 
                 s.CalculateFitness();
 

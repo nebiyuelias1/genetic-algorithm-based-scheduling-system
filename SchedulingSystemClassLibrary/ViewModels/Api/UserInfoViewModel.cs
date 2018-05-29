@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using SchedulingSystemClassLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace SchedulingSystemClassLibrary.ViewModels.Api
 
         public string LoginProvider { get; set; }
         public IList<string> Roles { get; set; }
+        public Employee User { get; set; }
     }
 }

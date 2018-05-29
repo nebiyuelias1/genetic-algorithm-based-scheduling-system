@@ -14,6 +14,7 @@ namespace SchedulingSystemClassLibrary
         public const float MUTATION_RATE = 0.4f;
         public const float CROSSOVER_RATE = 0.8f; 
         public const byte TOURNAMENT_SIZE = 2;
-        public const byte LAB_SPLIT_SIZE = 40; 
+        public const byte LAB_SPLIT_SIZE = 40;
+        public const byte MAX_SCHEDULE_ENTRIES = 40;
     }
 }

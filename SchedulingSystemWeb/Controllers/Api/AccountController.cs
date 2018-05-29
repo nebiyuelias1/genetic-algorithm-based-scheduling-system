@@ -19,6 +19,7 @@ using SchedulingSystemClassLibrary.Models;
 using SchedulingSystemWeb.Providers;
 using System.Web.Security;
 using SchedulingSystemClassLibrary;
+using System.Linq;
 
 namespace SchedulingSystemWeb.Controllers.Api
 {
@@ -61,13 +62,30 @@ namespace SchedulingSystemWeb.Controllers.Api
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var roles = UserManager.GetRoles(User.Identity.GetUserId());
+
+            Employee user = null; 
+
+            if (roles.Contains(RoleName.IsAnInstructor))
+            {
+                user = _context.Instructors.Single(i => i.AccountId == User.Identity.GetUserId());
+            }
+            else if (roles.Contains(RoleName.IsALabAssistant))
+            {
+
+            }
+            else if (roles.Contains(RoleName.IsAStudent))
+            {
+                user = _context.Students.Single(s => s.AccountId == User.Identity.GetUserId());
+            }
 
             return new UserInfoViewModel
             {
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null, 
-                Roles = UserManager.GetRoles(User.Identity.GetUserId())
+                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
+                Roles = roles,
+                User = user
             };
         }
 

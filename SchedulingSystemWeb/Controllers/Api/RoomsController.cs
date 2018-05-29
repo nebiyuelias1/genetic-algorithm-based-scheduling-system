@@ -32,14 +32,14 @@ namespace SchedulingSystemWeb.Controllers.Api
         public void DeleteRoom(int id)
         {
             var roomInDb = _context.Rooms
-            .Include(r => r.AssignedLabSections)
+            .Include(r => r.AssignedLabGroups)
             .Include(r => r.AssignedLectureSections)
             .SingleOrDefault(x => x.Id == id);
 
             if (roomInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            roomInDb.AssignedLabSections = null;
+            roomInDb.AssignedLabGroups = null;
             roomInDb.AssignedLectureSections = null; 
 
             _context.Rooms.Remove(roomInDb);

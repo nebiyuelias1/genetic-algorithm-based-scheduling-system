@@ -39,7 +39,7 @@ namespace SchedulingSystemWeb.Controllers.Api
             var buildingInDb = _context
                                 .Buildings
                                 .Include(b => b.Rooms.Select(r => r.AssignedLectureSections))
-                                .Include(b => b.Rooms.Select(r => r.AssignedLabSections))
+                                .Include(b => b.Rooms.Select(r => r.AssignedLabGroups))
                                 .SingleOrDefault(x => x.Id == id);
 
             if (buildingInDb == null)
@@ -50,7 +50,7 @@ namespace SchedulingSystemWeb.Controllers.Api
             buildingInDb.Rooms = null;
             foreach (var room in rooms)
             {
-                room.AssignedLabSections = null;
+                room.AssignedLabGroups = null;
                 room.AssignedLectureSections = null;
                 _context.Rooms.Remove(room);
             }

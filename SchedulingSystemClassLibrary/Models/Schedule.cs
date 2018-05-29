@@ -38,7 +38,7 @@ namespace SchedulingSystemClassLibrary.Models
 
             InitializeSchedule();
         }
-        public Schedule(Section section, Dictionary<string, byte[]> dictionary, IList<ScheduleEntry> scheduleEntries)
+        public Schedule(Section section, Dictionary<string, byte[]> dictionary, IList<ScheduleEntry> scheduleEntries, bool shouldSectionBeSplitted)
         {
             _context = new SchedulingContext();
 
@@ -70,81 +70,258 @@ namespace SchedulingSystemClassLibrary.Models
 
                 Random rand = new Random();
 
-                
-                while (lab > 0)
+                if (shouldSectionBeSplitted)
                 {
-                    var room = Section.AssignedLabRoom;
+                    var groupALab = lab;
+                    var groupBLab = lab; 
 
-                    // pick a random slot to index into the ScheduleDNA list 
-                    //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
-                    byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
-                    byte randDay = dictionary[offering.Course.Title][randIndex];
-                    byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
-
-                    if (lab > 2)
+                    while (groupALab > 0)
                     {
-                        byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 3);
+                        var room = Section.LabGroups.First().Room;
+                        var labGroupId = Section.LabGroups.First().Id;
 
-                        if (slots.Where(b => b == 0).Count() <= 1)
+                        // pick a random slot to index into the ScheduleDNA list 
+                        //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                        byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
+                        byte randDay = dictionary[offering.Course.Title][randIndex];
+                        byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
+
+                        if (groupALab > 2)
                         {
-                            var entry = Days[randDay].Periods[slots[0]];
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            entry.Room = room;
-                            entry.IsLab = true;
+                            byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 3);
 
-                            entry = Days[randDay].Periods[slots[1]];
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            entry.Room = room;
-                            entry.IsLab = true;
+                            if (slots.Where(b => b == 0).Count() <= 1)
+                            {
+                                var entry = Days[randDay].Periods[slots[0]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
 
-                            entry = Days[randDay].Periods[slots[2]];
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            entry.Room = room;
-                            entry.IsLab = true;
+                                entry = Days[randDay].Periods[slots[1]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
 
-                            lab -= 3;
+                                entry = Days[randDay].Periods[slots[2]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                groupALab -= 3;
+                            }
+                        }
+
+                        if (groupALab > 1)
+                        {
+                            byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 2);
+
+                            if (slots.Where(b => b == 0).Count() <= 1)
+                            {
+                                var entry = Days[randDay].Periods[slots[0]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                entry = Days[randDay].Periods[slots[1]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                groupALab -= 2;
+                            }
+                        }
+
+                        if (groupALab > 0)
+                        {
+                            if (Days[randDay].Periods[randPeriod].Course == null)
+                            {
+                                var entry = Days[randDay].Periods[randPeriod];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                groupALab--;
+                            }
                         }
                     }
 
-                    if (lab > 1)
+                    while (groupBLab > 0)
                     {
-                        byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 2);
+                        var room = Section.LabGroups.Last().Room;
+                        var labGroupId = Section.LabGroups.Last().Id;
 
-                        if (slots.Where(b => b == 0).Count() <= 1)
+                        // pick a random slot to index into the ScheduleDNA list 
+                        //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                        byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
+                        byte randDay = dictionary[offering.Course.Title][randIndex];
+                        byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
+
+                        if (groupBLab > 2)
                         {
-                            var entry = Days[randDay].Periods[slots[0]];
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            entry.Room = room;
-                            entry.IsLab = true;
+                            byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 3);
 
-                            entry = Days[randDay].Periods[slots[1]];
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            entry.Room = room;
-                            entry.IsLab = true;
+                            if (slots.Where(b => b == 0).Count() <= 1)
+                            {
+                                var entry = Days[randDay].Periods[slots[0]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
 
-                            lab -= 2;
+                                entry = Days[randDay].Periods[slots[1]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                entry = Days[randDay].Periods[slots[2]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                groupBLab -= 3;
+                            }
+                        }
+
+                        if (groupBLab > 1)
+                        {
+                            byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 2);
+
+                            if (slots.Where(b => b == 0).Count() <= 1)
+                            {
+                                var entry = Days[randDay].Periods[slots[0]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                entry = Days[randDay].Periods[slots[1]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                groupBLab -= 2;
+                            }
+                        }
+
+                        if (groupBLab > 0)
+                        {
+                            if (Days[randDay].Periods[randPeriod].Course == null)
+                            {
+                                var entry = Days[randDay].Periods[randPeriod];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                groupBLab--;
+                            }
                         }
                     }
-                    
-                    if (lab > 0)
+                }
+                else
+                {
+                    while (lab > 0)
                     {
-                        if (Days[randDay].Periods[randPeriod].Course == null)
-                        {
-                            var entry = Days[randDay].Periods[randPeriod];
-                            entry.Course = course;
-                            entry.Instructor = instructor;
-                            entry.Room = room;
-                            entry.IsLab = true;
+                        var room = Section.LabGroups.First().Room;
+                        var labGroupId = Section.LabGroups.First().Id; 
 
-                            lab--;
+                        // pick a random slot to index into the ScheduleDNA list 
+                        //byte randDay = (byte)rand.Next(0, GlobalConfig.NUM_OF_DAYS);
+                        byte randIndex = (byte)rand.Next((byte)dictionary[offering.Course.Title].Count());
+                        byte randDay = dictionary[offering.Course.Title][randIndex];
+                        byte randPeriod = (byte)rand.Next(0, GlobalConfig.NUM_OF_PERIODS);
+
+                        if (lab > 2)
+                        {
+                            byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 3);
+
+                            if (slots.Where(b => b == 0).Count() <= 1)
+                            {
+                                var entry = Days[randDay].Periods[slots[0]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                entry = Days[randDay].Periods[slots[1]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                entry = Days[randDay].Periods[slots[2]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                lab -= 3;
+                            }
+                        }
+
+                        if (lab > 1)
+                        {
+                            byte[] slots = FindConsecutiveSlots(randDay, randPeriod, 2);
+
+                            if (slots.Where(b => b == 0).Count() <= 1)
+                            {
+                                var entry = Days[randDay].Periods[slots[0]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                entry = Days[randDay].Periods[slots[1]];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                lab -= 2;
+                            }
+                        }
+
+                        if (lab > 0)
+                        {
+                            if (Days[randDay].Periods[randPeriod].Course == null)
+                            {
+                                var entry = Days[randDay].Periods[randPeriod];
+                                entry.Course = course;
+                                entry.Instructor = instructor;
+                                entry.Room = room;
+                                entry.IsLab = true;
+                                entry.LabGroupId = labGroupId;
+
+                                lab--;
+                            }
                         }
                     }
-
                 }
 
                 while (lecture > 0)
@@ -1043,8 +1220,8 @@ namespace SchedulingSystemClassLibrary.Models
                 }
 
 
-                //Does the instructor want this day
-                //numOfConflicts += ScheduleHelper.CountInstructorPreferenceConflictsForThisDay(day);
+                // Does the instructor want this day
+                numOfConflicts += ScheduleHelper.CountInstructorPreferenceConflictsForThisDay(day);
 
 
                 numOfConflicts += ScheduleHelper.HowManyTimesIsSchedulePerforatedInTheMorning(day);

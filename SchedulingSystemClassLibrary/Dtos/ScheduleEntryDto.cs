@@ -19,5 +19,7 @@ namespace SchedulingSystemClassLibrary.Dtos
         public bool IsLecture { get; set; } = false;
         public bool IsLab { get; set; } = false;
         public bool IsTutor { get; set; } = false;
+        public LabGroupDto LabGroup { get; set; }
+        public int? LabGroupId { get; set; }
     }
 }
