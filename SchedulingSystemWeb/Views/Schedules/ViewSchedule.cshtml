@@ -1,6 +1,6 @@
 ﻿@model SchedulingSystemClassLibrary.ViewModels.DepartmentHead.ViewScheduleViewModel
 @{
-    ViewBag.Title = "Schedule for ";
+    ViewBag.Title = $"Schedule for {Model.Section.Name}";
 }
 
 <header>
@@ -10,8 +10,22 @@
             <h5>Year: @Model.Section.CurrentYear</h5>
             <h5>Department: @Model.Section.Department.Name</h5>
             <h5>Semester: @Model.AcademicSemester.AcademicSemesterTitle @Model.AcademicSemester.AcademicYear.AcademicYearTitle</h5>
-            <h5>Lecture Room: @Model.Section.AssignedLectureRoom.Title</h5>
-            
+            <h5>
+                Lecture Room:
+
+                @if (Model.Section.AssignedLectureRoom != null)
+                {
+                    <span> @Model.Section.AssignedLectureRoom.Title</span>
+                }
+                
+            </h5>
+            <h5>Lab Groups:</h5>
+            <ul>
+                @foreach (var labGroup in Model.Section.LabGroups)
+                {
+                    <li>Group: @labGroup.Name Lab Rooms: @labGroup.Room.Title</li>
+                }
+            </ul>
 
         </div>
     </div>
@@ -38,7 +52,7 @@
             }
             @foreach (var courseOffering in Model.Section.CourseOfferings)
             {
-                
+
                 <tr>
                     <td>@courseOffering.Course.CourseCode</td>
                     <td>@courseOffering.Course.Title</td>
@@ -46,16 +60,25 @@
                     <td>@courseOffering.Course.Laboratory</td>
                     <td>@courseOffering.Course.Tutor</td>
                     <td>@courseOffering.Course.Credit</td>
-                    <td>@courseOffering.Instructor.FullName</td>
+                    @if (courseOffering.Instructor != null)
+                    {
+                        <td>@courseOffering.Instructor.FullName</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+
                 </tr>
-                    totalLecture += courseOffering.Course.Lecture;
-                    totalLab += courseOffering.Course.Laboratory;
-                    totalTutor += courseOffering.Course.Tutor;
-                    totalCredit += courseOffering.Course.Credit;
+                totalLecture += courseOffering.Course.Lecture;
+                totalLab += courseOffering.Course.Laboratory;
+                totalTutor += courseOffering.Course.Tutor;
+                totalCredit += courseOffering.Course.Credit;
             }
-            
-            
+
+
         </tbody>
+
         <tfoot>
             <tr>
                 <th colspan="2" class="text-right">Total</th>
@@ -78,16 +101,13 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <div id="classType" class="pull-right">Lecture</div>
+                    <div id="classType" class="pull-right"></div>
                     <label for="courseTitle">Course Title</label>
                     <input class="form-control" type="text" id="courseTitle" disabled />
                     <label for="instrucotr">Instructor Name</label>
                     <input class="form-control" type="text" id="instructorName" disabled />
                     <label for="room">Room</label>
                     <input class="form-control" type="text" id="Room" disabled />
-
-
-
                 </div>
 
             </div>
@@ -100,6 +120,7 @@
 <div class="progress progress-striped active" id="progressbar" style="visibility: hidden;">
     <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">Please wait while the schedule is being generated</div>
 </div>
+<button id="save" class="btn btn-primary" style="visibility: hidden;"><i class="fa fa-save"></i> Save</button>
 @section scripts
 {
     <script>
@@ -133,7 +154,7 @@
                                 getEventsData(data);
                                 displaySchedule(events);
                                 $('#progressbar').hide();
-                                
+                                $('#save').css("visibility", "visible");
 
                                 $('#save').click(function () {
                                     $.ajax({
@@ -141,7 +162,8 @@
                                         method: 'POST',
                                         data: schedule,
                                         success: function (data) {
-
+                                            bootbox.alert('Schedule Saved Successfully');
+                                            $('#save').remove();
                                         },
                                         error: function (jqXHR, textStatus, errorThrown) {
 
@@ -206,25 +228,24 @@
                         $('#myModal #eventTitle').text(calEvent.dayName + '(' + period + ')');
                         $('#myModal #courseTitle').val(calEvent.description);
                         $('#myModal #instructorName').val(calEvent.periodData.instructor.fullName)
-                        $('#myModal #Room').val(calEvent.periodData.room.name)
-                        if (calEvent.isLab) {
-                            $('#classType').html('Lab');
+                        $('#myModal #Room').val(calEvent.periodData.room.title)
+
+                        if (calEvent.periodData.isLab) {
+                            $('#classType').html('Lab ' + calEvent.periodData.labGroup.name);
+                        } else if (calEvent.periodData.isLecture) {
+                            $('#classType').html('Lecture');
+                        } else if (calEvent.periodData.isTutor) {
+                            $('#classType').html('Tutor');
                         }
+
                         $('#myModal').modal('show');
                     },
                     eventStartEditable: true,
-                    eventOverlap: function (stillEvent, movingEvent) {
-                        console.log(stillEvent);
-                        console.log(movingEvent); 
-                        return stillEvent.allDay && movingEvent.allDay;
-                    },
-                    eventDragStop: function (event, jsEvent, ui, view) {
-                        alert('event dropped');
-                    }
                 });
             }
 
             function getEventsData(data) {
+                events.length = 0;
                 $.each(data.days, function (i, day) {
 
                     $.each(day.periods, function (j, period) {
@@ -233,7 +254,7 @@
                             if (period.isLecture) {
                                 classType = ' (Lecture)';
                             } else if (period.isLab) {
-                                classType = ' (Lab)';
+                                classType = ' (Lab) ' + period.labGroup.name;
                             } else if (period.isTutor) {
                                 classType = ' (Tutor)';
                             }
@@ -256,6 +277,7 @@
                             }),
                             color: period.course != null ? '#' + period.course.color.toString(16) : '#000001',
                             dayName: day.dayName,
+                            dayNumber: day.dayNumber,
                             periodData: period
 
                         });

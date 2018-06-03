@@ -43,9 +43,6 @@
                     {
                         data: "sections.length",
                         render: function (data, type, department) {
-                            if (data > 0)
-                                return '<a href="/Schedules/Sections/' + department.id + '">' + data + '</a>';
-                            else
                                 return data;
                         }
                     },

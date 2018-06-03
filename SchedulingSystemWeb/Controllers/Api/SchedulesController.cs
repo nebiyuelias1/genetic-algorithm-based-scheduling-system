@@ -62,6 +62,9 @@ namespace SchedulingSystemWeb.Controllers.Api
                 .Include(s => s.Days
                 .Select(d => d.Periods
                 .Select(p => p.Room.Building)))
+                .Include(x => x.Days
+                .Select(d => d.Periods
+                .Select(p => p.LabGroup)))
                 .ToList()
                 .Select(Mapper.Map<Schedule, ScheduleDto>)
                 .SingleOrDefault(s => s.Section.Id == id);
@@ -80,6 +83,12 @@ namespace SchedulingSystemWeb.Controllers.Api
         {
             var algorithm = new GeneticAlgorithm(id);
             var best = algorithm.FindBestSchedule();
+
+            while (best == null)
+            {
+                algorithm = new GeneticAlgorithm(id);
+                best = algorithm.FindBestSchedule();
+            }
             var scheduleDto = Mapper.Map<Schedule, ScheduleDto>(best);
 
             return Ok(scheduleDto);
@@ -98,7 +107,7 @@ namespace SchedulingSystemWeb.Controllers.Api
                             .Select(p => p.Instructor)))
                             .Include(s => s.Days
                             .Select(d => d.Periods
-                            .Select(p => p.Room)))
+                            .Select(p => p.Room.Building)))
                             .Where(s => s.Section.DepartmentId == id)
                             .Select(Mapper.Map<Schedule, ScheduleDto>); 
                             
@@ -121,15 +130,36 @@ namespace SchedulingSystemWeb.Controllers.Api
                             day.Periods[period.Period].Course = null;
                             day.Periods[period.Period].Instructor = null;
                             day.Periods[period.Period].Room = null;
+                            day.Periods[period.Period].LabGroupId = null;
+                            day.Periods[period.Period].LabGroup = null; 
+
                         }
                         else
                         {
-                            day.Periods[period.Period].CourseId = day.Periods[period.Period].Course.Id; 
-                            day.Periods[period.Period].Course = null;
-                            day.Periods[period.Period].InstructorId = day.Periods[period.Period].Instructor.Id;
-                            day.Periods[period.Period].Instructor = null;
-                            day.Periods[period.Period].RoomId = day.Periods[period.Period].Room.Id;
-                            day.Periods[period.Period].Room = null; 
+                            if (day.Periods[period.Period].IsLab)
+                            {
+                                day.Periods[period.Period].CourseId = day.Periods[period.Period].Course.Id;
+                                day.Periods[period.Period].Course = null;
+                                day.Periods[period.Period].InstructorId = day.Periods[period.Period].Instructor.Id;
+                                day.Periods[period.Period].Instructor = null;
+                                day.Periods[period.Period].RoomId = day.Periods[period.Period].Room.Id;
+                                day.Periods[period.Period].Room = null;
+                                day.Periods[period.Period].LabGroupId = day.Periods[period.Period].LabGroup.Id;
+                                day.Periods[period.Period].LabGroup = null;
+                                
+                            }
+                            else
+                            {
+                                day.Periods[period.Period].CourseId = day.Periods[period.Period].Course.Id;
+                                day.Periods[period.Period].Course = null;
+                                day.Periods[period.Period].InstructorId = day.Periods[period.Period].Instructor.Id;
+                                day.Periods[period.Period].Instructor = null;
+                                day.Periods[period.Period].RoomId = day.Periods[period.Period].Room.Id;
+                                day.Periods[period.Period].Room = null;
+                                day.Periods[period.Period].LabGroup = null;
+                                day.Periods[period.Period].LabGroupId = null;
+                            }
+                            
                         }
                     }
                 }
@@ -146,6 +176,56 @@ namespace SchedulingSystemWeb.Controllers.Api
                 throw ex;
             }
             
+        }
+
+        [HttpPost]
+        [Route("api/schedules/canbeswapped")]
+        public IHttpActionResult CanScheduleSwapTakePlace(ScheduleEntrySwapModel model)
+        {
+            var currentSemester = _context
+                                    .AcademicSemesters
+                                    .SingleOrDefault(s => s.CurrentSemester);
+
+
+            var scheduleEntries = _context.ScheduleEntries
+                                    .Include(s => s.Instructor)
+                                    .Include(s => s.Room)
+                                    .Include(s => s.Day)
+                                    .Include(s => s.Day.Schedule)
+                                    .Where(s => s.Day.Schedule.AcademicSemesterId == currentSemester.Id)
+                                    .ToList();
+
+            bool willPeriodAInstructorClash = scheduleEntries.Any(s => s.Day.DayNumber == model.PeriodBDayNumber
+                                                    && s.Period == model.PeriodB.Period
+                                                    && s.InstructorId == model.PeriodA.Instructor.Id);
+            if (willPeriodAInstructorClash)
+            {
+                return NotFound();
+            }
+
+            bool willPeriodBInstructorClash = scheduleEntries.Any(s => s.Day.DayNumber == model.PeriodADayNumber
+                                                    && s.Period == model.PeriodA.Period
+                                                    && s.InstructorId == model.PeriodB.Instructor.Id);
+
+            if (willPeriodBInstructorClash)
+            {
+                return NotFound();
+            }
+
+            bool willPeriodARoomClash = scheduleEntries.Any(s => s.Day.DayNumber == model.PeriodBDayNumber
+                                                        && s.Period == model.PeriodB.Period
+                                                        && s.RoomId == model.PeriodA.Room.Id);
+
+            if (willPeriodARoomClash)
+            {
+                return NotFound();
+            }
+
+            bool willPeriodBRoomClash = scheduleEntries.Any(s => s.Day.DayNumber == model.PeriodADayNumber
+                                                        && s.Period == model.PeriodA.Period
+                                                        && s.RoomId == model.PeriodB.Room.Id);
+
+            return Ok(); 
         }
         protected override void Dispose(bool disposing)
         {

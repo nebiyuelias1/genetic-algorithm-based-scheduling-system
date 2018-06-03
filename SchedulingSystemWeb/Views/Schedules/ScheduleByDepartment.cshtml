@@ -24,7 +24,7 @@
             var resources = [];
 
             $.ajax({
-                url: '/api/Schedules/1',
+                url: '/api/Schedules/@Model.Id',
                 method: 'GET',
                 success: function (data) {
                     $.each(data, function (k, schedule) {
@@ -72,17 +72,18 @@
                 $('#calendar').fullCalendar('destroy');
                 // page is now ready, initialize the calendar...
                 $('#calendar').fullCalendar({
+                    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
                     // put your options and callbacks here
                     defaultView: 'agendaFiveDay', // options are: month, basicWeek, agendaWeek, agendaDay
                     //defaultView: 'agendaFourDay',
                     header: {
-                        left: 'prev,next today',
-                        right: 'agendaDay,agendaFiveDay,agendaWeek,month'
+                        left: '',
+                        right: 'agendaFiveDay'
                     },
                     views: {
                         agendaFiveDay: {
                             type: 'agenda',
-                            duration: { days: 6 },
+                            duration: { days: 5 },
                             // views that are more than a day will NOT do this behavior by default
                             // so, we need to explicitly enable it
                             //groupByResource: true
@@ -93,6 +94,7 @@
                     },
                     //defaultDate: '2018-03-12',
                     contentHeight: 'auto',
+                    titleFormat: '',
                     navLinks: true, // can click week names to navigate views
                     columnHeaderFormat: 'dddd', // Determines the text that will be displayed on the calendar’s column headings
                     allDaySlot: false, // Determines if the “all-day” slot is displayed at the top of the calendar

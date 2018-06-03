@@ -8,5 +8,7 @@ namespace SchedulingSystemClassLibrary.Models
 {
     public class LabAssistant : Employee
     {
+        public Room AssignedLabRoom { get; set; }
+        public int? AssignedLabRoomId { get; set; }
     }
 }

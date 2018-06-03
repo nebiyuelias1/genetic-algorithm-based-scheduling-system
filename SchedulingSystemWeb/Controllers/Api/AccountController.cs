@@ -68,7 +68,8 @@ namespace SchedulingSystemWeb.Controllers.Api
 
             if (roles.Contains(RoleName.IsAnInstructor))
             {
-                user = _context.Instructors.Single(i => i.AccountId == User.Identity.GetUserId());
+                var userId = User.Identity.GetUserId();
+                user = _context.Instructors.Single(i => i.AccountId == userId);
             }
             else if (roles.Contains(RoleName.IsALabAssistant))
             {
@@ -76,7 +77,8 @@ namespace SchedulingSystemWeb.Controllers.Api
             }
             else if (roles.Contains(RoleName.IsAStudent))
             {
-                user = _context.Students.Single(s => s.AccountId == User.Identity.GetUserId());
+                var userId = User.Identity.GetUserId();
+                user = _context.Students.Single(s => s.AccountId == userId);
             }
 
             return new UserInfoViewModel
@@ -138,7 +140,7 @@ namespace SchedulingSystemWeb.Controllers.Api
         }
 
         // POST api/Account/ChangePassword
-        [Route("ChangePassword")]
+        [Route("api/Account/ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -406,6 +408,44 @@ namespace SchedulingSystemWeb.Controllers.Api
             return Ok();
         }
 
+        //[AllowAnonymous]
+        //[Route(Name = "api/account/confirmemail/{emailAdress}")]
+        //public async Task<IHttpActionResult> ConfirmEmail(string emailAddress)
+        //{
+        //    var user = await UserManager.FindByEmailAsync(emailAddress);
+        //    //Send an email with this link
+
+
+        //    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+        //    var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
+        //    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+        //    return Ok();
+        //}
+
+        //[HttpGet]
+        //[AllowAnonymous]
+        //[Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
+        //public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
+        //{
+        //    if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+        //    {
+        //        ModelState.AddModelError("", "User Id and Code are required");
+        //        return BadRequest(ModelState); 
+        //    }
+
+
+        //    IdentityResult result = await this.UserManager.ConfirmEmailAsync(userId, code);
+
+        //    if (result.Succeeded)
+        //    {
+        //        return Ok();
+        //    }
+        //    else
+        //    {
+        //        return GetErrorResult(result);
+        //    }
+        //}
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

@@ -1,0 +1,22 @@
+﻿@model SchedulingSystemClassLibrary.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Account for Lab Assistance";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Account</h3>
+            <h5>Username: @Model.UserName</h5>
+            <h5>Email: @Model.Email</h5>
+            <h5>Email Confirmed: @Model.EmailConfirmed</h5>
+        </div>
+    </div>
+</header>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+

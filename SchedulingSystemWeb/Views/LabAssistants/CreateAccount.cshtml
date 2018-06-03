@@ -1,0 +1,57 @@
+﻿@model SchedulingSystemClassLibrary.ViewModels.CreateLabAssistantAccountViewModel
+@{
+    ViewBag.Title = "Create Lab Assistant Account";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Create Account for @Model.LabAssistant.FullName</h3>
+        </div>
+    </div>
+</header>
+
+@if (Model.Errors != null)
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <ul>
+            @foreach (var errorMessage in Model.Errors)
+            {
+                <li><strong>Error!</strong> @errorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@using (Html.BeginForm("CreateAccount", "LabAssistants", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.LabAssistantId)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

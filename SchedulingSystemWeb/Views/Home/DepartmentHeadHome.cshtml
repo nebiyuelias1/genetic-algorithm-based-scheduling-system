@@ -61,12 +61,12 @@
                     <a href="#" class="list-group-item list-group-item-action active">
                         <span class="glyphicon glyphicon-cog"></span> Dashboard
                     </a>
-                    <a href="/Curriculums" class="list-group-item list-group-item-action"><i class="fa fa-file" aria-hidden="true"></i> Curriculums <span class="badge">1</span></a>
+                    <a href="/Curriculums" class="list-group-item list-group-item-action"><i class="fa fa-file" aria-hidden="true"></i> Curriculums <span class="badge">@Model.CurriculumsCount</span></a>
                     <a href="/Courses" class="list-group-item list-group-item-action"><i class="fa fa-book" aria-hidden="true"></i> Courses <span class="badge">@Model.CoursesCount</span></a>
                     <a href="/Sections" class="list-group-item list-group-item-action"><i class="fa fa-users" aria-hidden="true"></i> Sections <span class="badge">@Model.SectionsCount</span></a>
                     <a href="/Buildings" class="list-group-item list-group-item-action"><i class="fa fa-building-o" aria-hidden="true"></i> Buildings <span class="badge">@Model.BuildingsCount</span></a>
                     <a href="/Instructors" class="list-group-item list-group-item-action"><i class="fa fa-user-o" aria-hidden="true"></i> Instructors <span class="badge">@Model.InstructorsCount</span></a>
-                    <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Students <span class="badge">0</span></a>
+                    <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Students <span class="badge">@Model.StudentsCount</span></a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -78,10 +78,12 @@
                 <div class="panel-body border">
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="well dash-box">
-                                <h3><i class="fa fa-user-circle" aria-hidden="true"></i> 203</h3>
-                                <h4>Users</h4>
-                            </div>
+                            <a class="home-link" href="/AcademicCalendars">
+                                <div class="well dash-box">
+                                    <h3><span class="glyphicon glyphicon-calendar"></span></h3>
+                                    <h4>Academic Calendar</h4>
+                                </div>
+                            </a>
                         </div>
                         <div class="col-md-4">
                             <a class="home-link" href="/Rooms">
@@ -118,12 +120,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-4">
-                            <div class="well dash-box">
-                                <h3><i class="fa fa-user-circle" aria-hidden="true"></i> 203</h3>
-                                <h4>Academic Calendar</h4>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

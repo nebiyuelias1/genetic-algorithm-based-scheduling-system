@@ -194,7 +194,10 @@
             }
 
             $('#saveButton').click(function () {
-                $("#calendar").fullCalendar('removeEvents', selectedEvent.id);
+                if (selectedEvent != null) {
+                    $("#calendar").fullCalendar('removeEvents', selectedEvent.id);
+                }
+                
 
                 $.ajax({
                     url: '/api/AcademicCalendars',

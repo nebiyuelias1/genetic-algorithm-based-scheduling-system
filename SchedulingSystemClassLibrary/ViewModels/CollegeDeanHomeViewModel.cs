@@ -19,6 +19,7 @@ namespace SchedulingSystemClassLibrary.ViewModels
         public int RoomsCount { get; set; }
         public int CourseOfferingsCount { get; set; }
         public int DepartmentHeadsCount { get; set; }
+        public int LabAssistantsCount { get; set; }
         public AcademicSemester Semester { get; set; }
     }
 }

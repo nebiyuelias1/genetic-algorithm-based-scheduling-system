@@ -14,7 +14,7 @@
 </header>
 
 <p>
-    @Html.ActionLink("Create New Lab Assistant", "New", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add New Lab Assistant", "New", null, new { @class = "btn btn-primary" })
 </p>
 
 <table id="labAssistants" class="table table-bordered table-striped table-hover">
@@ -25,6 +25,7 @@
             <th>Grand Father Name</th>
             <th>Lab Room</th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -34,12 +35,31 @@
                 <td>@labAssistant.FirstName</td>
                 <td>@labAssistant.FatherName</td>
                 <td>@labAssistant.GrandFatherName</td>
-                <td></td>
+                <td>
+                    @if (labAssistant.AssignedLabRoomId == null)
+                    {
+                        <a href="/LabAssistants/Assign/@labAssistant.Id">[Assign to lab room]</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-link js-remove-assignment" data-lab-assistant-id="@labAssistant.Id">@labAssistant.AssignedLabRoom.Title [Remove from assignment]</button>
+                    }
+                </td>
                 <td>
                     <a href="/LabAssistants/Edit/@labAssistant.Id" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
                     <button class="btn btn-danger js-delete" data-lab-assistant-id="@labAssistant.Id" data-lab-assistant-fullname="@labAssistant.FullName">
                         <i class="fa fa-trash"></i> Delete
                     </button>
+                </td>
+                <td>
+                    @if (labAssistant.AccountId == null)
+                    {
+                        <a class="btn btn-success" href="/LabAssistants/CreateAccount/@labAssistant.Id"><i class="fa fa-user" aria-hidden="true"></i> Create Account</a>
+                    }
+                    else
+                    {
+                        <a href="/LabAssistants/Account/@labAssistant.Id">Account Created</a>
+                    }
                 </td>
             </tr>
         }
@@ -67,6 +87,18 @@
                     }
                 });
             });
+
+            $('#labAssistants').on('click', '.js-remove-assignment', function () {
+                var button = $(this);
+                $.ajax({
+                    url: '/api/labassistants/removeassignment/' + button.attr('data-lab-assistant-id'),
+                    method: 'GET',
+                    success: function () {
+                        location.reload(true); 
+                    }
+                });
+            });
+
         });
 
         

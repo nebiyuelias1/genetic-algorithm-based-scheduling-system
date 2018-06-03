@@ -16,6 +16,8 @@ namespace SchedulingSystemClassLibrary.ViewModels.DepartmentHead
         public int InstructorsCount { get; set; }
         public int RoomsCount { get; set; }
         public int CourseOfferingsCount { get; set; }
+        public int CurriculumsCount { get; set; }
+        public int StudentsCount { get; set; }
         public AcademicSemester Semester { get; set; }
         public Department Department { get; set; }
     }

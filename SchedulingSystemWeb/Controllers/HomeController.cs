@@ -28,6 +28,7 @@ namespace SchedulingSystemWeb.Controllers
         {
             if (User.IsInRole(RoleName.IsACollegeDean))
             {
+                var context = new ApplicationDbContext();
                 var semester = _context.AcademicSemesters.Count() > 0 ? _context.AcademicSemesters.Include(s => s.AcademicYear).Single(s => s.CurrentSemester) : null;
                 var viewModel = new CollegeDeanHomeViewModel
                 {
@@ -36,9 +37,10 @@ namespace SchedulingSystemWeb.Controllers
                     SectionsCount = _context.Sections.Count(),
                     BuildingsCount = _context.Buildings.Count(),
                     InstructorsCount = _context.Instructors.Count(),
-                    //UsersCount = applicationDbContext.Users.Count()
+                    UsersCount = context.Users.Count(),
                     RoomsCount = _context.Rooms.Count(),
                     CourseOfferingsCount = _context.CourseOfferings.Count(),
+                    LabAssistantsCount = _context.LabAssistances.Count(),
                     Semester = semester
                 };
 
@@ -53,14 +55,14 @@ namespace SchedulingSystemWeb.Controllers
 
                 var viewModel = new DepartmentHeadHomeViewModel
                 {
-                    CoursesCount = _context.Courses.Count(),
-                    DepartmentsCount = _context.Departments.Count(),
-                    SectionsCount = _context.Sections.Count(),
+                    CurriculumsCount = _context.Curriculums.Where(c => c.DepartmentId == deptHead.DepartmentId).Count(),
+                    CoursesCount = _context.Courses.Where(c => c.Curriculum.DepartmentId == deptHead.DepartmentId).Count(),
+                    SectionsCount = _context.Sections.Where(s => s.DepartmentId == deptHead.DepartmentId).Count(),
                     BuildingsCount = _context.Buildings.Count(),
-                    InstructorsCount = _context.Instructors.Count(),
-                    //UsersCount = applicationDbContext.Users.Count()
+                    InstructorsCount = _context.Instructors.Where(s => s.DepartmentId == deptHead.DepartmentId).Count(),
                     RoomsCount = _context.Rooms.Count(),
-                    CourseOfferingsCount = _context.CourseOfferings.Count(),
+                    CourseOfferingsCount = _context.CourseOfferings.Where(s => s.Course.Curriculum.DepartmentId == deptHead.DepartmentId).Count(),
+                    StudentsCount = _context.Students.Where(s => s.Section.DepartmentId == deptHead.DepartmentId).Count(),
                     Semester = semester, 
                     Department = deptHead.Department
                 };

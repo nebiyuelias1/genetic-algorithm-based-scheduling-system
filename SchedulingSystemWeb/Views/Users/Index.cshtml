@@ -1,0 +1,98 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@using SchedulingSystemClassLibrary.Models
+@model IEnumerable<SchedulingSystemClassLibrary.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<header>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h3>Users</h3>
+            <h5>Total: @Model.Count()</h5>
+        </div>
+    </div>
+</header>
+
+
+<table id="users" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Email Confirmed?
+            </th>
+            <th>
+                Two Factor Enabled?
+            </th>
+            <th>
+                Lockout End Date Utc
+            </th>
+            <th>
+                Lockout Enabled
+            </th>
+            <th>
+                Access Failed Count
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LockoutEnabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccessFailedCount)
+                </td>
+                <td><button class="btn btn-danger js-delete" data-user-id="@item.Id" data-user-name="@item.UserName"><i class="fa fa-trash"></i> Delete</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#users').DataTable();
+
+            $('#users').on('click', '.js-delete', function () {
+                var button = $(this);
+                bootbox.confirm('Are you sure you want to delete the user with username <strong>' + button.attr('data-user-name') + '<strong>?', function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '/api/users/' + button.attr('data-user-id'),
+                            method: 'DELETE',
+                            success: function () {
+                                location.reload(true); 
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>    
+}

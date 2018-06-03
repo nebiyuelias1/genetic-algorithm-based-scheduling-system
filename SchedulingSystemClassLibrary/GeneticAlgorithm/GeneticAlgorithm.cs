@@ -28,7 +28,7 @@ namespace SchedulingSystemClassLibrary.GeneticAlgorithm
             var generation = 0;
             while (true)
             {
-                if (generation >= 50)
+                if (generation > 11)
                 {
                     break;
                 }

@@ -63,6 +63,8 @@ namespace SchedulingSystemWeb.Controllers
                             .Select(c => c.Instructor))
                             .Include(s => s.CourseOfferings
                             .Select(c => c.Course))
+                            .Include(s => s.LabGroups
+                            .Select(x => x.Room.Building))
                             .Single(s => s.Id == id);
 
             var semester = _context

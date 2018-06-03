@@ -204,6 +204,7 @@
     <Compile Include="Controllers\Api\RoomsController.cs" />
     <Compile Include="Controllers\Api\SchedulesController.cs" />
     <Compile Include="Controllers\Api\SectionsController.cs" />
+    <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
     <Compile Include="Controllers\CourseOfferingsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Controllers\SectionsController.cs" />
     <Compile Include="Controllers\SemestersController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -521,6 +523,10 @@
     <Content Include="Views\Schedules\ViewSchedule.cshtml" />
     <Content Include="Views\AcademicCalendars\Index.cshtml" />
     <Content Include="Views\Sections\LabGroups.cshtml" />
+    <Content Include="Views\LabAssistants\CreateAccount.cshtml" />
+    <Content Include="Views\LabAssistants\Account.cshtml" />
+    <Content Include="Views\LabAssistants\Assign.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

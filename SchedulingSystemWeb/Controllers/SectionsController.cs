@@ -29,8 +29,8 @@ namespace SchedulingSystemWeb.Controllers
                 var sections = _context
                                 .Sections
                                 .Include(s => s.Department)
-                                .Include(s => s.AssignedLectureRoom)
-                                .Include(s => s.AssignedLabRoom)
+                                .Include(s => s.AssignedLectureRoom.Building)
+                                .Include(s => s.AssignedLabRoom.Building)
                                 .ToList();
 
                 return View(sections);
@@ -45,8 +45,8 @@ namespace SchedulingSystemWeb.Controllers
                 var sections = _context
                                 .Sections
                                 .Include(s => s.Department)
-                                .Include(s => s.AssignedLectureRoom)
-                                .Include(s => s.AssignedLabRoom)
+                                .Include(s => s.AssignedLectureRoom.Building)
+                                .Include(s => s.AssignedLabRoom.Building)
                                 .Where(s => s.DepartmentId == deptHead.DepartmentId)
                                 .ToList();
 
@@ -302,7 +302,7 @@ namespace SchedulingSystemWeb.Controllers
             var sectionInDb = _context
                                 .Sections
                                 .Include(s => s.LabGroups
-                                .Select(g => g.Room))
+                                .Select(g => g.Room.Building))
                                 .Single(s => s.Id == id);
 
             return View(sectionInDb);

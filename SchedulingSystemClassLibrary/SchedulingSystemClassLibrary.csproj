@@ -242,6 +242,14 @@
     <Compile Include="Migrations\201805271856293_AddLabGroupPropertyToScheduleEntriesTable.Designer.cs">
       <DependentUpon>201805271856293_AddLabGroupPropertyToScheduleEntriesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.cs" />
+    <Compile Include="Migrations\201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.Designer.cs">
+      <DependentUpon>201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805312040521_MakeAssignedLabRoomIdPropertyNullable.cs" />
+    <Compile Include="Migrations\201805312040521_MakeAssignedLabRoomIdPropertyNullable.Designer.cs">
+      <DependentUpon>201805312040521_MakeAssignedLabRoomIdPropertyNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AcademicEvent.cs" />
     <Compile Include="Models\AcademicSemester.cs" />
     <Compile Include="Models\AcademicYear.cs" />
@@ -344,6 +352,7 @@
     <Compile Include="Models\RoomAssignmentInfo.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\ScheduleEntry.cs" />
+    <Compile Include="Models\ScheduleEntrySwapModel.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -362,12 +371,14 @@
     <Compile Include="ViewModels\Api\UserInfoViewModel.cs" />
     <Compile Include="ViewModels\Api\UserLoginInfoViewModel.cs" />
     <Compile Include="ViewModels\AssignDepartmentHeadViewModel.cs" />
+    <Compile Include="ViewModels\AssignLabAssistantViewModel.cs" />
     <Compile Include="ViewModels\ChangeDepartmentHeadViewModel.cs" />
     <Compile Include="ViewModels\CollegeDeanHomeViewModel.cs" />
     <Compile Include="ViewModels\CourseOfferingsFormViewModel.cs" />
     <Compile Include="ViewModels\CourseOfferingsViewModel.cs" />
     <Compile Include="ViewModels\CoursesFormViewModel.cs" />
     <Compile Include="ViewModels\CreateDepartmentHeadAccountViewModel.cs" />
+    <Compile Include="ViewModels\CreateLabAssistantAccountViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsFormViewModel.cs" />
     <Compile Include="ViewModels\CurriculumsIndexViewModel.cs" />
     <Compile Include="ViewModels\DepartmentHeadAccountsViewModel.cs" />
@@ -539,6 +550,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805271856293_AddLabGroupPropertyToScheduleEntriesTable.resx">
       <DependentUpon>201805271856293_AddLabGroupPropertyToScheduleEntriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.resx">
+      <DependentUpon>201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805312040521_MakeAssignedLabRoomIdPropertyNullable.resx">
+      <DependentUpon>201805312040521_MakeAssignedLabRoomIdPropertyNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

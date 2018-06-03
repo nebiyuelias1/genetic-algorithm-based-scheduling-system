@@ -57,7 +57,13 @@
                         }
                     },
                     {
-                        data: "departmentHead"
+                        data: "departmentHeadId",
+                        render: function (data, type, department) {
+                            if (department.departmentHead != null) {
+                                return department.departmentHead.fullName;
+                            }
+                        }
+
                     },
                     {
                         data: 'id',

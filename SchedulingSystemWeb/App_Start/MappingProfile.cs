@@ -29,6 +29,7 @@ namespace SchedulingSystemWeb.App_Start
             Mapper.CreateMap<Schedule, ScheduleDto>();
             Mapper.CreateMap<AcademicSemester, AcademicSemesterDto>();
             Mapper.CreateMap<AcademicYear, AcademicYearDto>();
+            Mapper.CreateMap<LabGroup, LabGroupDto>();
 
             Mapper.CreateMap<SectionDto, Section>();
             Mapper.CreateMap<SectionDtoMinimal, Section>();
@@ -45,6 +46,7 @@ namespace SchedulingSystemWeb.App_Start
             Mapper.CreateMap<ScheduleDto, Schedule>();
             Mapper.CreateMap<AcademicSemesterDto, AcademicSemester>();
             Mapper.CreateMap<AcademicYearDto, AcademicYear>();
+            Mapper.CreateMap<LabGroupDto, LabGroup>();
         }
     }
 }

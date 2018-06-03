@@ -30,6 +30,20 @@ namespace SchedulingSystemWeb.Controllers.Api
             _context.SaveChanges();
         }
 
+        [HttpGet]
+        [Route("api/labassistants/removeassignment/{id}")]
+        public void RemoveAssignment(int id)
+        {
+            var labAssistantInDb = _context.LabAssistances.SingleOrDefault(x => x.Id == id);
+
+            if (labAssistantInDb == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            labAssistantInDb.AssignedLabRoomId = null; 
+            _context.SaveChanges();
+        }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose(); 

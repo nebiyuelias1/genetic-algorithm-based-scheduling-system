@@ -98,6 +98,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 entry = Days[randDay].Periods[slots[1]];
                                 entry.Course = course;
@@ -105,6 +106,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 entry = Days[randDay].Periods[slots[2]];
                                 entry.Course = course;
@@ -112,6 +114,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 groupALab -= 3;
                             }
@@ -129,6 +132,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 entry = Days[randDay].Periods[slots[1]];
                                 entry.Course = course;
@@ -136,6 +140,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 groupALab -= 2;
                             }
@@ -151,6 +156,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 groupALab--;
                             }
@@ -180,6 +186,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.Last();
 
                                 entry = Days[randDay].Periods[slots[1]];
                                 entry.Course = course;
@@ -187,6 +194,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.Last();
 
                                 entry = Days[randDay].Periods[slots[2]];
                                 entry.Course = course;
@@ -194,6 +202,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.Last();
 
                                 groupBLab -= 3;
                             }
@@ -211,6 +220,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.Last();
 
                                 entry = Days[randDay].Periods[slots[1]];
                                 entry.Course = course;
@@ -218,6 +228,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.Last();
 
                                 groupBLab -= 2;
                             }
@@ -233,6 +244,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.Last();
 
                                 groupBLab--;
                             }
@@ -264,6 +276,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 entry = Days[randDay].Periods[slots[1]];
                                 entry.Course = course;
@@ -271,6 +284,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 entry = Days[randDay].Periods[slots[2]];
                                 entry.Course = course;
@@ -278,6 +292,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 lab -= 3;
                             }
@@ -295,6 +310,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 entry = Days[randDay].Periods[slots[1]];
                                 entry.Course = course;
@@ -302,6 +318,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 lab -= 2;
                             }
@@ -317,6 +334,7 @@ namespace SchedulingSystemClassLibrary.Models
                                 entry.Room = room;
                                 entry.IsLab = true;
                                 entry.LabGroupId = labGroupId;
+                                entry.LabGroup = Section.LabGroups.First();
 
                                 lab--;
                             }
@@ -622,9 +640,15 @@ namespace SchedulingSystemClassLibrary.Models
                         day.Periods[i - 1].Instructor = day.Periods[i].Instructor;
                         day.Periods[i - 1].Room = day.Periods[i].Room;
                         if (day.Periods[i].IsLecture)
+                        {
                             day.Periods[i - 1].IsLecture = true;
+                        }
                         else if (day.Periods[i].IsLab)
+                        {
                             day.Periods[i - 1].IsLab = true;
+                            day.Periods[i - 1].LabGroup = day.Periods[i].LabGroup;
+                            day.Periods[i - 1].LabGroupId = day.Periods[i].LabGroupId;
+                        }
                         else if (day.Periods[i].IsTutor)
                         {
                             day.Periods[i - 1].IsTutor = true;
@@ -636,6 +660,8 @@ namespace SchedulingSystemClassLibrary.Models
                         day.Periods[i].IsLecture = false;
                         day.Periods[i].IsLab = false;
                         day.Periods[i].IsTutor = false;
+                        day.Periods[i].LabGroupId = null;
+                        day.Periods[i].LabGroup = null; 
 
                     }
                 }
@@ -652,7 +678,11 @@ namespace SchedulingSystemClassLibrary.Models
                         if (day.Periods[i].IsLecture)
                             day.Periods[i - 1].IsLecture = true;
                         else if (day.Periods[i].IsLab)
+                        {
                             day.Periods[i - 1].IsLab = true;
+                            day.Periods[i - 1].LabGroup = day.Periods[i].LabGroup;
+                            day.Periods[i - 1].LabGroupId = day.Periods[i].LabGroupId;
+                        }
                         else if (day.Periods[i].IsTutor)
                         {
                             day.Periods[i - 1].IsTutor = true;
@@ -664,6 +694,8 @@ namespace SchedulingSystemClassLibrary.Models
                         day.Periods[i].IsLecture = false;
                         day.Periods[i].IsLab = false;
                         day.Periods[i].IsTutor = false;
+                        day.Periods[i].LabGroupId = null;
+                        day.Periods[i].LabGroup = null;
                     }
                 }
             }
