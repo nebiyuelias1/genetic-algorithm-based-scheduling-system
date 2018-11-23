@@ -110,163 +110,23 @@
     <Compile Include="EntityConfigurations\LabAssistanceConfiguration.cs" />
     <Compile Include="GeneticAlgorithm\GeneticAlgorithm.cs" />
     <Compile Include="GeneticAlgorithm\ScheduleHelper.cs" />
-    <Compile Include="Migrations\201804031823176_AddBuildingsTable.cs" />
-    <Compile Include="Migrations\201804031823176_AddBuildingsTable.Designer.cs">
-      <DependentUpon>201804031823176_AddBuildingsTable.cs</DependentUpon>
+    <Compile Include="Migrations\201811200758492_InitialModel.cs" />
+    <Compile Include="Migrations\201811200758492_InitialModel.Designer.cs">
+      <DependentUpon>201811200758492_InitialModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804031843066_ModifyBuildingsTable.cs" />
-    <Compile Include="Migrations\201804031843066_ModifyBuildingsTable.Designer.cs">
-      <DependentUpon>201804031843066_ModifyBuildingsTable.cs</DependentUpon>
+    <Compile Include="Migrations\201811200807403_SeedDatabase.cs" />
+    <Compile Include="Migrations\201811200807403_SeedDatabase.Designer.cs">
+      <DependentUpon>201811200807403_SeedDatabase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804040825256_ModifyBuildingsTable1.cs" />
-    <Compile Include="Migrations\201804040825256_ModifyBuildingsTable1.Designer.cs">
-      <DependentUpon>201804040825256_ModifyBuildingsTable1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804041228592_ModifyRoomConfiguration.cs" />
-    <Compile Include="Migrations\201804041228592_ModifyRoomConfiguration.Designer.cs">
-      <DependentUpon>201804041228592_ModifyRoomConfiguration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804041242182_ModifyRoomConfiguration1.cs" />
-    <Compile Include="Migrations\201804041242182_ModifyRoomConfiguration1.Designer.cs">
-      <DependentUpon>201804041242182_ModifyRoomConfiguration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804070649402_ModifyExistingModel.cs" />
-    <Compile Include="Migrations\201804070649402_ModifyExistingModel.Designer.cs">
-      <DependentUpon>201804070649402_ModifyExistingModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804101233006_ModifyDaysTable.cs" />
-    <Compile Include="Migrations\201804101233006_ModifyDaysTable.Designer.cs">
-      <DependentUpon>201804101233006_ModifyDaysTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804101259491_ModifyScheduleEntriesTable.cs" />
-    <Compile Include="Migrations\201804101259491_ModifyScheduleEntriesTable.Designer.cs">
-      <DependentUpon>201804101259491_ModifyScheduleEntriesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804101546380_ModifyScheduleEntriesTableToAllowNulls.cs" />
-    <Compile Include="Migrations\201804101546380_ModifyScheduleEntriesTableToAllowNulls.Designer.cs">
-      <DependentUpon>201804101546380_ModifyScheduleEntriesTableToAllowNulls.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804121909588_ModifySchedulesTable.cs" />
-    <Compile Include="Migrations\201804121909588_ModifySchedulesTable.Designer.cs">
-      <DependentUpon>201804121909588_ModifySchedulesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804171315005_AddColorPropertyToCoursesTable.cs" />
-    <Compile Include="Migrations\201804171315005_AddColorPropertyToCoursesTable.Designer.cs">
-      <DependentUpon>201804171315005_AddColorPropertyToCoursesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.cs" />
-    <Compile Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.Designer.cs">
-      <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804221133205_ModifyInstructorsTable.cs" />
-    <Compile Include="Migrations\201804221133205_ModifyInstructorsTable.Designer.cs">
-      <DependentUpon>201804221133205_ModifyInstructorsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.cs" />
-    <Compile Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.Designer.cs">
-      <DependentUpon>201804221158549_AddInstructorPreferenceConfiguration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804282026224_AddAccountIdPropertyToInstructorsTable.cs" />
-    <Compile Include="Migrations\201804282026224_AddAccountIdPropertyToInstructorsTable.Designer.cs">
-      <DependentUpon>201804282026224_AddAccountIdPropertyToInstructorsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805040958393_AddEvenMoreChangeToTheDb.cs" />
-    <Compile Include="Migrations\201805040958393_AddEvenMoreChangeToTheDb.Designer.cs">
-      <DependentUpon>201805040958393_AddEvenMoreChangeToTheDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805081621183_AddAcademicYearAndSemesterTables.cs" />
-    <Compile Include="Migrations\201805081621183_AddAcademicYearAndSemesterTables.Designer.cs">
-      <DependentUpon>201805081621183_AddAcademicYearAndSemesterTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805081735118_ModifyAcademicYearsTable.cs" />
-    <Compile Include="Migrations\201805081735118_ModifyAcademicYearsTable.Designer.cs">
-      <DependentUpon>201805081735118_ModifyAcademicYearsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805092100143_ModifyCourseOfferingsTable.cs" />
-    <Compile Include="Migrations\201805092100143_ModifyCourseOfferingsTable.Designer.cs">
-      <DependentUpon>201805092100143_ModifyCourseOfferingsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805092142353_ModifySectionsTable.cs" />
-    <Compile Include="Migrations\201805092142353_ModifySectionsTable.Designer.cs">
-      <DependentUpon>201805092142353_ModifySectionsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805092244023_SeedDatabase.cs" />
-    <Compile Include="Migrations\201805092244023_SeedDatabase.Designer.cs">
-      <DependentUpon>201805092244023_SeedDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805092304508_SeedUsers.cs" />
-    <Compile Include="Migrations\201805092304508_SeedUsers.Designer.cs">
-      <DependentUpon>201805092304508_SeedUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805101834118_FixEntityFrameworkRelationships.cs" />
-    <Compile Include="Migrations\201805101834118_FixEntityFrameworkRelationships.Designer.cs">
-      <DependentUpon>201805101834118_FixEntityFrameworkRelationships.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805101933472_ModelChangeDetected.cs" />
-    <Compile Include="Migrations\201805101933472_ModelChangeDetected.Designer.cs">
-      <DependentUpon>201805101933472_ModelChangeDetected.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805131011016_ModifySchedulesTableAndSectionsTable.cs" />
-    <Compile Include="Migrations\201805131011016_ModifySchedulesTableAndSectionsTable.Designer.cs">
-      <DependentUpon>201805131011016_ModifySchedulesTableAndSectionsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.cs" />
-    <Compile Include="Migrations\201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.Designer.cs">
-      <DependentUpon>201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805211822557_AddAcademicEventsTable.cs" />
-    <Compile Include="Migrations\201805211822557_AddAcademicEventsTable.Designer.cs">
-      <DependentUpon>201805211822557_AddAcademicEventsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805211838456_ChangeDescriptionColumnOfAcademicEventToString.cs" />
-    <Compile Include="Migrations\201805211838456_ChangeDescriptionColumnOfAcademicEventToString.Designer.cs">
-      <DependentUpon>201805211838456_ChangeDescriptionColumnOfAcademicEventToString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805222113011_AddStudentsTable.cs" />
-    <Compile Include="Migrations\201805222113011_AddStudentsTable.Designer.cs">
-      <DependentUpon>201805222113011_AddStudentsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805251938031_AddLabGroupsTable.cs" />
-    <Compile Include="Migrations\201805251938031_AddLabGroupsTable.Designer.cs">
-      <DependentUpon>201805251938031_AddLabGroupsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.cs" />
-    <Compile Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.Designer.cs">
-      <DependentUpon>201805270615440_AddStudentCountPropertyToLabGroupsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805271831027_ModifySectionsTablePropertyAndRelationships.cs" />
-    <Compile Include="Migrations\201805271831027_ModifySectionsTablePropertyAndRelationships.Designer.cs">
-      <DependentUpon>201805271831027_ModifySectionsTablePropertyAndRelationships.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805271856293_AddLabGroupPropertyToScheduleEntriesTable.cs" />
-    <Compile Include="Migrations\201805271856293_AddLabGroupPropertyToScheduleEntriesTable.Designer.cs">
-      <DependentUpon>201805271856293_AddLabGroupPropertyToScheduleEntriesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.cs" />
-    <Compile Include="Migrations\201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.Designer.cs">
-      <DependentUpon>201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805312040521_MakeAssignedLabRoomIdPropertyNullable.cs" />
-    <Compile Include="Migrations\201805312040521_MakeAssignedLabRoomIdPropertyNullable.Designer.cs">
-      <DependentUpon>201805312040521_MakeAssignedLabRoomIdPropertyNullable.cs</DependentUpon>
+    <Compile Include="Migrations\201811200809335_SeedUsers.cs" />
+    <Compile Include="Migrations\201811200809335_SeedUsers.Designer.cs">
+      <DependentUpon>201811200809335_SeedUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AcademicEvent.cs" />
     <Compile Include="Models\AcademicSemester.cs" />
     <Compile Include="Models\AcademicYear.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.cs" />
-    <Compile Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.Designer.cs">
-      <DependentUpon>201805031608125_AddDepartmentHeadToDepartmentsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805031613530_AddSectionsToDepartmentsTable.cs" />
-    <Compile Include="Migrations\201805031613530_AddSectionsToDepartmentsTable.Designer.cs">
-      <DependentUpon>201805031613530_AddSectionsToDepartmentsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805031624091_ModelChangeIntroduced.cs" />
-    <Compile Include="Migrations\201805031624091_ModelChangeIntroduced.Designer.cs">
-      <DependentUpon>201805031624091_ModelChangeIntroduced.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Building.cs" />
     <Compile Include="EntityConfigurations\CourseOfferingConfiguration.cs" />
     <Compile Include="EntityConfigurations\DayConfiguration.cs" />
@@ -275,66 +135,6 @@
     <Compile Include="EntityConfigurations\ScheduleConfiguration.cs" />
     <Compile Include="EntityConfigurations\SectionConfiguration.cs" />
     <Compile Include="GlobalConfig.cs" />
-    <Compile Include="Migrations\201802261607428_InitialModel.cs" />
-    <Compile Include="Migrations\201802261607428_InitialModel.Designer.cs">
-      <DependentUpon>201802261607428_InitialModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802281351595_InitialModel1.cs" />
-    <Compile Include="Migrations\201802281351595_InitialModel1.Designer.cs">
-      <DependentUpon>201802281351595_InitialModel1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802281403536_AddRelationshipBetweenRoomsAndSections.cs" />
-    <Compile Include="Migrations\201802281403536_AddRelationshipBetweenRoomsAndSections.Designer.cs">
-      <DependentUpon>201802281403536_AddRelationshipBetweenRoomsAndSections.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803060848367_AddFluentApiConfiguration.cs" />
-    <Compile Include="Migrations\201803060848367_AddFluentApiConfiguration.Designer.cs">
-      <DependentUpon>201803060848367_AddFluentApiConfiguration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803070221408_ModifyInstructorsAndDepartmentsTable.cs" />
-    <Compile Include="Migrations\201803070221408_ModifyInstructorsAndDepartmentsTable.Designer.cs">
-      <DependentUpon>201803070221408_ModifyInstructorsAndDepartmentsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803070312143_ModifyInstructorsTableColumnInstructorId.cs" />
-    <Compile Include="Migrations\201803070312143_ModifyInstructorsTableColumnInstructorId.Designer.cs">
-      <DependentUpon>201803070312143_ModifyInstructorsTableColumnInstructorId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803121830038_AddSchedulesAndScheduleEntriesTables.cs" />
-    <Compile Include="Migrations\201803121830038_AddSchedulesAndScheduleEntriesTables.Designer.cs">
-      <DependentUpon>201803121830038_AddSchedulesAndScheduleEntriesTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803131752078_ModifyModels.cs" />
-    <Compile Include="Migrations\201803131752078_ModifyModels.Designer.cs">
-      <DependentUpon>201803131752078_ModifyModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803210833566_AddDaysTable.cs" />
-    <Compile Include="Migrations\201803210833566_AddDaysTable.Designer.cs">
-      <DependentUpon>201803210833566_AddDaysTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803231717574_ModifyDatabaseTables.cs" />
-    <Compile Include="Migrations\201803231717574_ModifyDatabaseTables.Designer.cs">
-      <DependentUpon>201803231717574_ModifyDatabaseTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803231724440_ModifyDatabaseTables1.cs" />
-    <Compile Include="Migrations\201803231724440_ModifyDatabaseTables1.Designer.cs">
-      <DependentUpon>201803231724440_ModifyDatabaseTables1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803231823093_ModifyDatabaseTables2.cs" />
-    <Compile Include="Migrations\201803231823093_ModifyDatabaseTables2.Designer.cs">
-      <DependentUpon>201803231823093_ModifyDatabaseTables2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803251543119_ModifyModels1.cs" />
-    <Compile Include="Migrations\201803251543119_ModifyModels1.Designer.cs">
-      <DependentUpon>201803251543119_ModifyModels1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803281924588_AddInstructorsPreferenceTable.cs" />
-    <Compile Include="Migrations\201803281924588_AddInstructorsPreferenceTable.Designer.cs">
-      <DependentUpon>201803281924588_AddInstructorsPreferenceTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804021337349_ModifyRelationshipBetweenRoomsAndSections.cs" />
-    <Compile Include="Migrations\201804021337349_ModifyRelationshipBetweenRoomsAndSections.Designer.cs">
-      <DependentUpon>201804021337349_ModifyRelationshipBetweenRoomsAndSections.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseOffering.cs" />
@@ -398,171 +198,20 @@
     <Compile Include="ViewModels\SectionsFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802261607428_InitialModel.resx">
-      <DependentUpon>201802261607428_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802281351595_InitialModel1.resx">
-      <DependentUpon>201802281351595_InitialModel1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802281403536_AddRelationshipBetweenRoomsAndSections.resx">
-      <DependentUpon>201802281403536_AddRelationshipBetweenRoomsAndSections.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803060848367_AddFluentApiConfiguration.resx">
-      <DependentUpon>201803060848367_AddFluentApiConfiguration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803070221408_ModifyInstructorsAndDepartmentsTable.resx">
-      <DependentUpon>201803070221408_ModifyInstructorsAndDepartmentsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803070312143_ModifyInstructorsTableColumnInstructorId.resx">
-      <DependentUpon>201803070312143_ModifyInstructorsTableColumnInstructorId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803121830038_AddSchedulesAndScheduleEntriesTables.resx">
-      <DependentUpon>201803121830038_AddSchedulesAndScheduleEntriesTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803131752078_ModifyModels.resx">
-      <DependentUpon>201803131752078_ModifyModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803210833566_AddDaysTable.resx">
-      <DependentUpon>201803210833566_AddDaysTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803231717574_ModifyDatabaseTables.resx">
-      <DependentUpon>201803231717574_ModifyDatabaseTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803231724440_ModifyDatabaseTables1.resx">
-      <DependentUpon>201803231724440_ModifyDatabaseTables1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803231823093_ModifyDatabaseTables2.resx">
-      <DependentUpon>201803231823093_ModifyDatabaseTables2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803251543119_ModifyModels1.resx">
-      <DependentUpon>201803251543119_ModifyModels1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803281924588_AddInstructorsPreferenceTable.resx">
-      <DependentUpon>201803281924588_AddInstructorsPreferenceTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804021337349_ModifyRelationshipBetweenRoomsAndSections.resx">
-      <DependentUpon>201804021337349_ModifyRelationshipBetweenRoomsAndSections.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804031823176_AddBuildingsTable.resx">
-      <DependentUpon>201804031823176_AddBuildingsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804031843066_ModifyBuildingsTable.resx">
-      <DependentUpon>201804031843066_ModifyBuildingsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804040825256_ModifyBuildingsTable1.resx">
-      <DependentUpon>201804040825256_ModifyBuildingsTable1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804041228592_ModifyRoomConfiguration.resx">
-      <DependentUpon>201804041228592_ModifyRoomConfiguration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804041242182_ModifyRoomConfiguration1.resx">
-      <DependentUpon>201804041242182_ModifyRoomConfiguration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804070649402_ModifyExistingModel.resx">
-      <DependentUpon>201804070649402_ModifyExistingModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804101233006_ModifyDaysTable.resx">
-      <DependentUpon>201804101233006_ModifyDaysTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804101259491_ModifyScheduleEntriesTable.resx">
-      <DependentUpon>201804101259491_ModifyScheduleEntriesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804101546380_ModifyScheduleEntriesTableToAllowNulls.resx">
-      <DependentUpon>201804101546380_ModifyScheduleEntriesTableToAllowNulls.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804121909588_ModifySchedulesTable.resx">
-      <DependentUpon>201804121909588_ModifySchedulesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804171315005_AddColorPropertyToCoursesTable.resx">
-      <DependentUpon>201804171315005_AddColorPropertyToCoursesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804171403550_AddAcronymPropertyToCoursesTable.resx">
-      <DependentUpon>201804171403550_AddAcronymPropertyToCoursesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804221133205_ModifyInstructorsTable.resx">
-      <DependentUpon>201804221133205_ModifyInstructorsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804221158549_AddInstructorPreferenceConfiguration.resx">
-      <DependentUpon>201804221158549_AddInstructorPreferenceConfiguration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804282026224_AddAccountIdPropertyToInstructorsTable.resx">
-      <DependentUpon>201804282026224_AddAccountIdPropertyToInstructorsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805031608125_AddDepartmentHeadToDepartmentsTable.resx">
-      <DependentUpon>201805031608125_AddDepartmentHeadToDepartmentsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805031613530_AddSectionsToDepartmentsTable.resx">
-      <DependentUpon>201805031613530_AddSectionsToDepartmentsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805031624091_ModelChangeIntroduced.resx">
-      <DependentUpon>201805031624091_ModelChangeIntroduced.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805040958393_AddEvenMoreChangeToTheDb.resx">
-      <DependentUpon>201805040958393_AddEvenMoreChangeToTheDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805081621183_AddAcademicYearAndSemesterTables.resx">
-      <DependentUpon>201805081621183_AddAcademicYearAndSemesterTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805081735118_ModifyAcademicYearsTable.resx">
-      <DependentUpon>201805081735118_ModifyAcademicYearsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805092100143_ModifyCourseOfferingsTable.resx">
-      <DependentUpon>201805092100143_ModifyCourseOfferingsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805092142353_ModifySectionsTable.resx">
-      <DependentUpon>201805092142353_ModifySectionsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805092244023_SeedDatabase.resx">
-      <DependentUpon>201805092244023_SeedDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805092304508_SeedUsers.resx">
-      <DependentUpon>201805092304508_SeedUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805101834118_FixEntityFrameworkRelationships.resx">
-      <DependentUpon>201805101834118_FixEntityFrameworkRelationships.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805101933472_ModelChangeDetected.resx">
-      <DependentUpon>201805101933472_ModelChangeDetected.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805131011016_ModifySchedulesTableAndSectionsTable.resx">
-      <DependentUpon>201805131011016_ModifySchedulesTableAndSectionsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.resx">
-      <DependentUpon>201805181806017_FixRelationshipBetweenSchedulesAndDaysTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805211822557_AddAcademicEventsTable.resx">
-      <DependentUpon>201805211822557_AddAcademicEventsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805211838456_ChangeDescriptionColumnOfAcademicEventToString.resx">
-      <DependentUpon>201805211838456_ChangeDescriptionColumnOfAcademicEventToString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805222113011_AddStudentsTable.resx">
-      <DependentUpon>201805222113011_AddStudentsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805251938031_AddLabGroupsTable.resx">
-      <DependentUpon>201805251938031_AddLabGroupsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805270615440_AddStudentCountPropertyToLabGroupsTable.resx">
-      <DependentUpon>201805270615440_AddStudentCountPropertyToLabGroupsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805271831027_ModifySectionsTablePropertyAndRelationships.resx">
-      <DependentUpon>201805271831027_ModifySectionsTablePropertyAndRelationships.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805271856293_AddLabGroupPropertyToScheduleEntriesTable.resx">
-      <DependentUpon>201805271856293_AddLabGroupPropertyToScheduleEntriesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.resx">
-      <DependentUpon>201805312032111_IntroduceRelationshipBetweenLabAssistantAndRoomsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805312040521_MakeAssignedLabRoomIdPropertyNullable.resx">
-      <DependentUpon>201805312040521_MakeAssignedLabRoomIdPropertyNullable.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201811200758492_InitialModel.resx">
+      <DependentUpon>201811200758492_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811200807403_SeedDatabase.resx">
+      <DependentUpon>201811200807403_SeedDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811200809335_SeedUsers.resx">
+      <DependentUpon>201811200809335_SeedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
